@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://use.typekit.net/nvo2zqf.css">
+<style>
+@font-face { font-family:"LatoLocal"; font-weight:400; src:local("Lato"), url("fonts/Lato-Regular.ttf") format("truetype"); font-display:swap; }
+@font-face { font-family:"LatoLocal"; font-weight:700; src:local("Lato Bold"), url("fonts/Lato-Bold.ttf") format("truetype"); font-display:swap; }
+@font-face { font-family:"LatoLocal"; font-weight:900; src:local("Lato Black"), url("fonts/Lato-Black.ttf") format("truetype"); font-display:swap; }
+</style>
+</helmet>
+
+<div ref="{{ setRoot }}" data-screen-label="Login" style="min-height:100vh; background:#fff; font-family:lato,LatoLocal,sans-serif; color:#1D2430; display:flex; flex-direction:column">
+
+  <!-- Presenter control -->
+  <a href="CP Configuration.dc.html" data-presenter-control="1" style="position:fixed; bottom:20px; left:20px; z-index:100; display:inline-flex; align-items:center; gap:8px; height:38px; padding:0 15px 0 12px; border-radius:999px; background:#1D2430; color:#fff; font:700 13px lato; text-decoration:none; box-shadow:0 6px 18px rgba(10,13,18,.28)">
+    <svg style="width:16px;height:16px;color:#fff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>Back to configuration
+  </a>
+
+  <!-- Header -->
+  <div data-screen-label="Login · Header" style="background:#fff; border-bottom:1px solid #ECEDEF">
+    <div style="max-width:1080px; margin:0 auto; padding:0 28px; height:78px; display:flex; align-items:center; justify-content:space-between">
+      <div style="display:flex; align-items:center; gap:13px">
+        <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ false }}"><img ref="{{ setLogoImg }}" alt="brand logo" style="height:48px;width:auto;max-width:200px;object-fit:contain;display:block"></sc-if>
+        <sc-if value="{{ noLogo }}" hint-placeholder-val="{{ true }}"><div style="width:38px;height:38px;border-radius:9px;background:var(--accent,#16181D);display:flex;align-items:center;justify-content:center;color:var(--accent-ink,#fff);font:700 15px lato;box-shadow:0 1px 2px rgba(10,13,18,.12), 0 0 0 1px rgba(10,13,18,.04)">{{ monogram }}</div></sc-if>
+        <div style="display:flex; flex-direction:column; gap:2px; line-height:1">
+          <sc-if value="{{ showCompany }}" hint-placeholder-val="{{ false }}"><span style="font:700 15px lato; letter-spacing:-.01em; color:#16181D">{{ companyName }}</span></sc-if>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px">
+        <div style="position:relative">
+          <button onClick="{{ toggleLang }}" style="display:inline-flex; align-items:center; gap:7px; height:36px; padding:0 12px; border:1px solid #E5E6E9; border-radius:9px; background:#fff; font:600 13px lato; color:#414651; cursor:pointer">
+            <svg style="width:15px;height:15px;color:#717680"><use href="assets/icons-sprite.svg#globe"></use></svg>{{ currentLang }}
+            <svg style="width:11px;height:11px;color:#A4A7AE" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <sc-if value="{{ langOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; top:42px; right:0; width:160px; background:#fff; border:1px solid #D5D7DA; border-radius:8px; box-shadow:0 12px 16px -4px rgba(10,13,18,.12), 0 4px 6px -2px rgba(10,13,18,.03); padding:5px; z-index:30">
+            <sc-for list="{{ languages }}" as="lng" hint-placeholder-count="5">
+              <div onClick="{{ lng.pick }}" style="display:flex; align-items:center; justify-content:space-between; padding:8px 10px; border-radius:6px; cursor:pointer; font:600 13px lato; color:#1D2430">{{ lng.label }}<sc-if value="{{ lng.active }}" hint-placeholder-val="{{ false }}"><svg style="width:14px;height:14px;color:var(--accent,#0E65E5)"><use href="assets/icons-sprite.svg#check"></use></svg></sc-if></div>
+            </sc-for>
+          </div>
+          </sc-if>
+        </div>
+        <a href="#" style="display:inline-flex; align-items:center; gap:7px; height:36px; padding:0 14px; border:1px solid #E5E6E9; border-radius:9px; background:#fff; font:700 13px lato; color:#3B3F46; text-decoration:none; box-shadow:0 1px 2px rgba(10,13,18,.04)" style-hover="background:#FAFBFC; border-color:#D5D7DA"><svg style="width:16px;height:16px;color:#717680"><use href="assets/icons-sprite.svg#message-chat"></use></svg>Help</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login card -->
+  <div data-screen-label="Login · Card" style="flex:1; display:flex; align-items:center; justify-content:center; padding:48px 28px 64px; background:#FCFCFD">
+    <div style="width:100%; max-width:440px; background:#fff; border:1px solid #E9EAEB; border-radius:18px; box-shadow:0 20px 44px -14px rgba(10,13,18,.16), 0 4px 10px rgba(10,13,18,.04); padding:38px 38px 30px; text-align:center">
+      <h1 style="font:600 26px lato; letter-spacing:-.02em; line-height:1.15; margin:0; color:#16181D">Sign in</h1>
+      <p style="font:400 14px/1.55 lato; color:#717680; margin:8px 0 0; text-wrap:pretty">Live order tracking and shipment ETAs</p>
+
+      <!-- SSO -->
+      <div style="display:flex; flex-direction:column; gap:10px; margin-top:24px">
+        <button onClick="{{ ssoSignIn }}" style="display:inline-flex; align-items:center; justify-content:center; gap:10px; width:100%; height:46px; border:1px solid #D5D7DA; border-radius:10px; background:#fff; font:700 14px lato; color:#1D2430; cursor:pointer; box-shadow:0 1px 2px rgba(10,13,18,.04)" style-hover="background:#FAFBFC; border-color:#B9BCC2">
+          <svg style="width:18px;height:18px;flex:none" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"></path><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"></path><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"></path><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.231 4.166-4.087 5.571.001-.001 6.19 5.238 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"></path></svg>
+          Continue with Google
+        </button>
+        <button onClick="{{ ssoSignIn }}" style="display:inline-flex; align-items:center; justify-content:center; gap:10px; width:100%; height:46px; border:1px solid #D5D7DA; border-radius:10px; background:#fff; font:700 14px lato; color:#1D2430; cursor:pointer; box-shadow:0 1px 2px rgba(10,13,18,.04)" style-hover="background:#FAFBFC; border-color:#B9BCC2">
+          <svg style="width:17px;height:17px;flex:none" viewBox="0 0 24 24"><rect x="1" y="1" width="10" height="10" fill="#F25022"></rect><rect x="13" y="1" width="10" height="10" fill="#7FBA00"></rect><rect x="1" y="13" width="10" height="10" fill="#00A4EF"></rect><rect x="13" y="13" width="10" height="10" fill="#FFB900"></rect></svg>
+          Continue with Microsoft
+        </button>
+      </div>
+
+      <!-- divider -->
+      <div style="display:flex; align-items:center; gap:14px; margin:22px 0 18px">
+        <div style="flex:1; height:1px; background:#ECEDEF"></div>
+        <span style="font:600 11px lato; letter-spacing:.06em; text-transform:uppercase; color:#A4A7AE">or</span>
+        <div style="flex:1; height:1px; background:#ECEDEF"></div>
+      </div>
+
+      <!-- email + password -->
+      <div style="text-align:left">
+        <label style="display:block; font:700 12px lato; color:#414651; margin-bottom:6px">Email</label>
+        <input ref="{{ setEmail }}" type="email" placeholder="you@company.com" style="box-sizing:border-box; width:100%; height:46px; border:1px solid #D5D7DA; border-radius:9px; padding:0 14px; font:400 14px lato; color:#181D27; outline:none; box-shadow:0 1px 2px rgba(10,13,18,.05)" style-focus="border-color:var(--accent,#16181D)">
+        <div style="display:flex; align-items:baseline; justify-content:space-between; margin:16px 0 6px">
+          <label style="font:700 12px lato; color:#414651">Password</label>
+          <span onClick="{{ forgot }}" style="font:700 12px lato; color:var(--accent,#16181D); cursor:pointer">Forgot password?</span>
+        </div>
+        <input ref="{{ setPassword }}" onKeyDown="{{ onKey }}" type="password" placeholder="••••••••" style="box-sizing:border-box; width:100%; height:46px; border:1px solid #D5D7DA; border-radius:9px; padding:0 14px; font:400 14px lato; color:#181D27; outline:none; box-shadow:0 1px 2px rgba(10,13,18,.05)" style-focus="border-color:var(--accent,#16181D)">
+        <sc-if value="{{ forgotNote }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; align-items:flex-start; gap:8px; margin-top:12px; padding:10px 12px; border-radius:9px; background:color-mix(in srgb,var(--accent,#16181D) 7%,#fff); font:500 12.5px/1.45 lato; color:#414651"><svg style="width:15px;height:15px;color:var(--accent,#16181D);flex:none;margin-top:1px"><use href="assets/icons-sprite.svg#mail"></use></svg>Enter your email above and we’ll send a reset link.</div>
+        </sc-if>
+      </div>
+
+      <button onClick="{{ submit }}" style="width:100%; height:50px; margin-top:20px; border:none; border-radius:10px; background:var(--accent,#16181D); color:var(--accent-ink,#fff); font:700 15px lato; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:9px; box-shadow:0 1px 2px 0 rgba(10,13,18,.05), 0 -2px 0 0 rgba(10,13,18,.05) inset, 0 0 0 1px rgba(10,13,18,.18) inset">Sign in<svg style="width:17px;height:17px;color:var(--accent-ink,#fff)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></button>
+
+      <div style="margin-top:22px; padding-top:18px; border-top:1px solid #F2F3F4; font:500 13px lato; color:#717680">Need access? <a href="#" style="color:var(--accent,#16181D); font-weight:700; text-decoration:none">Contact us</a></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div data-screen-label="Login · Footer" style="border-top:1px solid #ECEDEF; padding:16px 28px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; font:400 12px lato; color:#A4A7AE">
+    <span>© 2026 {{ companyName }}</span>
+    <span style="display:inline-flex; align-items:center; gap:6px">Powered by <strong style="color:#717680; font-weight:700">FourKites</strong></span>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1080,&quot;height&quot;:760},&quot;companyName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;FedEx&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;monogram&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;AL&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#16181D&quot;,&quot;options&quot;:[&quot;#16181D&quot;,&quot;#0E65E5&quot;,&quot;#0B5C3F&quot;,&quot;#5B3FB5&quot;,&quot;#B5430F&quot;],&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { langOpen:false, lang:'English', applied:null, forgotNote:false };
+  componentDidMount(){
+    let applied={name:'FedEx',brandMark:'FX',accent:'#4D148C',logoUrl:'assets/fedex-logo.png',url:'fedex.com',showCompany:false};
+    try { const s=localStorage.getItem('fk_brand_v3'); if(s) applied=JSON.parse(s); } catch(e){}
+    this.setState({applied});
+    import('./portal-brand.js').then(m=>{ this.brandLib=m; this.applyAccent(); }).catch(()=>{});
+    this.applyAccent();
+  }
+  componentDidUpdate(){ this.applyAccent(); this.syncLogos(); }
+  activeAccent(){ const a=this.state.applied; return (a&&a.accent) || this.props.accentColor || '#16181D'; }
+  inkOn(hex){
+    try{ const h=String(hex).replace('#',''); const f=h.length===3?h.split('').map(c=>c+c).join(''):h;
+      const r=parseInt(f.slice(0,2),16), g=parseInt(f.slice(2,4),16), b=parseInt(f.slice(4,6),16);
+      const L=(0.299*r+0.587*g+0.114*b)/255; return L>0.62?'#16181D':'#ffffff'; }catch(e){ return '#ffffff'; }
+  }
+  applyAccent(){ const el=this.root; if(!el) return; const acc=this.activeAccent(); el.style.setProperty('--accent', acc); el.style.setProperty('--accent-ink', this.inkOn(acc)); if(this.brandLib){ this.brandLib.applyBrand(el, this.state.applied); const _bg=this.state.applied&&this.state.applied.pageBg; if(_bg) el.style.background=_bg; } }
+  go(url){ window.location.href = url; }
+  submit(){ try{ sessionStorage.setItem('fk_authed','1'); }catch(e){} this.go('Customer Portal Home.dc.html'); }
+  syncLogos(){ if(!this._logos) return; const url=this.state.applied&&this.state.applied.logoUrl; this._logos.forEach(el=>{ if(url&&el.src!==url) el.src=url; }); }
+  renderVals(){
+    const langs = ['English','Español','Français','Deutsch','中文'];
+    const applied = this.state.applied;
+    return {
+      companyName: (applied&&applied.name) || this.props.companyName || 'FedEx',
+      monogram: (applied&&applied.brandMark) || this.props.monogram || 'AL',
+      hasLogo: !!(applied&&applied.logoUrl),
+      noLogo: !(applied&&applied.logoUrl),
+      showCompany: !!(applied&&applied.showCompany),
+      currentLang: this.state.lang,
+      langOpen: this.state.langOpen,
+      toggleLang: ()=>this.setState(s=>({langOpen:!s.langOpen})),
+      languages: langs.map(l=>({ label:l, active:l===this.state.lang, pick:()=>this.setState({lang:l, langOpen:false}) })),
+      setEmail: el=>{ this.email=el; },
+      setPassword: el=>{ this.password=el; },
+      submit: ()=>this.submit(),
+      ssoSignIn: ()=>this.submit(),
+      forgot: ()=>this.setState({forgotNote:true}),
+      forgotNote: this.state.forgotNote,
+      onKey: e=>{ if(e.key==='Enter') this.submit(); },
+      setLogoImg: el=>{ if(!el) return; el.onerror=()=>{el.style.display='none';}; this._logos=this._logos||new Set(); this._logos.add(el); const url=this.state.applied&&this.state.applied.logoUrl; if(url) el.src=url; },
+      setRoot: el=>{ this.root=el; if(el) this.applyAccent(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

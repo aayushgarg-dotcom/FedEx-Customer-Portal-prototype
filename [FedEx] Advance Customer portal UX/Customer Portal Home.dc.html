@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://use.typekit.net/nvo2zqf.css">
+<style>
+@font-face { font-family:"LatoLocal"; font-weight:400; src:local("Lato"), url("fonts/Lato-Regular.ttf") format("truetype"); font-display:swap; }
+@font-face { font-family:"LatoLocal"; font-weight:700; src:local("Lato Bold"), url("fonts/Lato-Bold.ttf") format("truetype"); font-display:swap; }
+@font-face { font-family:"LatoLocal"; font-weight:900; src:local("Lato Black"), url("fonts/Lato-Black.ttf") format("truetype"); font-display:swap; }
+</style>
+</helmet>
+
+<div ref="{{ setRoot }}" data-screen-label="Home" style="min-height:100vh; background:#fff; font-family:lato,LatoLocal,sans-serif; color:#1D2430; display:flex; flex-direction:column">
+
+  <!-- Presenter control -->
+  <a href="CP Configuration.dc.html" data-presenter-control="1" style="position:fixed; bottom:20px; left:20px; z-index:100; display:inline-flex; align-items:center; gap:8px; height:38px; padding:0 15px 0 12px; border-radius:999px; background:#1D2430; color:#fff; font:700 13px lato; text-decoration:none; box-shadow:0 6px 18px rgba(10,13,18,.28)">
+    <svg style="width:16px;height:16px;color:#fff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>Back to configuration
+  </a>
+
+  <!-- Company header (from brand extraction) -->
+  <div data-screen-label="Home · Header" style="background:#fff; border-bottom:1px solid #ECEDEF">
+    <div style="max-width:1080px; margin:0 auto; padding:0 28px; height:78px; display:flex; align-items:center; justify-content:space-between">
+      <div style="display:flex; align-items:center; gap:13px">
+        <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ false }}"><img ref="{{ setLogoImg }}" alt="brand logo" style="height:48px;width:auto;max-width:200px;object-fit:contain;display:block"></sc-if>
+        <sc-if value="{{ noLogo }}" hint-placeholder-val="{{ true }}"><div style="width:38px;height:38px;border-radius:9px;background:var(--accent,#16181D);display:flex;align-items:center;justify-content:center;color:var(--accent-ink,#fff);font:700 15px lato;box-shadow:0 1px 2px rgba(10,13,18,.12), 0 0 0 1px rgba(10,13,18,.04)">{{ monogram }}</div></sc-if>
+        <sc-if value="{{ showCompany }}" hint-placeholder-val="{{ false }}"><span style="font:700 15px lato; letter-spacing:-.01em; color:#16181D">{{ companyName }}</span></sc-if>
+      </div>
+
+      <!-- logged-in user controls -->
+      <div style="display:flex; align-items:center; gap:6px">
+        <button style="position:relative; width:40px;height:40px;border:none;background:none;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#535862" style-hover="background:#F4F5F6">
+          <svg style="width:21px;height:21px"><use href="assets/icons-sprite.svg#notification"></use></svg>
+          <span style="position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:999px;background:#F04438;border:2px solid #fff"></span>
+        </button>
+        <button style="width:40px;height:40px;border:none;background:none;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#535862" style-hover="background:#F4F5F6">
+          <svg style="width:20px;height:20px"><use href="assets/icons-sprite.svg#settings"></use></svg>
+        </button>
+        <div style="width:1px;height:28px;background:#E5E6E9;margin:0 8px"></div>
+        <div style="position:relative">
+          <button onClick="{{ toggleUser }}" style="display:flex; align-items:center; gap:10px; height:48px; padding:0 8px 0 4px; border:none; background:none; border-radius:10px; cursor:pointer" style-hover="background:#F7F8FA">
+            <span style="width:38px;height:38px;border-radius:999px;background:var(--accent,#0E65E5);color:var(--accent-ink,#fff);display:flex;align-items:center;justify-content:center;font:700 14px lato">{{ userInitials }}</span>
+            <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.2">
+              <span style="font:700 13px lato; color:#1D2430">{{ userName }}</span>
+              <span style="font:600 11px lato; color:#8E929A">{{ userRole }}</span>
+            </span>
+            <svg style="width:13px;height:13px;color:#A4A7AE" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <sc-if value="{{ userMenuOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; top:56px; right:0; width:238px; background:#fff; border:1px solid #D5D7DA; border-radius:12px; box-shadow:0 20px 24px -4px rgba(10,13,18,.12), 0 8px 8px -4px rgba(10,13,18,.03); padding:6px; z-index:70; animation:fkpop .14s ease">
+            <div style="padding:10px 12px 8px; border-bottom:1px solid #F2F3F4; margin-bottom:4px">
+              <div style="font:700 14px lato; color:#1D2430">{{ userName }}</div>
+              <div style="font:500 12px lato; color:#8E929A">{{ userEmail }}</div>
+            </div>
+            <sc-for list="{{ userMenu }}" as="mi" hint-placeholder-count="4">
+              <div onClick="{{ mi.run }}" style="display:flex; align-items:center; gap:11px; padding:9px 11px; border-radius:8px; cursor:pointer; font:600 13px lato; color:#1D2430" style-hover="background:#F7F8FA"><svg style="width:16px;height:16px;color:#717680"><use href="assets/icons-sprite.svg#{{ mi.icon }}"></use></svg>{{ mi.label }}</div>
+            </sc-for>
+          </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <sc-if value="{{ userMenuOpen }}" hint-placeholder-val="{{ false }}"><div onClick="{{ closeUser }}" style="position:fixed; inset:0; z-index:45"></div></sc-if>
+
+  <!-- FourKites utility bar -->
+  <div data-screen-label="Home · Utility bar" style="background:#FAFBFC; border-bottom:1px solid #ECEDEF">
+    <div style="max-width:1080px; margin:0 auto; padding:0 28px; height:42px; display:flex; align-items:center; justify-content:space-between">
+      <div style="display:flex; align-items:center; gap:8px; font:600 11px lato; letter-spacing:.02em; color:#A4A7AE">
+        <span>Order tracking &amp; shipment visibility powered by</span>
+        <svg viewBox="0 0 224 56" style="height:15px; width:auto"><path d="M71.575 29.575V41.545H66.724V14.455H78.96V18.697H71.575V25.249H77.413V29.568H71.575V29.575Z" fill="#535862"></path><path d="M83.664 40.446C82.152 39.123 81.312 36.995 81.312 31.507V24.5C81.312 19.005 82.145 16.884 83.664 15.561C84.84 14.539 86.506 14.007 88.473 14.007C90.44 14.007 92.148 14.539 93.324 15.561C94.836 16.884 95.676 19.012 95.676 24.5V31.507C95.676 37.002 94.843 39.123 93.324 40.446C92.148 41.468 90.482 42 88.473 42C86.464 42 84.833 41.468 83.664 40.446ZM90.79 32.564V23.436C90.79 20.629 90.79 18.508 88.48 18.508C86.17 18.508 86.205 20.629 86.205 23.436V32.564C86.205 35.371 86.205 37.492 88.48 37.492C90.755 37.492 90.79 35.371 90.79 32.564Z" fill="#535862"></path><path d="M113.939 14.455L113.904 17.22V34.727C113.904 39.389 111.174 42 106.778 42C102.382 42 99.6939 39.382 99.6939 34.727V17.22L99.6589 14.455H104.545L104.51 17.22V34.195C104.51 36.316 105.077 37.492 106.785 37.492C108.493 37.492 109.095 36.316 109.095 34.195V17.22L109.06 14.455H113.946H113.939Z" fill="#535862"></path><path d="M123.228 30.408V41.545H118.377V14.455H125.195C131.257 14.455 132.734 18.053 132.734 22.449V22.526C132.734 25.368 131.936 27.832 129.703 29.232L133.343 41.545H128.191L125.083 30.408H123.228ZM123.228 26.278H124.516C127.246 26.278 127.778 24.57 127.778 22.491V22.456C127.778 20.37 127.211 18.704 124.593 18.704H123.228V26.278Z" fill="#535862"></path><path d="M151.76 14.455L146.566 24.57L152.061 41.545H146.867L143.115 29.421L141.337 32.872L141.372 41.552H136.486V14.455H141.26C141.26 14.455 141.295 24.038 141.26 24.871H141.414C141.869 24.038 142.401 22.939 142.856 22.064L146.531 14.448H151.76V14.455Z" fill="#535862"></path><path d="M159.677 14.455V41.545H154.791V14.455H159.677Z" fill="#535862"></path><path d="M172.067 18.697V41.545H167.293V18.697H162.519V14.455H176.876V18.697H172.067Z" fill="#535862"></path><path d="M184.576 29.575V37.303H192.15V41.545H179.725V14.455H192.003V18.697H184.576V25.249H190.414V29.568H184.576V29.575Z" fill="#535862"></path><path d="M198.898 34.041C199.353 36.54 200.487 37.492 202.118 37.492C203.749 37.492 204.617 36.547 204.617 35.14C204.617 33.628 203.63 32.186 201.474 30.597L198.975 28.777C195.979 26.579 194.691 24.003 194.691 21.161C194.691 16.954 197.568 14 202.041 14C206.171 14 208.558 16.499 209.167 20.741L204.428 21.385C204.162 19.565 203.406 18.508 201.887 18.508C200.368 18.508 199.612 19.53 199.612 20.93C199.612 22.638 200.823 23.849 202.797 25.284L205.261 27.062C208.103 29.148 209.545 31.801 209.545 34.867C209.545 39.221 206.626 41.993 202.083 41.993C197.54 41.993 194.845 39.263 194.201 34.678L198.898 34.041V34.041Z" fill="#535862"></path><path d="M36.722 17.682L28 26.404L19.278 17.682L28 0L36.722 17.682Z" fill="#E1E000"></path><path d="M26.404 28L17.682 36.722L0 28L17.675 19.278L26.404 28Z" fill="#F9423A"></path><path d="M36.722 38.3179L28 55.9999L19.271 38.3249L28 29.5959L36.722 38.3179Z" fill="#00AFD7"></path><path d="M55.9999 28L38.3179 36.729L29.5959 28L38.3179 19.278L55.9999 28Z" fill="#00AF66"></path></svg>
+      </div>
+      <div style="position:relative">
+        <button onClick="{{ toggleLang }}" style="display:inline-flex; align-items:center; gap:7px; height:28px; padding:0 10px; border:1px solid #E9EAEB; border-radius:7px; background:#fff; font:600 12px lato; color:#414651; cursor:pointer">
+          <svg style="width:14px;height:14px;color:#717680"><use href="assets/icons-sprite.svg#globe"></use></svg>{{ currentLang }}
+          <svg style="width:11px;height:11px;color:#A4A7AE" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <sc-if value="{{ langOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute; top:34px; right:0; width:160px; background:#fff; border:1px solid #D5D7DA; border-radius:8px; box-shadow:0 12px 16px -4px rgba(10,13,18,.12), 0 4px 6px -2px rgba(10,13,18,.03); padding:5px; z-index:30">
+          <sc-for list="{{ languages }}" as="lng" hint-placeholder-count="5">
+            <div onClick="{{ lng.pick }}" style="display:flex; align-items:center; justify-content:space-between; padding:8px 10px; border-radius:6px; cursor:pointer; font:600 13px lato; color:#1D2430">{{ lng.label }}<sc-if value="{{ lng.active }}" hint-placeholder-val="{{ false }}"><svg style="width:14px;height:14px;color:var(--accent,#0E65E5)"><use href="assets/icons-sprite.svg#check"></use></svg></sc-if></div>
+          </sc-for>
+        </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search hero (editorial) -->
+  <div ref="{{ setHeroEl }}" data-screen-label="Home · Search box" style="flex:1; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; width:100%; max-width:1080px; margin:0 auto; box-sizing:border-box; padding:clamp(48px,10vh,108px) 28px 76px; text-align:left">
+    <h1 style="font:600 clamp(38px,6vw,60px) lato; letter-spacing:-.03em; line-height:1.02; margin:0; color:#16181D">Where&rsquo;s your order right now?</h1>
+    <p style="font:400 17px/1.6 lato; color:#717680; margin:18px 0 0; max-width:520px; text-wrap:pretty">Track any order end to end — and every shipment delivering it. Enter a tracking, order or reference number.</p>
+
+    <div style="display:flex; align-items:center; gap:12px; width:100%; max-width:640px; margin-top:34px; flex-wrap:wrap">
+      <div style="flex:1; min-width:280px; position:relative; display:flex; align-items:center">
+        <span style="position:absolute; left:18px; display:flex; color:#A4A7AE"><svg style="width:20px;height:20px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+        <input ref="{{ setSearchInput }}" onKeyDown="{{ onKey }}" type="text" placeholder="Tracking or reference number" style="box-sizing:border-box; width:100%; height:60px; border:1.5px solid #D5D7DA; border-radius:13px; padding:0 16px 0 48px; font:600 16px lato; color:#1D2430; outline:none; box-shadow:0 1px 2px rgba(10,13,18,.05)" style-focus="border-color:var(--accent,#16181D)">
+      </div>
+      <button onClick="{{ doSearch }}" style="height:60px; padding:0 30px; border:none; border-radius:13px; background:var(--accent,#16181D); color:var(--accent-ink,#fff); font:700 16px lato; cursor:pointer; display:inline-flex; align-items:center; gap:9px; box-shadow:0 1px 2px 0 rgba(10,13,18,.05), 0 -2px 0 0 rgba(10,13,18,.05) inset, 0 0 0 1px rgba(10,13,18,.18) inset">Track<svg style="width:18px;height:18px;color:var(--accent-ink,#fff)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></button>
+    </div>
+    <div style="font:500 13px lato; color:#A4A7AE; margin-top:16px">For example <span onClick="{{ useExample }}" style="color:var(--accent,#16181D); font-weight:700; cursor:pointer; text-decoration:underline; text-underline-offset:2px; text-decoration-thickness:1px">PO-4471-A</span> or a carrier tracking number</div>
+  </div>
+
+  <!-- ===== Authenticated home: dashboard summary + marketing (auth flow only) ===== -->
+  <sc-if value="{{ showAuthHome }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="Home · Dashboard summary" style="width:100%; max-width:1080px; margin:0 auto; box-sizing:border-box; padding:8px 28px 4px">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:16px">
+      <div>
+        <div style="font:900 22px lato; letter-spacing:-.02em; color:#16181D">Your orders &amp; shipments</div>
+        <div style="font:400 14px lato; color:#717680; margin-top:3px">A snapshot of your orders and the shipments in motion right now.</div>
+      </div>
+      <button onClick="{{ goDashboard }}" style="display:inline-flex; align-items:center; gap:9px; height:44px; padding:0 20px; border:none; border-radius:11px; background:var(--accent,#16181D); color:var(--accent-ink,#fff); font:700 14px lato; cursor:pointer; box-shadow:0 1px 2px 0 rgba(10,13,18,.05), 0 -2px 0 0 rgba(10,13,18,.05) inset, 0 0 0 1px rgba(10,13,18,.18) inset">Take me to Dashboard<svg style="width:17px;height:17px;color:var(--accent-ink,#fff)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></button>
+    </div>
+
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:14px">
+      <div onClick="{{ excPick }}" title="Show only exceptions" style="display:flex; align-items:center; gap:11px; padding:12px 16px; border:1px solid #E9EAEB; border-radius:12px; background:#fff; flex:1; min-width:170px; cursor:pointer; transition:border-color .12s, box-shadow .12s; {{ excCss }}" style-hover="border-color:#D5D7DA">
+        <span style="width:34px;height:34px;border-radius:9px;background:#FEF3F2;display:flex;align-items:center;justify-content:center;flex:none"><svg style="width:18px;height:18px;color:#D92D20"><use href="assets/icons-sprite.svg#alert-triangle"></use></svg></span>
+        <span style="line-height:1.1"><span style="display:block;font:900 22px lato;color:#16181D;line-height:1">{{ cExc }}</span><span style="font:600 12px lato;color:#717680">Exceptions</span></span>
+      </div>
+      <div onClick="{{ ofdPick }}" title="Show only out for delivery" style="display:flex; align-items:center; gap:11px; padding:12px 16px; border:1px solid #E9EAEB; border-radius:12px; background:#fff; flex:1; min-width:170px; cursor:pointer; transition:border-color .12s, box-shadow .12s; {{ ofdCss }}" style-hover="border-color:#D5D7DA">
+        <span style="width:34px;height:34px;border-radius:9px;background:#E7F0FE;display:flex;align-items:center;justify-content:center;flex:none"><svg style="width:18px;height:18px;color:#0E65E5"><use href="assets/icons-sprite.svg#truck"></use></svg></span>
+        <span style="line-height:1.1"><span style="display:block;font:900 22px lato;color:#16181D;line-height:1">{{ cOfd }}</span><span style="font:600 12px lato;color:#717680">Out for delivery</span></span>
+      </div>
+      <div onClick="{{ delPick }}" title="Show only delivered today" style="display:flex; align-items:center; gap:11px; padding:12px 16px; border:1px solid #E9EAEB; border-radius:12px; background:#fff; flex:1; min-width:170px; cursor:pointer; transition:border-color .12s, box-shadow .12s; {{ delCss }}" style-hover="border-color:#D5D7DA">
+        <span style="width:34px;height:34px;border-radius:9px;background:#ECFDF3;display:flex;align-items:center;justify-content:center;flex:none"><svg style="width:18px;height:18px;color:#067647"><use href="assets/icons-sprite.svg#check-circle"></use></svg></span>
+        <span style="line-height:1.1"><span style="display:block;font:900 22px lato;color:#16181D;line-height:1">{{ cDel }}</span><span style="font:600 12px lato;color:#717680">Delivered today</span></span>
+      </div>
+    </div>
+
+    <div data-card style="border:1px solid #E9EAEB; border-radius:14px; background:#fff; overflow:hidden; box-shadow:0 1px 2px rgba(10,13,18,.05)">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 18px; border-bottom:1px solid #ECEDEF; background:#FCFCFD">
+        <span style="font:800 13px lato; letter-spacing:.02em; color:#414651">Your orders &amp; shipments</span>
+        <sc-if value="{{ filterActive }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ clearFilter }}" title="Clear filter" style="display:inline-flex; align-items:center; gap:8px; height:28px; padding:0 6px 0 11px; border:1px solid #D5D7DA; border-radius:999px; background:#fff; font:700 12px lato; color:#414651; cursor:pointer" style-hover="background:#F7F8FA">
+          <span style="width:7px;height:7px;border-radius:999px;background:var(--accent,#0E65E5)"></span>{{ filterLabel }}
+          <span style="display:flex;width:18px;height:18px;align-items:center;justify-content:center;border-radius:999px;color:#98A2B3" style-hover="background:#F2F3F4;color:#414651"><svg style="width:12px;height:12px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+        </button>
+        </sc-if>
+      </div>
+      <sc-for list="{{ shipRows }}" as="row" hint-placeholder-count="5">
+        <div style="display:flex; align-items:center; gap:14px; padding:0 18px; min-height:56px; border-bottom:1px solid #F2F3F4" style-hover="background:#FCFCFD">
+          <span style="width:8px;height:8px;border-radius:999px;background:{{ row.dot }};flex:none"></span>
+          <a onClick="{{ row.open }}" style="flex:0 0 148px; font:700 14px lato; color:var(--accent,#0E65E5); cursor:pointer; text-decoration:none; white-space:nowrap" style-hover="text-decoration:underline">{{ row.id }}</a>
+          <span style="flex:1; min-width:0; font:600 13px lato; color:#414651; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ row.lane }}</span>
+          <span style="flex:0 0 92px; font:600 12px lato; color:#717680; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ row.mode }}</span>
+          <span style="flex:0 0 132px; display:flex; align-items:center"><span style="display:inline-flex; align-items:center; height:24px; padding:0 10px; border-radius:999px; background:{{ row.bg }}; font:700 11px lato; color:{{ row.color }}">{{ row.statusLabel }}</span></span>
+          <span style="flex:0 0 116px; text-align:right; font:700 12px lato; color:#535862; white-space:nowrap">{{ row.eta }}</span>
+        </div>
+      </sc-for>
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:11px 18px; border-top:1px solid #F2F3F4; background:#FCFCFD">
+        <span style="font:600 12px lato; color:#98A2B3">Showing {{ rangeStart }}&ndash;{{ rangeEnd }} of {{ filteredTotal }}</span>
+        <sc-if value="{{ multiPage }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; align-items:center; gap:4px">
+          <button onClick="{{ prev }}" disabled="{{ prevDisabled }}" style="display:inline-flex; align-items:center; gap:5px; height:32px; padding:0 11px 0 8px; border:1px solid #E9EAEB; border-radius:8px; background:#fff; font:700 12px lato; color:#414651; cursor:pointer; {{ prevCss }}" style-hover="background:#F7F8FA">
+            <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>Prev
+          </button>
+          <sc-for list="{{ pages }}" as="pg" hint-placeholder-count="4">
+            <button onClick="{{ pg.go }}" style="min-width:32px; height:32px; padding:0 7px; border:1px solid transparent; border-radius:8px; background:transparent; font:700 12px lato; color:#535862; cursor:pointer; {{ pg.css }}" style-hover="background:#F2F3F4">{{ pg.n }}</button>
+          </sc-for>
+          <button onClick="{{ next }}" disabled="{{ nextDisabled }}" style="display:inline-flex; align-items:center; gap:5px; height:32px; padding:0 8px 0 11px; border:1px solid #E9EAEB; border-radius:8px; background:#fff; font:700 12px lato; color:#414651; cursor:pointer; {{ nextCss }}" style-hover="background:#F7F8FA">
+            Next<svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+
+  <div data-screen-label="Home · Marketing" style="width:100%; max-width:1080px; margin:0 auto; box-sizing:border-box; padding:28px 28px 8px">
+    <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:14px; flex-wrap:wrap">
+      <span style="font:900 18px lato; letter-spacing:-.01em; color:#16181D">More from {{ companyName }}</span>
+      <sc-if value="{{ hasDomain }}" hint-placeholder-val="{{ false }}"><span style="font:600 12px lato; color:#A4A7AE">from {{ domain }}</span></sc-if>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px">
+      <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="3">
+        <a data-card href="{{ t.href }}" target="_blank" style="display:flex; flex-direction:column; gap:9px; padding:20px; border:1px solid #E9EAEB; border-radius:14px; background:#fff; text-decoration:none; box-shadow:0 1px 2px rgba(10,13,18,.05)" style-hover="border-color:#D5D7DA; box-shadow:0 6px 16px -6px rgba(10,13,18,.14)">
+          <span style="width:40px;height:40px;border-radius:10px;background:color-mix(in srgb,var(--accent,#16181D) 12%,#fff);display:flex;align-items:center;justify-content:center"><svg style="width:20px;height:20px;color:var(--accent,#16181D)"><use href="assets/icons-sprite.svg#{{ t.icon }}"></use></svg></span>
+          <span style="font:800 16px lato; color:#16181D; margin-top:4px">{{ t.title }}</span>
+          <span style="font:400 13px/1.55 lato; color:#717680; flex:1">{{ t.blurb }}</span>
+          <span style="display:inline-flex; align-items:center; gap:6px; font:700 13px lato; color:var(--accent,#0E65E5)">{{ t.cta }}<svg style="width:14px;height:14px;color:var(--accent,#0E65E5)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- Footer -->
+  <div data-screen-label="Home · Footer" style="border-top:1px solid #ECEDEF; padding:18px 28px; text-align:center; font:400 12px lato; color:#A4A7AE">© 2026 {{ companyName }} · Need help? <a href="#" style="color:var(--accent,#0E65E5); font-weight:700; text-decoration:none">Contact support</a></div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;companyName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;FedEx&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;monogram&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;AL&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#16181D&quot;,&quot;options&quot;:[&quot;#16181D&quot;,&quot;#0E65E5&quot;,&quot;#0B5C3F&quot;,&quot;#5B3FB5&quot;,&quot;#B5430F&quot;],&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { langOpen:false, lang:'English', applied:null, ships:[], authHome:true, tiles:null, domain:'', userMenuOpen:false, filter:null, page:0 };
+  componentDidMount(){
+    let applied={name:'FedEx',brandMark:'FX',accent:'#4D148C',logoUrl:'assets/fedex-logo.png',url:'fedex.com',showCompany:false};
+    try { const s=localStorage.getItem('fk_brand_v3'); if(s) applied=JSON.parse(s); } catch(e){}
+    const domain = (applied&&applied.url) || '';
+    this.setState({ applied, domain });
+    import('./portal-shipments.js').then(m=>this.setState({ships:m.OPS||[]})).catch(()=>{});
+    import('./portal-brand.js').then(m=>{ this.brandLib=m; this.applyAccent(); }).catch(()=>{});
+    this.loadTiles(domain, (applied&&applied.name)||'');
+    this.applyAccent();
+  }
+  componentDidUpdate(){ this.applyAccent(); this.syncLogos(); if(this.heroEl) this.heroEl.style.flex='0 0 auto'; }
+  activeAccent(){ const a=this.state.applied; return (a&&a.accent) || this.props.accentColor || '#16181D'; }
+  inkOn(hex){
+    try{ const h=String(hex).replace('#',''); const f=h.length===3?h.split('').map(c=>c+c).join(''):h;
+      const r=parseInt(f.slice(0,2),16), g=parseInt(f.slice(2,4),16), b=parseInt(f.slice(4,6),16);
+      const L=(0.299*r+0.587*g+0.114*b)/255; return L>0.62?'#16181D':'#ffffff'; }catch(e){ return '#ffffff'; }
+  }
+  applyAccent(){ const el=this.root; if(!el) return; const acc=this.activeAccent(); el.style.setProperty('--accent', acc); el.style.setProperty('--accent-ink', this.inkOn(acc)); if(this.brandLib){ this.brandLib.applyBrand(el, this.state.applied); const _bg=this.state.applied&&this.state.applied.pageBg; if(_bg) el.style.background=_bg; } }
+  go(url){ window.location.href = url; }
+  goDashboard(){ this.go('CP Shipment Dashboard.dc.html'); }
+  openShip(s){ this.go('CP Tracking Details.dc.html?ref='+encodeURIComponent(s.id)+'&shipment='+encodeURIComponent(s.id)); }
+  pick(key){ this.setState(s=>({ filter: s.filter===key ? null : key, page:0 })); }
+  fallbackTiles(name){
+    const co = name || 'our team';
+    return [
+      { icon:'box', title:'Explore services', blurb:'Freight, parcel and supply-chain solutions from '+co+', built around your shipments.', cta:'Browse services' },
+      { icon:'message-chat', title:'Support center', blurb:'Guides, FAQs and live help for tracking, claims and managing your deliveries.', cta:'Get help' },
+      { icon:'notification', title:'Delivery alerts', blurb:'Turn on proactive notifications for delays, exceptions and arrivals.', cta:'Manage alerts' }
+    ];
+  }
+  async loadTiles(domain, name){
+    const key='fk_mktg_'+(domain||'default');
+    try { const c=sessionStorage.getItem(key); if(c){ this.setState({tiles:JSON.parse(c)}); return; } } catch(e){}
+    const fb=this.fallbackTiles(name);
+    if(!domain || !window.claude || !window.claude.complete){ this.setState({tiles:fb}); return; }
+    try {
+      const out=await window.claude.complete({ messages:[{role:'user', content:
+        'For the company at "'+domain+'", write 3 short marketing tiles for a customer shipment-tracking portal. Respond ONLY with a compact JSON array of 3 objects, keys: "title" (2-4 words), "blurb" (max 16 words, customer-facing), "cta" (2-3 words), "icon" (one of: box, truck, ship, message-chat, notification, map-pin, file-text, activity). Base them on that company real products/services. Domain: '+domain }] });
+      const j=String(out||'').replace(/```json/gi,'').replace(/```/g,'').trim();
+      const arr=JSON.parse(j.substring(j.indexOf('['), j.lastIndexOf(']')+1));
+      const icons=['box','truck','ship','message-chat','notification','map-pin','file-text','activity'];
+      const tiles=(Array.isArray(arr)?arr:[]).slice(0,3).map(t=>({ title:String(t.title||'').slice(0,40)||'Learn more', blurb:String(t.blurb||'').slice(0,130), cta:String(t.cta||'Learn more').slice(0,24), icon: icons.indexOf(t.icon)>=0?t.icon:'box' }));
+      const final = tiles.length===3 ? tiles : fb;
+      try{ sessionStorage.setItem(key, JSON.stringify(final)); }catch(e){}
+      this.setState({tiles:final});
+    } catch(e){ this.setState({tiles:fb}); }
+  }
+  submit(){ const v=(this.searchInput && this.searchInput.value || '').trim() || 'PO-4471-A'; this.go('CP Tracking Details.dc.html?ref=' + encodeURIComponent(v) + '&shipment=' + encodeURIComponent(v)); }
+  syncLogos(){ if(!this._logos) return; const url=this.state.applied&&this.state.applied.logoUrl; this._logos.forEach(el=>{ if(url&&el.src!==url) el.src=url; }); }
+  renderVals(){
+    const langs = ['English','Español','Français','Deutsch','中文'];
+    const applied = this.state.applied;
+    const ST = { exception:{label:'Exception',c:'#B42318',bg:'#FEF3F2',dot:'#F04438'}, out_for_delivery:{label:'Out for delivery',c:'#0B51B7',bg:'#E7F0FE',dot:'#0E65E5'}, delivered:{label:'Delivered',c:'#067647',bg:'#ECFDF3',dot:'#17B26A'}, in_transit:{label:'In transit',c:'#0E7090',bg:'#EBFAFF',dot:'#0BA5C7'}, scheduled:{label:'Scheduled',c:'#535862',bg:'#F4F5F6',dot:'#98A2B3'} };
+    const rank={exception:0,out_for_delivery:1,in_transit:2,scheduled:3,delivered:4};
+    const ships=this.state.ships;
+    const cExc=ships.filter(s=>s.status==='exception').length;
+    const cOfd=ships.filter(s=>s.status==='out_for_delivery').length;
+    const cDel=ships.filter(s=>s.status==='delivered'&&s.deliveredToday).length;
+    const filter=this.state.filter;
+    const match=s=> filter==='exception'? s.status==='exception'
+      : filter==='out_for_delivery'? s.status==='out_for_delivery'
+      : filter==='delivered_today'? (s.status==='delivered'&&s.deliveredToday)
+      : true;
+    const sorted=ships.slice().sort((a,b)=>(rank[a.status]-rank[b.status]) || ((a.etaDay||0)-(b.etaDay||0)));
+    const filtered=sorted.filter(match);
+    const perPage=5;
+    const totalPages=Math.max(1, Math.ceil(filtered.length/perPage));
+    const page=Math.min(this.state.page||0, totalPages-1);
+    const startIdx=page*perPage;
+    const pageItems=filtered.slice(startIdx, startIdx+perPage);
+    const shipRows=pageItems.map(s=>{ const m=ST[s.status]; return { id:s.id, lane:(s.origin+' \u2192 '+s.destination), mode:s.mode||'', statusLabel:m.label, bg:m.bg, color:m.c, dot:m.dot, eta:s.etaText, open:()=>this.openShip(s) }; });
+    const ring=a=> a ? 'border-color:var(--accent); box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent)' : '';
+    const filterLabels={exception:'Exceptions', out_for_delivery:'Out for delivery', delivered_today:'Delivered today'};
+    const pages=Array.from({length:totalPages},(_,i)=>({ n:i+1, active:i===page, css: i===page?'background:var(--accent); color:var(--accent-ink); border-color:var(--accent)':'', go:()=>this.setState({page:i}) }));
+    const domain=this.state.domain||'';
+    const tiles=(this.state.tiles||[]).map(t=>({ title:t.title, blurb:t.blurb, cta:t.cta, icon:t.icon, href: domain?('https://'+domain):'#' }));
+    return {
+      companyName: (applied&&applied.name) || this.props.companyName || 'FedEx',
+      monogram: (applied&&applied.brandMark) || this.props.monogram || 'AL',
+      hasLogo: !!(applied&&applied.logoUrl),
+      noLogo: !(applied&&applied.logoUrl),
+      showCompany: !!(applied&&applied.showCompany),
+      currentLang: this.state.lang,
+      langOpen: this.state.langOpen,
+      toggleLang: ()=>this.setState(s=>({langOpen:!s.langOpen})),
+      languages: langs.map(l=>({ label:l, active:l===this.state.lang, pick:()=>this.setState({lang:l, langOpen:false}) })),
+      userName: this.props.userName || 'John Doe',
+      userInitials: this.props.userInitials || 'JD',
+      userRole: this.props.userRole || 'Operations',
+      userEmail: this.props.userEmail || 'john.doe@fedex.com',
+      userMenuOpen: this.state.userMenuOpen,
+      toggleUser: ()=>this.setState(s=>({userMenuOpen:!s.userMenuOpen, langOpen:false})),
+      closeUser: ()=>this.setState({userMenuOpen:false}),
+      userMenu: [
+        { label:'Profile', icon:'user', run:()=>this.setState({userMenuOpen:false}) },
+        { label:'Account settings', icon:'settings', run:()=>this.setState({userMenuOpen:false}) },
+        { label:'Notifications', icon:'notification', run:()=>this.setState({userMenuOpen:false}) },
+        { label:'Sign out', icon:'logout', run:()=>this.go('Customer Portal Login.dc.html') }
+      ],
+      setSearchInput: el=>{ this.searchInput=el; },
+      doSearch: ()=>this.submit(),
+      showAuthHome: this.state.authHome,
+      goDashboard: ()=>this.goDashboard(),
+      cExc, cOfd, cDel,
+      excCss: ring(filter==='exception'), ofdCss: ring(filter==='out_for_delivery'), delCss: ring(filter==='delivered_today'),
+      excPick: ()=>this.pick('exception'), ofdPick: ()=>this.pick('out_for_delivery'), delPick: ()=>this.pick('delivered_today'),
+      filterActive: !!filter, filterLabel: filterLabels[filter]||'', clearFilter: ()=>this.setState({filter:null, page:0}),
+      shipRows, rangeStart: filtered.length? startIdx+1 : 0, rangeEnd: startIdx+pageItems.length, filteredTotal: filtered.length,
+      pages, multiPage: totalPages>1,
+      prev: ()=>this.setState(s=>({page:Math.max(0,(s.page||0)-1)})), next: ()=>this.setState(s=>({page:Math.min(totalPages-1,(s.page||0)+1)})),
+      prevDisabled: page===0, nextDisabled: page>=totalPages-1,
+      prevCss: page===0?'opacity:.45; cursor:default':'', nextCss: page>=totalPages-1?'opacity:.45; cursor:default':'',
+      tiles, hasDomain: !!domain, domain,
+      setHeroEl: el=>{ this.heroEl=el; if(el) el.style.flex='0 0 auto'; },
+      onKey: e=>{ if(e.key==='Enter') this.submit(); },
+      useExample: ()=>{ if(this.searchInput){ this.searchInput.value='PO-4471-A'; this.searchInput.focus(); } },
+      setLogoImg: el=>{ if(!el) return; el.onerror=()=>{el.style.display='none';}; this._logos=this._logos||new Set(); this._logos.add(el); const url=this.state.applied&&this.state.applied.logoUrl; if(url) el.src=url; },
+      setRoot: el=>{ this.root=el; if(el) this.applyAccent(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

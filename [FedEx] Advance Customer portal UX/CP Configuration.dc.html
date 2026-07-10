@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://use.typekit.net/nvo2zqf.css">
+<style>
+@font-face { font-family:"LatoLocal"; font-weight:400; src:local("Lato"), url("fonts/Lato-Regular.ttf") format("truetype"); font-display:swap; }
+@font-face { font-family:"LatoLocal"; font-weight:700; src:local("Lato Bold"), url("fonts/Lato-Bold.ttf") format("truetype"); font-display:swap; }
+@font-face { font-family:"LatoLocal"; font-weight:900; src:local("Lato Black"), url("fonts/Lato-Black.ttf") format("truetype"); font-display:swap; }
+@keyframes fkpulse { 0%{ box-shadow:0 0 0 0 rgba(20,22,29,.30);} 70%{ box-shadow:0 0 0 9px rgba(20,22,29,0);} 100%{ box-shadow:0 0 0 0 rgba(20,22,29,0);} }
+@keyframes fktoast { from{ opacity:0; transform:translate(-50%,12px);} to{ opacity:1; transform:translate(-50%,0);} }
+@keyframes fkfade { from{ opacity:0;} to{ opacity:1;} }
+@keyframes fkpop { from{ opacity:0; transform:translateY(8px) scale(.98);} to{ opacity:1; transform:translateY(0) scale(1);} }
+</style>
+</helmet>
+
+<div ref="{{ setRoot }}" data-screen-label="Settings" style="background:#FAFAFA; min-height:100%; font-family:lato,LatoLocal,sans-serif; color:#181D27; position:relative">
+
+  <!-- ===== Global header ===== -->
+  <div data-screen-label="Settings · Top nav" style="background:#fff; box-shadow:0 1px 3px rgba(10,13,18,.06); position:relative; z-index:50">
+    <div style="height:64px; display:flex; align-items:center; padding:0 22px">
+      <svg viewBox="0 0 224 56" style="height:27px; width:auto"><path d="M71.575 29.575V41.545H66.724V14.455H78.96V18.697H71.575V25.249H77.413V29.568H71.575V29.575Z" fill="#181D27"></path><path d="M83.664 40.446C82.152 39.123 81.312 36.995 81.312 31.507V24.5C81.312 19.005 82.145 16.884 83.664 15.561C84.84 14.539 86.506 14.007 88.473 14.007C90.44 14.007 92.148 14.539 93.324 15.561C94.836 16.884 95.676 19.012 95.676 24.5V31.507C95.676 37.002 94.843 39.123 93.324 40.446C92.148 41.468 90.482 42 88.473 42C86.464 42 84.833 41.468 83.664 40.446ZM90.79 32.564V23.436C90.79 20.629 90.79 18.508 88.48 18.508C86.17 18.508 86.205 20.629 86.205 23.436V32.564C86.205 35.371 86.205 37.492 88.48 37.492C90.755 37.492 90.79 35.371 90.79 32.564Z" fill="#181D27"></path><path d="M113.939 14.455L113.904 17.22V34.727C113.904 39.389 111.174 42 106.778 42C102.382 42 99.6939 39.382 99.6939 34.727V17.22L99.6589 14.455H104.545L104.51 17.22V34.195C104.51 36.316 105.077 37.492 106.785 37.492C108.493 37.492 109.095 36.316 109.095 34.195V17.22L109.06 14.455H113.946H113.939Z" fill="#181D27"></path><path d="M123.228 30.408V41.545H118.377V14.455H125.195C131.257 14.455 132.734 18.053 132.734 22.449V22.526C132.734 25.368 131.936 27.832 129.703 29.232L133.343 41.545H128.191L125.083 30.408H123.228ZM123.228 26.278H124.516C127.246 26.278 127.778 24.57 127.778 22.491V22.456C127.778 20.37 127.211 18.704 124.593 18.704H123.228V26.278Z" fill="#181D27"></path><path d="M151.76 14.455L146.566 24.57L152.061 41.545H146.867L143.115 29.421L141.337 32.872L141.372 41.552H136.486V14.455H141.26C141.26 14.455 141.295 24.038 141.26 24.871H141.414C141.869 24.038 142.401 22.939 142.856 22.064L146.531 14.448H151.76V14.455Z" fill="#181D27"></path><path d="M159.677 14.455V41.545H154.791V14.455H159.677Z" fill="#181D27"></path><path d="M172.067 18.697V41.545H167.293V18.697H162.519V14.455H176.876V18.697H172.067Z" fill="#181D27"></path><path d="M184.576 29.575V37.303H192.15V41.545H179.725V14.455H192.003V18.697H184.576V25.249H190.414V29.568H184.576V29.575Z" fill="#181D27"></path><path d="M198.898 34.041C199.353 36.54 200.487 37.492 202.118 37.492C203.749 37.492 204.617 36.547 204.617 35.14C204.617 33.628 203.63 32.186 201.474 30.597L198.975 28.777C195.979 26.579 194.691 24.003 194.691 21.161C194.691 16.954 197.568 14 202.041 14C206.171 14 208.558 16.499 209.167 20.741L204.428 21.385C204.162 19.565 203.406 18.508 201.887 18.508C200.368 18.508 199.612 19.53 199.612 20.93C199.612 22.638 200.823 23.849 202.797 25.284L205.261 27.062C208.103 29.148 209.545 31.801 209.545 34.867C209.545 39.221 206.626 41.993 202.083 41.993C197.54 41.993 194.845 39.263 194.201 34.678L198.898 34.034V34.041Z" fill="#181D27"></path><path d="M36.722 17.682L28 26.404L19.278 17.682L28 0L36.722 17.682Z" fill="#E1E000"></path><path d="M26.404 28L17.682 36.722L0 28L17.675 19.278L26.404 28Z" fill="#F9423A"></path><path d="M36.722 38.3179L28 55.9999L19.271 38.3249L28 29.5959L36.722 38.3179Z" fill="#00AFD7"></path><path d="M55.9999 28L38.3179 36.729L29.5959 28L38.3179 19.278L55.9999 28Z" fill="#00AF66"></path></svg>
+      <div style="width:2px; height:30px; background:#E9EAEB; border-radius:999px; margin:0 18px 0 22px"></div>
+      <button style="display:flex; align-items:center; gap:10px; border:none; background:none; cursor:pointer; height:40px; padding:0 8px; border-radius:8px; color:#181D27">
+        <svg viewBox="0 0 24 24" style="width:22px;height:22px;color:#535862" fill="currentColor"><path d="M3 7.5h4.5V3H3v4.5zM9.75 21h4.5v-4.5h-4.5V21zM3 21h4.5v-4.5H3V21zM3 14.25h4.5v-4.5H3v4.5zM9.75 14.25h4.5v-4.5h-4.5v4.5zM16.5 3v4.5H21V3h-4.5zM9.75 7.5h4.5V3h-4.5v4.5zM16.5 14.25H21v-4.5h-4.5v4.5zM16.5 21H21v-4.5h-4.5V21z"></path></svg>
+        <span style="font:700 15px lato; letter-spacing:.04em">DIGITAL TWINS</span>
+        <svg viewBox="0 0 24 24" style="width:13px;height:13px;color:#717680" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+      <div style="display:inline-flex; align-items:center; gap:8px; height:30px; padding:0 13px; margin-left:18px; border:1px solid #F0B79B; border-radius:999px; background:#fff; font:700 13px lato; color:#B54708"><span style="width:7px;height:7px;border-radius:999px;background:#F38744"></span>Work in progress</div>
+      <div style="flex:1"></div>
+      <div style="display:flex; align-items:center; gap:8px">
+        <button style="width:38px;height:38px;border:none;background:none;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#535862"><svg viewBox="0 0 24 24" style="width:23px;height:23px" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"></circle><line x1="12" y1="11" x2="12" y2="16.5"></line><circle cx="12" cy="7.7" r="0.6" fill="currentColor" stroke="none"></circle></svg></button>
+        <button style="width:38px;height:38px;border:none;background:none;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#535862"><svg viewBox="0 0 24 24" style="width:23px;height:23px" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"></circle><path d="M9.2 9.2a2.9 2.9 0 0 1 5.6 1c0 2-2.9 2.6-2.9 4"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+        <button style="width:38px;height:38px;border:none;background:none;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#535862"><svg viewBox="0 0 24 24" style="width:22px;height:22px" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
+        <div style="width:40px;height:40px;border-radius:999px;background:#7A5AF8;color:#fff;display:flex;align-items:center;justify-content:center;font:700 14px lato;margin-left:6px">KM</div>
+      </div>
+    </div>
+    <div style="height:54px; display:flex; align-items:center; gap:4px; padding:0 16px; border-top:1px solid #E9EAEB">
+      <span style="display:inline-flex; align-items:center; gap:6px; height:34px; padding:0 14px; font:700 14px lato; color:#181D27; border-radius:8px; cursor:pointer">Global Map<svg viewBox="0 0 24 24" style="width:12px;height:12px;color:#A4A7AE" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+      <span style="display:inline-flex; align-items:center; gap:6px; height:34px; padding:0 14px; font:700 14px lato; color:#181D27; border-radius:8px; cursor:pointer">Dashboards<svg viewBox="0 0 24 24" style="width:12px;height:12px;color:#A4A7AE" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+      <span style="display:inline-flex; align-items:center; gap:6px; height:34px; padding:0 14px; font:700 14px lato; color:#181D27; border-radius:8px; cursor:pointer">Bookings<svg viewBox="0 0 24 24" style="width:12px;height:12px;color:#A4A7AE" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+      <span style="display:inline-flex; align-items:center; gap:6px; height:34px; padding:0 14px; font:700 14px lato; color:#181D27; border-radius:8px; cursor:pointer">Shipments<svg viewBox="0 0 24 24" style="width:12px;height:12px;color:#A4A7AE" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+      <span style="display:inline-flex; align-items:center; gap:6px; height:34px; padding:0 14px; font:700 14px lato; color:#181D27; border-radius:8px; cursor:pointer">Orders<svg viewBox="0 0 24 24" style="width:12px;height:12px;color:#A4A7AE" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+      <span style="display:inline-flex; align-items:center; gap:6px; height:34px; padding:0 14px; font:700 14px lato; color:#181D27; border-radius:8px; cursor:pointer">Inventory<svg viewBox="0 0 24 24" style="width:12px;height:12px;color:#A4A7AE" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+      <span style="display:inline-flex; align-items:center; gap:6px; height:34px; padding:0 14px; font:700 14px lato; color:#181D27; border-radius:8px; cursor:pointer">Assets<svg viewBox="0 0 24 24" style="width:12px;height:12px;color:#A4A7AE" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+      <div style="position:relative">
+        <span onClick="{{ toggleTools }}" style="display:inline-flex; align-items:center; gap:6px; height:34px; padding:0 14px; font:700 14px lato; color:#0E65E5; background:#E7F0FE; border-radius:8px; cursor:pointer">Tools<svg viewBox="0 0 24 24" style="width:12px;height:12px;color:#0E65E5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+        <sc-if value="{{ toolsOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute; top:44px; left:0; width:276px; background:#fff; border:1px solid #D5D7DA; border-radius:8px; box-shadow:0 12px 16px -4px rgba(10,13,18,.12), 0 4px 6px -2px rgba(10,13,18,.03); padding:6px; z-index:60">
+          <div style="font:700 10px lato; letter-spacing:.09em; text-transform:uppercase; color:#A4A7AE; padding:8px 10px 6px">Tools</div>
+          <sc-for list="{{ toolsItems }}" as="t" hint-placeholder-count="7">
+            <sc-if value="{{ t.active }}" hint-placeholder-val="{{ false }}"><div style="display:flex; align-items:center; gap:11px; padding:9px 10px; border-radius:6px; background:#E7F0FE"><svg style="width:17px;height:17px;color:#0E65E5"><use href="assets/icons-sprite.svg#{{ t.icon }}"></use></svg><span style="font:700 14px lato; color:#0E65E5; flex:1">{{ t.label }}</span><svg style="width:15px;height:15px;color:#0E65E5"><use href="assets/icons-sprite.svg#check"></use></svg></div></sc-if>
+            <sc-if value="{{ t.normal }}" hint-placeholder-val="{{ true }}"><div onClick="{{ closeTools }}" style="display:flex; align-items:center; gap:11px; padding:9px 10px; border-radius:8px; cursor:pointer"><svg style="width:17px;height:17px;color:#717680"><use href="assets/icons-sprite.svg#{{ t.icon }}"></use></svg><span style="font:600 14px lato; color:#181D27">{{ t.label }}</span></div></sc-if>
+          </sc-for>
+        </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Title bar ===== -->
+  <div data-screen-label="Settings · Title bar" style="background:#fff; border-bottom:1px solid #E9EAEB; padding:13px 28px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap">
+    <div style="font:700 18px lato; letter-spacing:-.015em; color:#181D27">Customer Portal Settings</div>
+    <div style="display:flex; align-items:center; gap:12px">
+      <sc-if value="{{ draft }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex; align-items:center; gap:7px; height:30px; padding:0 12px; border-radius:999px; background:#F5F5F5; font:700 12px lato; color:#717680"><span style="width:7px;height:7px;border-radius:999px;background:#A4A7AE"></span>Draft</span></sc-if>
+    </div>
+  </div>
+
+  <div style="padding:24px 28px 70px; max-width:1340px; margin:0 auto">
+
+    <!-- ===== Site configuration ===== -->
+    <div data-screen-label="Settings · Site config" style="background:#fff; border:1px solid #E9EAEB; border-radius:12px; box-shadow:0 1px 2px 0 rgba(10,13,18,.05); padding:20px 24px; margin-bottom:20px">
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px">
+        <div>
+          <div style="font:800 17px lato; color:#181D27">Site configuration</div>
+          <sc-if value="{{ published }}" hint-placeholder-val="{{ true }}"><div style="font:400 13px lato; color:#717680; margin-top:3px">Your customer portal is live. Unpublish to make changes.</div></sc-if>
+          <sc-if value="{{ draft }}" hint-placeholder-val="{{ false }}"><div style="font:400 13px lato; color:#717680; margin-top:3px">Set up the public search portal, then publish it. Independent of the live preview below.</div></sc-if>
+        </div>
+        <sc-if value="{{ published }}" hint-placeholder-val="{{ true }}">
+        <button onClick="{{ openUnpublish }}" style="display:inline-flex; align-items:center; gap:8px; height:40px; padding:0 16px; border:1px solid #FDA29B; border-radius:8px; background:#fff; font:700 14px lato; color:#D92D20; cursor:pointer; flex:none; box-shadow:0 1px 2px 0 rgba(10,13,18,.05), 0 -2px 0 0 rgba(10,13,18,.05) inset, 0 0 0 1px rgba(10,13,18,.18) inset"><svg style="width:16px;height:16px"><use href="assets/icons-sprite.svg#eye-off"></use></svg>Unpublish to edit</button>
+        </sc-if>
+      </div>
+
+      <!-- published summary -->
+      <sc-if value="{{ published }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top:18px; border:1px solid #E9EAEB; background:#F6FEFB; border-radius:12px; padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; box-shadow:0 1px 2px 0 rgba(10,13,18,.05)">
+        <div style="min-width:0; display:flex; flex-direction:column; gap:9px">
+          <span style="display:inline-flex; align-items:center; gap:6px; align-self:flex-start; height:22px; padding:0 10px 0 8px; border-radius:999px; background:#ECFDF3; border:1px solid #ABEFC6; font:700 10px lato; letter-spacing:.07em; text-transform:uppercase; color:#067647"><span style="width:7px;height:7px;border-radius:999px;background:#17B26A"></span>Live</span>
+          <a href="{{ portalHref }}" style-hover="text-decoration:underline" style="display:inline-flex; align-items:center; gap:7px; font:700 16px lato; color:#0E65E5; text-decoration:none; word-break:break-all">{{ slugUrl }}<svg style="width:14px;height:14px;color:#0E65E5;flex:none"><use href="assets/icons-sprite.svg#external-link"></use></svg></a>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; flex:none">
+          <button style="display:inline-flex; align-items:center; gap:7px; height:38px; padding:0 13px; border:1px solid #D5D7DA; border-radius:8px; background:#fff; font:700 13px lato; color:#414651; cursor:pointer; box-shadow:0 1px 2px 0 rgba(10,13,18,.05), 0 -2px 0 0 rgba(10,13,18,.05) inset, 0 0 0 1px rgba(10,13,18,.18) inset"><svg style="width:15px;height:15px;color:#535862"><use href="assets/icons-sprite.svg#copy"></use></svg>Copy link</button>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:24px; padding:16px 0 0; border-top:1px solid #F5F5F5; margin-top:18px; flex-wrap:wrap">
+        <div style="max-width:520px">
+          <div style="display:flex; align-items:center; gap:9px"><svg style="width:17px;height:17px;color:#535862"><use href="assets/icons-sprite.svg#lock"></use></svg><span style="font:700 14px lato; color:#181D27">Require authenticated login</span></div>
+          <div style="font:400 13px lato; color:#717680; margin-top:4px">When on, customers sign in before they search. When off, the portal is open to anyone with a tracking number.</div>
+        </div>
+        <sc-if value="{{ loginRequired }}" hint-placeholder-val="{{ false }}"><span style="flex:none; display:inline-flex; align-items:center; gap:7px; height:30px; padding:0 13px; border-radius:999px; background:#E7F0FE; font:700 13px lato; color:#0B51B7"><svg style="width:14px;height:14px;color:#0B51B7"><use href="assets/icons-sprite.svg#lock"></use></svg>Required</span></sc-if>
+        <sc-if value="{{ loginOff }}" hint-placeholder-val="{{ true }}"><span style="flex:none; display:inline-flex; align-items:center; height:30px; padding:0 13px; border-radius:999px; background:#F5F5F5; font:700 13px lato; color:#535862">Not required</span></sc-if>
+      </div>
+      <div style="margin-top:16px; font:400 12px lato; color:#A4A7AE">Last published {{ publishedAt }} · by {{ publishedBy }}</div>
+      </sc-if>
+
+      <sc-if value="{{ draft }}" hint-placeholder-val="{{ false }}">
+
+      <!-- slug -->
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:24px; padding:18px 0 16px; border-top:1px solid #F5F5F5; margin-top:16px; flex-wrap:wrap">
+        <div style="max-width:300px">
+          <div style="font:700 14px lato; color:#181D27">Portal URL</div>
+          <div style="font:400 13px lato; color:#717680; margin-top:3px">The web address where customers search and track their shipments.</div>
+        </div>
+        <div style="flex:1; min-width:320px">
+          <div style="display:flex; align-items:stretch; gap:0; max-width:540px">
+            <span style="display:flex; align-items:center; padding:0 12px; height:44px; border:1px solid #D5D7DA; border-right:none; border-radius:8px 0 0 8px; background:#FAFAFA; font:500 14px lato; color:#717680">track.fourkites.com/portal/</span>
+            <input ref="{{ setSlugInput }}" onInput="{{ onSlug }}" type="text" style="flex:1; min-width:0; height:44px; border:1px solid #D5D7DA; border-radius:0 8px 8px 0; padding:0 13px; font:700 14px lato; color:#181D27; outline:none; box-shadow:0 1px 2px 0 rgba(10,13,18,.05)">
+          </div>
+          <div style="display:flex; align-items:center; gap:14px; margin-top:9px">
+            <sc-if value="{{ slugOk }}" hint-placeholder-val="{{ true }}"><span style="display:inline-flex; align-items:center; gap:6px; font:600 12px lato; color:#067647"><svg style="width:14px;height:14px"><use href="assets/icons-sprite.svg#check-circle"></use></svg>Available</span></sc-if>
+            <sc-if value="{{ slugBad }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex; align-items:center; gap:6px; font:600 12px lato; color:#B42318"><svg style="width:14px;height:14px"><use href="assets/icons-sprite.svg#alert-circle"></use></svg>Already taken</span></sc-if>
+            <sc-if value="{{ slugShort }}" hint-placeholder-val="{{ false }}"><span style="font:600 12px lato; color:#A4A7AE">Enter at least 3 characters</span></sc-if>
+            <span style="font:500 12px lato; color:#A4A7AE">→ {{ slugUrl }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- login -->
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:24px; padding:18px 0; border-top:1px solid #F5F5F5; flex-wrap:wrap">
+        <div style="max-width:520px">
+          <div style="display:flex; align-items:center; gap:9px"><svg style="width:17px;height:17px;color:#535862"><use href="assets/icons-sprite.svg#lock"></use></svg><span style="font:700 14px lato; color:#181D27">Require authenticated login</span></div>
+          <div style="font:400 13px lato; color:#717680; margin-top:4px">When on, end users must sign in before they can search. When off, the portal is open to anyone with a tracking number.</div>
+        </div>
+        <div onClick="{{ toggleLogin }}" style="cursor:pointer; flex:none">
+          <sc-if value="{{ loginRequired }}" hint-placeholder-val="{{ false }}"><div style="width:48px;height:28px;border-radius:999px;background:#0E65E5;position:relative"><div style="position:absolute;top:3px;left:23px;width:22px;height:22px;border-radius:999px;background:#fff"></div></div></sc-if>
+          <sc-if value="{{ loginOff }}" hint-placeholder-val="{{ true }}"><div style="width:48px;height:28px;border-radius:999px;background:#D5D7DA;position:relative"><div style="position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:999px;background:#fff"></div></div></sc-if>
+        </div>
+      </div>
+
+      <!-- publish -->
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:24px; padding:18px 0 4px; border-top:1px solid #F5F5F5; flex-wrap:wrap">
+        <div style="max-width:520px">
+          <div style="font:700 14px lato; color:#181D27">Portal status</div>
+          <sc-if value="{{ published }}" hint-placeholder-val="{{ true }}"><div style="font:400 13px lato; color:#717680; margin-top:4px">Live and reachable by your customers. Unpublishing takes the public site offline immediately.</div></sc-if>
+          <sc-if value="{{ draft }}" hint-placeholder-val="{{ false }}"><div style="font:400 13px lato; color:#717680; margin-top:4px">Not yet live. Publishing makes the portal reachable at the URL above.</div></sc-if>
+        </div>
+        <div style="flex:none">
+          <sc-if value="{{ published }}" hint-placeholder-val="{{ true }}"><button onClick="{{ openUnpublish }}" style="display:inline-flex; align-items:center; gap:8px; height:40px; padding:0 16px; border:1px solid #FDA29B; border-radius:8px; background:#fff; font:700 14px lato; color:#D92D20; cursor:pointer; box-shadow:0 1px 2px 0 rgba(10,13,18,.05), 0 -2px 0 0 rgba(10,13,18,.05) inset, 0 0 0 1px rgba(10,13,18,.18) inset"><svg style="width:16px;height:16px"><use href="assets/icons-sprite.svg#eye-off"></use></svg>Unpublish</button></sc-if>
+          <sc-if value="{{ draft }}" hint-placeholder-val="{{ false }}"><button onClick="{{ openPublish }}" style="display:inline-flex; align-items:center; gap:8px; height:40px; padding:0 18px; border:none; border-radius:8px; background:#0E65E5; color:#fff; font:700 14px lato; cursor:pointer; box-shadow:0 1px 2px 0 rgba(10,13,18,.05), 0 -2px 0 0 rgba(10,13,18,.05) inset, 0 0 0 1px rgba(10,13,18,.18) inset"><svg style="width:16px;height:16px;color:#fff"><use href="assets/icons-sprite.svg#send"></use></svg>Publish portal</button></sc-if>
+        </div>
+      </div>
+      </sc-if>
+    </div>
+
+    <!-- ===== Live preview section ===== -->
+    <div data-screen-label="Settings · Live preview" ref="{{ setSectionEl }}" style="background:#fff; border:1px solid #E9EAEB; border-radius:12px; box-shadow:0 1px 2px 0 rgba(10,13,18,.05)">
+    <!-- preview toolbar = section header -->
+    <div data-screen-label="Settings · Preview toolbar" style="display:flex; align-items:center; justify-content:space-between; gap:16px; background:#fff; border-bottom:1px solid #E9EAEB; border-radius:12px 12px 0 0; padding:14px 24px; flex-wrap:wrap; position:sticky; top:10px; z-index:30">
+      <div style="min-width:0; max-width:560px">
+        <div style="font:700 16px lato; letter-spacing:-.01em; color:#181D27">Result page setup</div>
+        <div style="font:400 13px lato; color:#717680; margin-top:2px; text-wrap:pretty">Choose which sections and data customers see when they open a shipment. The preview updates live.</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px">
+        <!-- device -->
+        <div style="display:flex; align-items:center; gap:2px; background:#F5F5F5; border-radius:8px; padding:3px">
+          <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}"><span style="display:flex;width:32px;height:30px;align-items:center;justify-content:center;border-radius:7px;background:#fff;color:#181D27;box-shadow:0 1px 2px rgba(0,0,0,.08)"><svg style="width:17px;height:17px"><use href="assets/icons-sprite.svg#monitor"></use></svg></span></sc-if>
+          <sc-if value="{{ notDesktop }}" hint-placeholder-val="{{ false }}"><span onClick="{{ setDesktop }}" style="display:flex;width:32px;height:30px;align-items:center;justify-content:center;border-radius:7px;color:#717680;cursor:pointer"><svg style="width:17px;height:17px"><use href="assets/icons-sprite.svg#monitor"></use></svg></span></sc-if>
+          <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}"><span style="display:flex;width:32px;height:30px;align-items:center;justify-content:center;border-radius:7px;background:#fff;color:#181D27;box-shadow:0 1px 2px rgba(0,0,0,.08)"><svg style="width:16px;height:16px"><use href="assets/icons-sprite.svg#smartphone"></use></svg></span></sc-if>
+          <sc-if value="{{ notMobile }}" hint-placeholder-val="{{ true }}"><span onClick="{{ setMobile }}" style="display:flex;width:32px;height:30px;align-items:center;justify-content:center;border-radius:7px;color:#717680;cursor:pointer"><svg style="width:16px;height:16px"><use href="assets/icons-sprite.svg#smartphone"></use></svg></span></sc-if>
+        </div>
+
+        <div style="position:relative">
+          <button onClick="{{ openScenario }}" style="display:inline-flex; align-items:center; gap:8px; height:40px; padding:0 14px; max-width:420px; border:1px solid #D5D7DA; border-radius:8px; background:#fff; cursor:pointer; box-shadow:0 1px 2px 0 rgba(10,13,18,.05), 0 -2px 0 0 rgba(10,13,18,.05) inset, 0 0 0 1px rgba(10,13,18,.18) inset"><span style="font:600 13px lato; color:#717680; flex:none">Preview as</span><span style="font:700 13px lato; color:#181D27; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ scenarioSummary }}</span><svg style="width:13px;height:13px;color:#A4A7AE;flex:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+          <sc-if value="{{ scenarioPanel }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; top:46px; right:0; width:392px; max-height:560px; overflow:auto; background:#fff; border:1px solid #D5D7DA; border-radius:12px; box-shadow:0 20px 24px -4px rgba(10,13,18,.12), 0 8px 8px -4px rgba(10,13,18,.03); padding:18px; z-index:40; animation:fkpop .14s ease">
+            <div style="display:flex; align-items:center; justify-content:space-between"><div style="font:700 11px lato; letter-spacing:.09em; text-transform:uppercase; color:#717680">Preview as a shipment</div><span onClick="{{ closePanel }}" style="cursor:pointer;color:#A4A7AE;display:flex"><svg style="width:18px;height:18px"><use href="assets/icons-sprite.svg#x"></use></svg></span></div>
+            <div style="font:400 13px/1.5 lato; color:#717680; margin-top:8px">Describe the shipment you want customers to see and we’ll render the result page — or pick a common example.</div>
+
+            <div style="margin-top:14px; border:1px solid #D5D7DA; border-radius:11px; padding:12px; box-shadow:0 1px 2px 0 rgba(10,13,18,.05)">
+              <textarea ref="{{ setNlInput }}" onKeyDown="{{ onNlKey }}" rows="2" placeholder="e.g. An ocean container held at customs in Los Angeles, single stop" style="display:block; width:100%; box-sizing:border-box; border:none; outline:none; resize:none; font:500 13px/1.5 lato; color:#181D27; background:transparent; max-height:96px"></textarea>
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:8px">
+                <span style="font:500 11px lato; color:#A4A7AE">AI-generated · uses sample data</span>
+                <button onClick="{{ generateScenario }}" style="display:inline-flex; align-items:center; gap:7px; height:34px; padding:0 14px; border:none; border-radius:8px; background:#0E65E5; color:#fff; font:700 13px lato; cursor:pointer; box-shadow:0 1px 2px 0 rgba(10,13,18,.05), 0 -2px 0 0 rgba(10,13,18,.05) inset, 0 0 0 1px rgba(10,13,18,.18) inset"><svg style="width:15px;height:15px;color:#fff" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2 2-6z"></path></svg>{{ genLabel }}</button>
+              </div>
+            </div>
+            <sc-if value="{{ hasAiMsg }}" hint-placeholder-val="{{ false }}"><div style="font:600 12px lato; color:#717680; margin-top:10px">{{ aiMsg }}</div></sc-if>
+
+            <div style="font:700 11px lato; letter-spacing:.05em; text-transform:uppercase; color:#A4A7AE; margin:18px 0 9px">Common examples</div>
+            <div style="display:flex; flex-direction:column; gap:7px">
+              <sc-for list="{{ quickPicks }}" as="ps" hint-placeholder-count="6">
+                <div onClick="{{ ps.apply }}" style="display:flex; align-items:center; gap:11px; padding:11px 13px; border:1px solid #E9EAEB; border-radius:10px; cursor:pointer" style-hover="border-color:#D5D7DA; background:#FAFAFA">
+                  <div style="flex:1; min-width:0"><div style="font:700 13px lato; color:#181D27">{{ ps.name }}</div><div style="font:400 12px lato; color:#717680">{{ ps.sub }}</div></div>
+                  <svg style="width:16px;height:16px;color:#A4A7AE;flex:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+              </sc-for>
+            </div>
+
+            <div onClick="{{ toggleAdv }}" style="display:flex; align-items:center; justify-content:space-between; cursor:pointer; margin-top:16px; padding-top:14px; border-top:1px solid #E9EAEB">
+              <span style="font:700 11px lato; letter-spacing:.05em; text-transform:uppercase; color:#A4A7AE">Advanced · fine-tune manually</span>
+              <sc-if value="{{ advOpen }}" hint-placeholder-val="{{ false }}"><svg style="width:15px;height:15px;color:#717680" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></sc-if>
+              <sc-if value="{{ advClosed }}" hint-placeholder-val="{{ true }}"><svg style="width:15px;height:15px;color:#717680" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></sc-if>
+            </div>
+            <sc-if value="{{ advOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="font:700 11px lato; letter-spacing:.05em; text-transform:uppercase; color:#A4A7AE; margin:14px 0 9px">Mode</div>
+            <div style="display:flex; flex-wrap:wrap; gap:7px">
+              <sc-for list="{{ modeChips }}" as="m" hint-placeholder-count="7">
+                <sc-if value="{{ m.active }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex; align-items:center; gap:6px; height:32px; padding:0 12px; border-radius:8px; background:#0E65E5; color:#fff; font:700 12px lato"><svg style="width:14px;height:14px;color:#fff"><use href="assets/icons-sprite.svg#{{ m.icon }}"></use></svg>{{ m.label }}</span></sc-if>
+                <sc-if value="{{ m.normal }}" hint-placeholder-val="{{ true }}"><span onClick="{{ m.set }}" style="display:inline-flex; align-items:center; gap:6px; height:32px; padding:0 12px; border-radius:8px; border:1px solid #D5D7DA; background:#fff; color:#414651; font:600 12px lato; cursor:pointer"><svg style="width:14px;height:14px;color:#717680"><use href="assets/icons-sprite.svg#{{ m.icon }}"></use></svg>{{ m.label }}</span></sc-if>
+              </sc-for>
+            </div>
+            <div style="font:700 11px lato; letter-spacing:.05em; text-transform:uppercase; color:#A4A7AE; margin:18px 0 9px">Condition</div>
+            <div style="display:flex; flex-wrap:wrap; gap:7px">
+              <sc-for list="{{ statusChips }}" as="s" hint-placeholder-count="7">
+                <sc-if value="{{ s.active }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex; align-items:center; gap:7px; height:32px; padding:0 12px; border-radius:8px; background:#0E65E5; color:#fff; font:700 12px lato"><span style="width:8px;height:8px;border-radius:999px;background:{{ s.color }}"></span>{{ s.label }}</span></sc-if>
+                <sc-if value="{{ s.normal }}" hint-placeholder-val="{{ true }}"><span onClick="{{ s.set }}" style="display:inline-flex; align-items:center; gap:7px; height:32px; padding:0 12px; border-radius:8px; border:1px solid #D5D7DA; background:#fff; color:#414651; font:600 12px lato; cursor:pointer"><span style="width:8px;height:8px;border-radius:999px;background:{{ s.color }}"></span>{{ s.label }}</span></sc-if>
+              </sc-for>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:18px">
+              <span style="font:700 13px lato; color:#181D27">Multi-stop shipment</span>
+              <div onClick="{{ toggleMulti }}" style="cursor:pointer">
+                <sc-if value="{{ multiStop }}" hint-placeholder-val="{{ true }}"><div style="width:44px;height:26px;border-radius:999px;background:#0E65E5;position:relative"><div style="position:absolute;top:3px;left:21px;width:20px;height:20px;border-radius:999px;background:#fff"></div></div></sc-if>
+                <sc-if value="{{ singleStop }}" hint-placeholder-val="{{ false }}"><div style="width:44px;height:26px;border-radius:999px;background:#D5D7DA;position:relative"><div style="position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:999px;background:#fff"></div></div></sc-if>
+              </div>
+            </div>
+            </sc-if>
+
+          </div>
+          </sc-if>
+        </div>
+
+        <div style="position:relative">
+          <button onClick="{{ openBrand }}" style="display:inline-flex; align-items:center; gap:8px; height:40px; padding:0 16px; border:none; border-radius:8px; background:#0E65E5; color:#fff; font:700 13px lato; cursor:pointer; box-shadow:0 1px 2px 0 rgba(10,13,18,.05), 0 -2px 0 0 rgba(10,13,18,.05) inset, 0 0 0 1px rgba(10,13,18,.18) inset"><svg style="width:16px;height:16px;color:#fff"><use href="assets/icons-sprite.svg#globe"></use></svg>Brand</button>
+          <sc-if value="{{ brandPanel }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; top:46px; right:0; width:384px; max-height:min(76vh,660px); overflow-y:auto; background:#fff; border:1px solid #D5D7DA; border-radius:12px; box-shadow:0 20px 24px -4px rgba(10,13,18,.12), 0 8px 8px -4px rgba(10,13,18,.03); padding:18px; z-index:40; animation:fkpop .14s ease">
+            <div style="display:flex; align-items:center; justify-content:space-between"><div style="display:inline-flex; align-items:center; gap:8px; font:800 14px lato; letter-spacing:-.01em; color:#181D27"><svg style="width:16px;height:16px;color:#0E65E5"><use href="assets/icons-sprite.svg#globe"></use></svg>Brand</div><span onClick="{{ closePanel }}" style="cursor:pointer;color:#A4A7AE;display:flex" style-hover="color:#717680"><svg style="width:18px;height:18px"><use href="assets/icons-sprite.svg#x"></use></svg></span></div>
+            <div style="font:400 13px/1.5 lato; color:#717680; margin-top:7px">Paste your website link — we’ll pull your logo, color and font, along with other brand details tucked under Advanced.</div>
+            <div style="display:flex; gap:8px; margin-top:13px">
+              <input ref="{{ setUrlInput }}" onKeyDown="{{ onKey }}" type="text" placeholder="e.g. fedex.com" style="box-sizing:border-box; flex:1; min-width:0; height:42px; border:1px solid #D5D7DA; border-radius:9px; padding:0 13px; font:500 14px lato; color:#181D27; outline:none; box-shadow:0 1px 2px 0 rgba(10,13,18,.05)" style-focus="border-color:#0E65E5">
+              <button onClick="{{ applyBrand }}" style="flex:none; height:42px; padding:0 16px; border:none; border-radius:9px; background:#0E65E5; color:#fff; font:700 13px lato; cursor:pointer; white-space:nowrap; box-shadow:0 1px 2px 0 rgba(10,13,18,.05), 0 -2px 0 0 rgba(10,13,18,.05) inset, 0 0 0 1px rgba(10,13,18,.18) inset">{{ brandLabel }}</button>
+            </div>
+            <sc-if value="{{ hasBrandStatus }}" hint-placeholder-val="{{ false }}"><div style="display:inline-flex; align-items:center; gap:7px; font:600 12px lato; color:#535862; margin-top:11px; padding:6px 10px; background:#F4F5F6; border-radius:7px"><span style="width:6px;height:6px;border-radius:999px;background:#16B364;flex:none"></span>{{ brandStatus }}</div></sc-if>
+            <sc-if value="{{ hasBrand }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:14px; padding-top:14px; border-top:1px solid #F0F1F3; display:flex; flex-direction:column; gap:15px">
+
+              <!-- PRIMARY · Logo -->
+              <div>
+                <div style="font:700 10px lato; letter-spacing:.08em; text-transform:uppercase; color:#A4A7AE; margin-bottom:8px">Logo</div>
+                <div style="display:flex; align-items:center; gap:11px; padding:10px 12px; border:1px solid #E9EAEB; border-radius:11px">
+                  <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ true }}"><img ref="{{ setLogoImg }}" alt="logo" style="height:32px;width:auto;max-width:118px;object-fit:contain;flex:none"></sc-if>
+                  <sc-if value="{{ noLogo }}" hint-placeholder-val="{{ false }}"><span style="width:32px;height:32px;border-radius:7px;background:var(--accent,#181D27);color:var(--accent-ink,#fff);display:flex;align-items:center;justify-content:center;font:700 13px lato;flex:none">{{ effMark }}</span></sc-if>
+                  <div style="flex:1; min-width:0"><div style="font:700 14px lato; color:#181D27; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ brandName }}</div><div style="font:600 11px lato; color:#A4A7AE">{{ brandDomain }}</div></div>
+                  <label style="font:700 12px lato; color:var(--accent,#0E65E5); cursor:pointer; flex:none">Replace<input onChange="{{ onLogoUpload }}" type="file" accept="image/*" style="display:none"></label>
+                </div>
+              </div>
+
+              <!-- PRIMARY · Primary color -->
+              <div>
+                <div style="font:700 10px lato; letter-spacing:.08em; text-transform:uppercase; color:#A4A7AE; margin-bottom:9px">Primary color</div>
+                <div style="display:flex; align-items:center; gap:9px; flex-wrap:wrap">
+                  <sc-for list="{{ accentSwatches }}" as="a" hint-placeholder-count="6">
+                    <sc-if value="{{ a.active }}" hint-placeholder-val="{{ false }}"><span style="width:26px;height:26px;border-radius:7px;background:{{ a.hex }};box-shadow:0 0 0 2px #fff,0 0 0 3px var(--accent,#0E65E5)"></span></sc-if>
+                    <sc-if value="{{ a.idle }}" hint-placeholder-val="{{ true }}"><span onClick="{{ a.set }}" style="width:26px;height:26px;border-radius:7px;background:{{ a.hex }};cursor:pointer;box-shadow:0 0 0 1px #E1E3E6" style-hover="box-shadow:0 0 0 1px #B9BCC2"></span></sc-if>
+                  </sc-for>
+                  <span onClick="{{ useBrandAccent }}" style="display:inline-flex;align-items:center;height:26px;padding:0 11px;border-radius:7px;border:1px dashed #D5D7DA;font:700 10px lato;letter-spacing:.02em;color:#717680;cursor:pointer" style-hover="border-color:#B9BCC2;color:#535862">Brand</span>
+                </div>
+              </div>
+
+              <!-- PRIMARY · Font -->
+              <div>
+                <div style="font:700 10px lato; letter-spacing:.08em; text-transform:uppercase; color:#A4A7AE; margin-bottom:9px">Font</div>
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 13px; border:1px solid #E9EAEB; border-radius:11px; margin-bottom:9px">
+                  <span style="font-family:var(--portal-font,lato); font-weight:700; font-size:17px; color:#181D27">{{ fontName }}</span>
+                  <span style="font:600 10px lato; letter-spacing:.04em; text-transform:uppercase; color:#A4A7AE; flex:none">{{ fontSource }}</span>
+                </div>
+                <div style="display:flex; flex-wrap:wrap; gap:6px">
+                  <sc-for list="{{ fontChoices }}" as="f" hint-placeholder-count="5">
+                    <sc-if value="{{ f.active }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;align-items:center;height:30px;padding:0 13px;border-radius:999px;background:var(--accent,#0E65E5);color:var(--accent-ink,#fff);font:700 12px lato">{{ f.label }}</span></sc-if>
+                    <sc-if value="{{ f.idle }}" hint-placeholder-val="{{ true }}"><span onClick="{{ f.set }}" style="display:inline-flex;align-items:center;height:30px;padding:0 13px;border-radius:999px;border:1px solid #E1E3E6;background:#fff;color:#535862;font:600 12px lato;cursor:pointer" style-hover="border-color:#B9BCC2;color:#181D27">{{ f.label }}</span></sc-if>
+                  </sc-for>
+                </div>
+              </div>
+
+              <!-- PRIMARY · Company name -->
+              <div style="padding-top:2px">
+                <div style="display:flex; align-items:center; justify-content:space-between"><span style="font:700 13px lato; color:#181D27">Show company name</span><div onClick="{{ toggleCompany }}" style="cursor:pointer"><sc-if value="{{ showCompanyName }}" hint-placeholder-val="{{ true }}"><div style="width:36px;height:22px;border-radius:999px;background:var(--accent,#0E65E5);position:relative"><div style="position:absolute;top:3px;left:17px;width:16px;height:16px;border-radius:999px;background:#fff"></div></div></sc-if><sc-if value="{{ showCompanyOff }}" hint-placeholder-val="{{ false }}"><div style="width:36px;height:22px;border-radius:999px;background:#D5D7DA;position:relative"><div style="position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:999px;background:#fff"></div></div></sc-if></div></div>
+                <sc-if value="{{ showCompanyName }}" hint-placeholder-val="{{ true }}"><input ref="{{ setCompanyInput }}" onInput="{{ onCompany }}" type="text" placeholder="Your Company" style="box-sizing:border-box; width:100%; max-width:100%; height:38px; border:1px solid #D5D7DA; border-radius:8px; padding:0 12px; font:600 14px lato; color:#181D27; outline:none; margin-top:10px" style-focus="border-color:var(--accent,#0E65E5)"></sc-if>
+              </div>
+
+              <!-- ADVANCED disclosure -->
+              <div onClick="{{ toggleBrandAdv }}" style="display:flex; align-items:center; justify-content:space-between; cursor:pointer; padding-top:13px; border-top:1px solid #F0F1F3">
+                <span style="font:700 11px lato; letter-spacing:.06em; text-transform:uppercase; color:#98A2B3">Advanced</span>
+                <span style="display:inline-flex; align-items:center; gap:6px; font:600 11px lato; color:#A4A7AE">{{ advSummary }}<sc-if value="{{ brandAdvOpen }}" hint-placeholder-val="{{ false }}"><svg style="width:14px;height:14px;color:#98A2B3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></sc-if><sc-if value="{{ brandAdvClosed }}" hint-placeholder-val="{{ true }}"><svg style="width:14px;height:14px;color:#98A2B3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></sc-if></span>
+              </div>
+
+              <sc-if value="{{ brandAdvOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex; flex-direction:column; gap:16px; padding:15px; background:#FAFBFC; border:1px solid #EFF0F2; border-radius:12px">
+
+                <!-- Secondary color -->
+                <div>
+                  <div style="font:700 10px lato; letter-spacing:.08em; text-transform:uppercase; color:#A4A7AE; margin-bottom:9px">Secondary color</div>
+                  <div style="display:flex; align-items:center; gap:9px; flex-wrap:wrap">
+                    <sc-for list="{{ secondarySwatches }}" as="a" hint-placeholder-count="6">
+                      <sc-if value="{{ a.active }}" hint-placeholder-val="{{ false }}"><span style="width:26px;height:26px;border-radius:7px;background:{{ a.hex }};box-shadow:0 0 0 2px #FAFBFC,0 0 0 3px var(--accent-2,#0E65E5)"></span></sc-if>
+                      <sc-if value="{{ a.idle }}" hint-placeholder-val="{{ true }}"><span onClick="{{ a.set }}" style="width:26px;height:26px;border-radius:7px;background:{{ a.hex }};cursor:pointer;box-shadow:0 0 0 1px #E1E3E6" style-hover="box-shadow:0 0 0 1px #B9BCC2"></span></sc-if>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <!-- Surface / tint -->
+                <div>
+                  <div style="font:700 10px lato; letter-spacing:.08em; text-transform:uppercase; color:#A4A7AE; margin-bottom:9px">Surface tint</div>
+                  <div style="display:flex; align-items:center; gap:9px; flex-wrap:wrap">
+                    <sc-for list="{{ surfaceSwatches }}" as="a" hint-placeholder-count="5">
+                      <sc-if value="{{ a.active }}" hint-placeholder-val="{{ false }}"><span style="width:26px;height:26px;border-radius:7px;background:{{ a.hex }};box-shadow:0 0 0 2px #FAFBFC,0 0 0 3px #98A2B3"></span></sc-if>
+                      <sc-if value="{{ a.idle }}" hint-placeholder-val="{{ true }}"><span onClick="{{ a.set }}" style="width:26px;height:26px;border-radius:7px;background:{{ a.hex }};cursor:pointer;box-shadow:0 0 0 1px #E1E3E6" style-hover="box-shadow:0 0 0 1px #B9BCC2"></span></sc-if>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <!-- Button shape -->
+                <div>
+                  <div style="font:700 10px lato; letter-spacing:.08em; text-transform:uppercase; color:#A4A7AE; margin-bottom:9px">Button shape</div>
+                  <div style="display:flex; gap:3px; background:#EFF0F2; border-radius:9px; padding:3px">
+                    <sc-for list="{{ shapeOptions }}" as="o" hint-placeholder-count="3">
+                      <sc-if value="{{ o.active }}" hint-placeholder-val="{{ false }}"><span style="flex:1; display:flex; align-items:center; justify-content:center; height:32px; border-radius:7px; background:#fff; color:#181D27; font:700 12px lato; box-shadow:0 1px 2px rgba(10,13,18,.12)">{{ o.label }}</span></sc-if>
+                      <sc-if value="{{ o.idle }}" hint-placeholder-val="{{ true }}"><span onClick="{{ o.set }}" style="flex:1; display:flex; align-items:center; justify-content:center; height:32px; border-radius:7px; color:#717680; font:600 12px lato; cursor:pointer">{{ o.label }}</span></sc-if>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <!-- Widget border -->
+                <div>
+                  <div style="font:700 10px lato; letter-spacing:.08em; text-transform:uppercase; color:#A4A7AE; margin-bottom:9px">Widget border</div>
+                  <div style="display:flex; gap:3px; background:#EFF0F2; border-radius:9px; padding:3px">
+                    <sc-for list="{{ borderOptions }}" as="o" hint-placeholder-count="3">
+                      <sc-if value="{{ o.active }}" hint-placeholder-val="{{ false }}"><span style="flex:1; display:flex; align-items:center; justify-content:center; height:32px; border-radius:7px; background:#fff; color:#181D27; font:700 12px lato; box-shadow:0 1px 2px rgba(10,13,18,.12)">{{ o.label }}</span></sc-if>
+                      <sc-if value="{{ o.idle }}" hint-placeholder-val="{{ true }}"><span onClick="{{ o.set }}" style="flex:1; display:flex; align-items:center; justify-content:center; height:32px; border-radius:7px; color:#717680; font:600 12px lato; cursor:pointer">{{ o.label }}</span></sc-if>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <!-- Page background -->
+                <div>
+                  <div style="font:700 10px lato; letter-spacing:.08em; text-transform:uppercase; color:#A4A7AE; margin-bottom:9px">Page background</div>
+                  <div style="display:flex; align-items:center; gap:9px; flex-wrap:wrap">
+                    <sc-for list="{{ pageBgSwatches }}" as="a" hint-placeholder-count="5">
+                      <sc-if value="{{ a.active }}" hint-placeholder-val="{{ false }}"><span style="width:26px;height:26px;border-radius:7px;background:{{ a.hex }};box-shadow:0 0 0 2px #FAFBFC,0 0 0 3px #98A2B3"></span></sc-if>
+                      <sc-if value="{{ a.idle }}" hint-placeholder-val="{{ true }}"><span onClick="{{ a.set }}" style="width:26px;height:26px;border-radius:7px;background:{{ a.hex }};cursor:pointer;box-shadow:0 0 0 1px #E1E3E6" style-hover="box-shadow:0 0 0 1px #B9BCC2"></span></sc-if>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <!-- Upload font -->
+                <div>
+                  <div style="font:700 10px lato; letter-spacing:.08em; text-transform:uppercase; color:#A4A7AE; margin-bottom:8px">Upload font</div>
+                  <sc-if value="{{ noCustomFont }}" hint-placeholder-val="{{ true }}">
+                    <label style="display:flex; align-items:center; justify-content:center; gap:8px; height:40px; border:1px dashed #C6C9CF; border-radius:9px; font:700 12px lato; color:#535862; cursor:pointer" style-hover="border-color:var(--accent,#0E65E5); color:var(--accent,#0E65E5)"><svg style="width:15px;height:15px;color:currentColor"><use href="assets/icons-sprite.svg#upload"></use></svg>Upload a font file<input onChange="{{ onFontUploadBody }}" type="file" accept=".woff,.woff2,.ttf,.otf,font/*" style="display:none"></label>
+                    <div style="font:500 11px lato; color:#A4A7AE; margin-top:6px">.woff, .woff2, .ttf or .otf · applies for this session</div>
+                  </sc-if>
+                  <sc-if value="{{ hasCustomFont }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:9px"><span style="font:600 12px lato; color:#181D27">Custom font active</span><span onClick="{{ clearCustomFont }}" style="font:700 11px lato; color:#717680; cursor:pointer">Remove</span></div>
+                    <div style="font:600 10px lato; letter-spacing:.05em; text-transform:uppercase; color:#B0B4BB; margin-bottom:7px">Map weight files to roles</div>
+                    <div style="display:flex; flex-direction:column; gap:7px">
+                      <sc-for list="{{ fontRoles }}" as="r" hint-placeholder-count="3">
+                        <label style="display:flex; align-items:center; gap:10px; padding:8px 11px; border:1px solid #E9EAEB; border-radius:8px; cursor:pointer" style-hover="border-color:#D5D7DA">
+                          <span style="flex:none; width:58px; font:700 12px lato; color:#181D27">{{ r.label }}</span>
+                          <span style="flex:1; min-width:0; font:500 12px lato; color:{{ r.color }}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ r.status }}</span>
+                          <span style="flex:none; font:700 11px lato; color:var(--accent,#0E65E5)">{{ r.action }}</span>
+                          <input onChange="{{ r.onUpload }}" type="file" accept=".woff,.woff2,.ttf,.otf,font/*" style="display:none">
+                        </label>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </div>
+
+                <span onClick="{{ resetBrandAll }}" style="align-self:flex-start; font:700 12px lato; color:#717680; cursor:pointer">Reset all to extracted</span>
+              </div>
+              </sc-if>
+            </div>
+            </sc-if>
+          </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Result page body (config rail + preview) ===== -->
+    <div style="background:#F5F5F5; border-radius:0 0 12px 12px; padding:20px 24px; display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap">
+
+      <!-- config rail -->
+      <div data-screen-label="Settings · Page content" style="width:264px; flex:none; background:#fff; border:1px solid #E9EAEB; border-radius:12px; padding:16px 16px 18px; box-shadow:0 1px 2px 0 rgba(10,13,18,.05)">
+        <div style="font:700 11px lato; letter-spacing:.09em; text-transform:uppercase; color:#717680">Page content</div>
+        <div style="font:400 12px/1.45 lato; color:#717680; margin-top:5px">Toggle the sections customers see on this page.</div>
+        <div style="display:flex; flex-direction:column; gap:2px; margin-top:14px">
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:7px 0"><span style="font:600 13px lato; color:#181D27">Milestones</span><div onClick="{{ toggleJourney }}" style="cursor:pointer"><sc-if value="{{ secJourney }}" hint-placeholder-val="{{ true }}"><div style="width:40px;height:24px;border-radius:999px;background:#0E65E5;position:relative"><div style="position:absolute;top:3px;left:19px;width:18px;height:18px;border-radius:999px;background:#fff"></div></div></sc-if><sc-if value="{{ secJourneyOff }}" hint-placeholder-val="{{ false }}"><div style="width:40px;height:24px;border-radius:999px;background:#D5D7DA;position:relative"><div style="position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:999px;background:#fff"></div></div></sc-if></div></div>
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:7px 0"><span style="font:600 13px lato; color:#181D27">Order &amp; shipment details</span><div onClick="{{ toggleDetails }}" style="cursor:pointer"><sc-if value="{{ secDetails }}" hint-placeholder-val="{{ true }}"><div style="width:40px;height:24px;border-radius:999px;background:#0E65E5;position:relative"><div style="position:absolute;top:3px;left:19px;width:18px;height:18px;border-radius:999px;background:#fff"></div></div></sc-if><sc-if value="{{ secDetailsOff }}" hint-placeholder-val="{{ false }}"><div style="width:40px;height:24px;border-radius:999px;background:#D5D7DA;position:relative"><div style="position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:999px;background:#fff"></div></div></sc-if></div></div>
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:7px 0"><span style="font:600 13px lato; color:#181D27">Live map</span><div onClick="{{ toggleMap }}" style="cursor:pointer"><sc-if value="{{ secMap }}" hint-placeholder-val="{{ true }}"><div style="width:40px;height:24px;border-radius:999px;background:#0E65E5;position:relative"><div style="position:absolute;top:3px;left:19px;width:18px;height:18px;border-radius:999px;background:#fff"></div></div></sc-if><sc-if value="{{ secMapOff }}" hint-placeholder-val="{{ false }}"><div style="width:40px;height:24px;border-radius:999px;background:#D5D7DA;position:relative"><div style="position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:999px;background:#fff"></div></div></sc-if></div></div>
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:7px 0"><span style="font:600 13px lato; color:#181D27">Documents</span><div onClick="{{ toggleDocs }}" style="cursor:pointer"><sc-if value="{{ secDocs }}" hint-placeholder-val="{{ true }}"><div style="width:40px;height:24px;border-radius:999px;background:#0E65E5;position:relative"><div style="position:absolute;top:3px;left:19px;width:18px;height:18px;border-radius:999px;background:#fff"></div></div></sc-if><sc-if value="{{ secDocsOff }}" hint-placeholder-val="{{ false }}"><div style="width:40px;height:24px;border-radius:999px;background:#D5D7DA;position:relative"><div style="position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:999px;background:#fff"></div></div></sc-if></div></div>
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:7px 0"><span style="font:600 13px lato; color:#181D27">Comments</span><div onClick="{{ toggleComments }}" style="cursor:pointer"><sc-if value="{{ secComments }}" hint-placeholder-val="{{ true }}"><div style="width:40px;height:24px;border-radius:999px;background:#0E65E5;position:relative"><div style="position:absolute;top:3px;left:19px;width:18px;height:18px;border-radius:999px;background:#fff"></div></div></sc-if><sc-if value="{{ secCommentsOff }}" hint-placeholder-val="{{ false }}"><div style="width:40px;height:24px;border-radius:999px;background:#D5D7DA;position:relative"><div style="position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:999px;background:#fff"></div></div></sc-if></div></div>
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:7px 0"><span style="font:600 13px lato; color:#181D27">Feedback</span><div onClick="{{ toggleFeedback }}" style="cursor:pointer"><sc-if value="{{ secFeedback }}" hint-placeholder-val="{{ true }}"><div style="width:40px;height:24px;border-radius:999px;background:#0E65E5;position:relative"><div style="position:absolute;top:3px;left:19px;width:18px;height:18px;border-radius:999px;background:#fff"></div></div></sc-if><sc-if value="{{ secFeedbackOff }}" hint-placeholder-val="{{ false }}"><div style="width:40px;height:24px;border-radius:999px;background:#D5D7DA;position:relative"><div style="position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:999px;background:#fff"></div></div></sc-if></div></div>
+        </div>
+        <div style="font:700 11px lato; letter-spacing:.05em; text-transform:uppercase; color:#A4A7AE; margin-top:18px; padding-top:16px; border-top:1px solid #F5F5F5">Participant privacy</div>
+        <div style="font:400 12px/1.45 lato; color:#717680; margin:5px 0 11px">How partner names &amp; references appear to customers.</div>
+        <div style="display:flex; gap:7px">
+          <sc-for list="{{ maskChips }}" as="k" hint-placeholder-count="3">
+            <sc-if value="{{ k.active }}" hint-placeholder-val="{{ false }}"><span style="flex:1; text-align:center; padding:9px 6px; border-radius:9px; background:#0E65E5; color:#fff; font:700 11px lato; line-height:1.3">{{ k.label }}</span></sc-if>
+            <sc-if value="{{ k.normal }}" hint-placeholder-val="{{ true }}"><span onClick="{{ k.set }}" style="flex:1; text-align:center; padding:9px 6px; border-radius:9px; border:1px solid #D5D7DA; background:#fff; color:#414651; font:600 11px lato; line-height:1.3; cursor:pointer">{{ k.label }}</span></sc-if>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- preview -->
+      <div data-screen-label="Settings · Portal preview" style="flex:1; min-width:360px; display:flex; justify-content:center">
+      <div style="width:var(--preview-w,100%); max-width:1180px; background:#fff; border:1px solid #E9EAEB; border-radius:12px; overflow:hidden; box-shadow:0 12px 16px -4px rgba(10,13,18,.08), 0 4px 6px -2px rgba(10,13,18,.03)">
+
+        <!-- preview window bar (persists while content scrolls) -->
+        <div style="display:flex; align-items:center; justify-content:space-between; height:42px; padding:0 16px; background:#FAFAFA; border-bottom:1px solid #E9EAEB">
+          <span style="display:inline-flex; align-items:center; gap:8px; font:700 11px lato; letter-spacing:.07em; text-transform:uppercase; color:#717680"><svg style="width:14px;height:14px;color:#A4A7AE"><use href="assets/icons-sprite.svg#eye"></use></svg>Customer preview</span>
+          <span style="display:inline-flex; align-items:center; gap:6px; font:600 12px lato; color:#717680"><svg style="width:14px;height:14px;color:#A4A7AE"><use href="assets/icons-sprite.svg#{{ deviceIcon }}"></use></svg>{{ deviceLabel }}</span>
+        </div>
+
+        <!-- PORTAL -->
+        <div ref="{{ setPreviewScroll }}" style="container-type:inline-size; background:#fff; color:#414651; max-height:calc(74vh - 42px); overflow-y:auto">
+          <div style="max-width:1000px; margin:0 auto; padding:0 clamp(18px,4cqw,40px)">
+
+            <!-- portal header -->
+            <div data-screen-label="Preview › Header" style="display:flex; align-items:center; justify-content:space-between; height:72px; border-bottom:1px solid #ECEDEF">
+              <div style="display:flex; align-items:center; gap:12px">
+                <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ false }}"><img ref="{{ setLogoImg }}" alt="brand" style="height:44px;width:auto;max-width:200px;object-fit:contain;display:block"></sc-if>
+                <sc-if value="{{ noLogo }}" hint-placeholder-val="{{ true }}"><div style="width:36px;height:36px;border-radius:8px;background:var(--accent,#1D2430);display:flex;align-items:center;justify-content:center;color:var(--accent-ink,#fff);font:700 15px lato">{{ effMark }}</div></sc-if>
+                <sc-if value="{{ showCompanyName }}" hint-placeholder-val="{{ false }}"><span style="font:700 15px lato; color:#414651">{{ effCompany }}</span></sc-if>
+              </div>
+              <button style="display:inline-flex; align-items:center; gap:8px; height:38px; padding:0 14px; border:1px solid #D5D7DA; border-radius:2px; background:#fff; font:700 13px lato; color:#414651; cursor:pointer" style-hover="background:#FAFBFC; border-color:#B9BCC2"><svg style="width:14px;height:14px;color:#535862"><use href="assets/icons-sprite.svg#copy"></use></svg>Copy link</button>
+            </div>
+
+            <!-- HERO GROUP -->
+            <div data-screen-label="Preview › Hero / ETA">
+              <div style="padding:32px 0 24px">
+                <div style="font:600 11px lato; letter-spacing:.10em; text-transform:uppercase; color:var(--accent,#1D2430)">Order {{ p.orderRef }} &nbsp;·&nbsp; {{ p.etaEyebrow }}</div>
+                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:18px; flex-wrap:wrap; margin-top:10px">
+                  <div style="min-width:0">
+                    <div style="font-family:lato,LatoLocal,sans-serif; font-weight:900; font-size:clamp(34px,5.4cqw,52px); line-height:.96; letter-spacing:-.025em; color:#414651">{{ p.heroBig }}</div>
+                    <div style="font:600 14px lato; color:#535862; margin-top:8px">{{ p.etaSub }}</div>
+                  </div>
+                  <div style="text-align:right; flex:none">
+                    <span style="display:inline-flex; align-items:center; gap:8px; height:30px; padding:0 13px; border-radius:999px; background:var(--status-soft,#E7F8EF); font:700 13px lato; color:var(--status,#16B364)"><span style="width:8px;height:8px;border-radius:999px;background:var(--status,#16B364)"></span>{{ p.etaLabel }}</span>
+                    <sc-if value="{{ p.showStatusLine }}" hint-placeholder-val="{{ true }}"><div style="font:700 15px lato; color:#414651; margin-top:11px; white-space:nowrap">{{ p.move }} &nbsp;·&nbsp; {{ p.currentLoc }}</div></sc-if>
+                    <div style="font:500 12px lato; color:#8E929A; margin-top:3px">Updated {{ p.updated }}</div>
+                  </div>
+                </div>
+              </div>
+
+              <sc-if value="{{ p.exception }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex; align-items:flex-start; gap:12px; padding:14px 16px; margin:4px 0 8px; background:var(--exc-soft,#FEF6EE); border:1px solid var(--exc-bar,#F38744); border-radius:12px">
+                <svg style="width:19px;height:19px;color:var(--exc-bar,#F38744);flex:none;margin-top:1px"><use href="assets/icons-sprite.svg#{{ p.excIcon }}"></use></svg>
+                <div style="flex:1; min-width:0">
+                  <div style="display:flex; align-items:center; gap:9px; flex-wrap:wrap"><span style="font:600 15px lato; color:var(--exc-ink,#B54708)">{{ p.excHeadline }}</span><span style="font:600 10px lato; letter-spacing:.05em; text-transform:uppercase; color:var(--exc-ink,#B54708); background:#fff; border:1px solid var(--exc-bar,#F38744); padding:2px 7px; border-radius:5px">{{ p.excLabel }}</span></div>
+                  <div style="font:400 13px/1.5 lato; color:#535862; margin-top:4px">{{ p.excBody }}</div>
+                </div>
+              </div>
+              </sc-if>
+
+              <sc-if value="{{ secJourney }}" hint-placeholder-val="{{ true }}">
+              <!-- leg context + milestone stepper (progress indicator) -->
+              <div data-screen-label="Preview › Milestone stepper" data-sec="journey" style="padding:26px 0; border-top:1px solid #ECEDEF">
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
+                  <span style="display:inline-flex; align-items:center; gap:8px; font:700 12px lato; letter-spacing:.02em; color:#414651"><svg style="width:15px;height:15px;color:var(--accent,#1D2430);flex:none"><use href="assets/icons-sprite.svg#shuffle"></use></svg>{{ p.legLine }}</span>
+                  <sc-if value="{{ p.contextShow }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex; align-items:center; gap:7px; font:600 12px lato; color:#717680"><svg style="width:14px;height:14px;color:var(--accent,#1D2430);flex:none"><use href="assets/icons-sprite.svg#location-pin"></use></svg>Your stop · <span style="color:#414651; font-weight:800">{{ p.yourStopCity }}</span></span></sc-if>
+                </div>
+
+                <sc-if value="{{ p.masked }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; align-items:center; gap:10px; margin-top:14px; padding:10px 13px; background:#F7F8FA; border:1px solid #E6E8EB; border-radius:10px">
+                  <svg style="width:16px;height:16px;color:#717680;flex:none"><use href="assets/icons-sprite.svg#eye-off"></use></svg>
+                  <span style="font:600 12px lato; color:#535862">{{ p.maskNote }}</span>
+                </div>
+                </sc-if>
+
+                <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+                <div style="position:relative; margin-top:22px; padding-top:4px">
+                  <div style="position:absolute; left:7%; right:7%; top:15px; height:3px">
+                    <div style="position:absolute; inset:0; border-radius:999px; background:#ECEDEF"></div>
+                    <div style="position:absolute; left:0; top:0; bottom:0; width:var(--step-fill,75%); border-radius:999px; background:var(--accent,#1D2430); transition:width .4s ease"></div>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; position:relative">
+                    <sc-for list="{{ p.stops }}" as="st" hint-placeholder-count="5">
+                      <div style="flex:1; min-width:0; display:flex; flex-direction:column; align-items:center; text-align:center; padding:0 4px">
+                        <sc-if value="{{ st.done }}" hint-placeholder-val="{{ false }}"><div style="width:26px;height:26px;border-radius:999px;background:var(--accent,#1D2430);display:flex;align-items:center;justify-content:center"><svg style="width:13px;height:13px;color:#fff"><use href="assets/icons-sprite.svg#check"></use></svg></div></sc-if>
+                        <sc-if value="{{ st.current }}" hint-placeholder-val="{{ true }}"><div style="width:26px;height:26px;border-radius:999px;background:var(--accent,#1D2430);display:flex;align-items:center;justify-content:center; animation:fkpulse 2.2s infinite"><span style="width:9px;height:9px;border-radius:999px;background:#fff"></span></div></sc-if>
+                        <sc-if value="{{ st.upcoming }}" hint-placeholder-val="{{ false }}"><div style="width:26px;height:26px;border-radius:999px;background:#fff;border:2px solid #D5D7DA"></div></sc-if>
+                        <sc-if value="{{ st.shown }}" hint-placeholder-val="{{ true }}">
+                          <div style="font:600 12px lato; color:#414651; margin-top:10px; line-height:1.3">{{ st.kind }}</div>
+                          <div style="font:500 11px lato; color:#8E929A; margin-top:3px">{{ st.date }}</div>
+                        </sc-if>
+                        <sc-if value="{{ st.masked }}" hint-placeholder-val="{{ false }}">
+                          <div style="display:flex; flex-direction:column; align-items:center; gap:4px; margin-top:10px"><svg style="width:14px;height:14px;color:#A4A7AE"><use href="assets/icons-sprite.svg#eye-off"></use></svg><span style="font:500 11px lato; color:#A4A7AE; font-style:italic">Hidden</span></div>
+                        </sc-if>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+                </sc-if>
+
+                <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+                <div style="position:relative; padding-left:30px; margin-top:18px">
+                  <div style="position:absolute; left:8px; top:10px; bottom:18px; width:2px; background:#ECEDEF"></div>
+                  <sc-for list="{{ p.stops }}" as="st" hint-placeholder-count="5">
+                    <div style="position:relative; padding-bottom:16px">
+                      <sc-if value="{{ st.done }}" hint-placeholder-val="{{ false }}"><div style="position:absolute; left:-30px; top:1px; width:18px;height:18px;border-radius:999px;background:#1D2430;display:flex;align-items:center;justify-content:center"><svg style="width:11px;height:11px;color:#fff"><use href="assets/icons-sprite.svg#check"></use></svg></div></sc-if>
+                      <sc-if value="{{ st.current }}" hint-placeholder-val="{{ true }}"><div style="position:absolute; left:-30px; top:1px; width:18px;height:18px;border-radius:999px;background:var(--status,#1D2430);border:3px solid #fff;box-shadow:0 0 0 1px var(--status,#1D2430); animation:fkpulse 2.2s infinite"></div></sc-if>
+                      <sc-if value="{{ st.upcoming }}" hint-placeholder-val="{{ false }}"><div style="position:absolute; left:-30px; top:1px; width:18px;height:18px;border-radius:999px;background:#fff;border:2px solid #D5D7DA"></div></sc-if>
+                      <sc-if value="{{ st.masked }}" hint-placeholder-val="{{ false }}"><div style="display:flex; align-items:center; gap:9px"><svg style="width:15px;height:15px;color:#A4A7AE"><use href="assets/icons-sprite.svg#eye-off"></use></svg><span style="font:600 14px lato; color:#A4A7AE; font-style:italic">Hidden for your visibility</span></div></sc-if>
+                      <sc-if value="{{ st.shown }}" hint-placeholder-val="{{ true }}">
+                        <div style="display:flex; align-items:baseline; justify-content:space-between; gap:14px">
+                          <div><div style="font:600 10px lato; letter-spacing:.07em; text-transform:uppercase; color:#A4A7AE">{{ st.kind }} &nbsp;·&nbsp; {{ st.tag }}</div><div style="font:600 17px lato; letter-spacing:-.01em; color:#414651; margin-top:3px">{{ st.loc }}</div></div>
+                          <span style="font:700 13px lato; color:#A4A7AE; white-space:nowrap">{{ st.date }}</span>
+                        </div>
+                      </sc-if>
+                    </div>
+                  </sc-for>
+                </div>
+                </sc-if>
+
+              </div>
+              </sc-if>
+            </div>
+
+<!-- details -->
+            <sc-if value="{{ secDetails }}" hint-placeholder-val="{{ true }}">
+            <div data-screen-label="Preview › Shipment details" data-sec="details" style="padding:26px 0; border-top:1px solid #ECEDEF">
+              <div style="font:600 12px lato; letter-spacing:.10em; text-transform:uppercase; color:var(--accent,#1D2430); margin-bottom:16px">Order &amp; shipment details</div>
+              <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:16px 28px">
+                <div><div style="font:600 11px lato; letter-spacing:.05em; text-transform:uppercase; color:#A4A7AE">Carrier</div><div style="font:600 17px lato; color:#414651; margin-top:6px">{{ p.carrier }} ({{ p.scac }})</div></div>
+                <div><div style="font:600 11px lato; letter-spacing:.05em; text-transform:uppercase; color:#A4A7AE">Mode</div><div style="font:600 17px lato; color:#414651; margin-top:6px">{{ p.modeLabel }}</div></div>
+                <sc-for list="{{ p.refs }}" as="r" hint-placeholder-count="4">
+                  <div>
+                    <div style="font:600 11px lato; letter-spacing:.05em; text-transform:uppercase; color:#A4A7AE">{{ r.label }}</div>
+                    <sc-if value="{{ r.masked }}" hint-placeholder-val="{{ false }}"><div style="display:flex; align-items:center; gap:7px; font:700 16px lato; color:#A4A7AE; margin-top:6px"><svg style="width:14px;height:14px"><use href="assets/icons-sprite.svg#eye-off"></use></svg>{{ r.value }}</div></sc-if>
+                    <sc-if value="{{ r.shown }}" hint-placeholder-val="{{ true }}"><div style="font:700 17px lato; color:#414651; margin-top:6px">{{ r.value }}</div></sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            </sc-if>
+
+            <!-- map -->
+            <sc-if value="{{ secMap }}" hint-placeholder-val="{{ true }}">
+            <div data-screen-label="Preview › Live map" data-sec="map" style="padding:26px 0; border-top:1px solid #ECEDEF">
+              <div style="font:600 12px lato; letter-spacing:.10em; text-transform:uppercase; color:var(--accent,#1D2430); margin-bottom:14px">Live location</div>
+              <div data-card style="position:relative; height:240px; border:1px solid #ECEDEF; border-radius:16px; overflow:hidden; background:linear-gradient(155deg,#F7F8FA 0%,#EEF0F3 55%,#E6E9ED 100%); opacity:var(--dim,1); filter:var(--dim-filter,none)">
+                <div style="position:absolute; inset:0; background-image:linear-gradient(rgba(120,128,140,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(120,128,140,.08) 1px,transparent 1px); background-size:46px 46px"></div>
+                <svg viewBox="0 0 1000 300" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%"><path d="M120 230 L560 140" fill="none" stroke="var(--accent,#1D2430)" stroke-width="3" stroke-linecap="round"></path><path d="M560 140 L880 64" fill="none" stroke="#AEB3BB" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 11"></path></svg>
+                <div style="position:absolute; left:12%; top:76.6%; transform:translate(-50%,-50%); width:13px;height:13px;border-radius:999px;background:var(--accent,#1D2430);border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2)"></div>
+                <div style="position:absolute; left:56%; top:46.6%; transform:translate(-50%,-50%); width:46px;height:46px;border-radius:999px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.18); border:2px solid var(--status,#1D2430); animation:fkpulse 2.4s infinite"><svg style="width:22px;height:22px;color:var(--status,#1D2430)"><use href="assets/icons-sprite.svg#{{ p.modeIcon }}"></use></svg></div>
+                <div style="position:absolute; left:88%; top:21.3%; transform:translate(-50%,-50%); width:30px;height:30px;border-radius:999px;background:var(--accent,#1D2430);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 9px rgba(0,0,0,.22)"><svg style="width:16px;height:16px;color:#fff"><use href="assets/icons-sprite.svg#location-pin"></use></svg></div>
+                <div style="position:absolute; left:20px; top:18px; background:#fff; border-radius:10px; box-shadow:0 3px 12px rgba(10,13,18,.1); padding:9px 13px; font:700 12px lato; color:#414651">{{ p.currentLoc }}</div>
+              </div>
+            </div>
+            </sc-if>
+
+            <!-- documents -->
+            <sc-if value="{{ secDocs }}" hint-placeholder-val="{{ true }}">
+            <div data-screen-label="Preview › Documents" data-sec="documents" style="padding:26px 0; border-top:1px solid #ECEDEF">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px">
+                <div style="display:flex; align-items:center; gap:12px"><span style="font:600 12px lato; letter-spacing:.10em; text-transform:uppercase; color:var(--accent,#1D2430)">Documents</span><span data-surface style="font:600 11px lato; color:#6B7280; background:#F4F5F6; padding:3px 9px; border-radius:999px">{{ p.docsAvailable }} available</span></div>
+                <span style="display:inline-flex; align-items:center; gap:7px; height:34px; padding:0 13px; border:1px solid #D5D7DA; border-radius:8px; background:#fff; font:700 12px lato; color:#414651"><svg style="width:14px;height:14px;color:var(--accent,#1D2430)"><use href="assets/icons-sprite.svg#upload"></use></svg>Upload</span>
+              </div>
+              <sc-for list="{{ p.documents }}" as="doc" hint-placeholder-count="3">
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; padding:13px 0; border-top:1px solid #F2F3F4">
+                  <div style="display:flex; align-items:center; gap:13px; min-width:0">
+                    <sc-if value="{{ doc.available }}" hint-placeholder-val="{{ true }}"><svg style="width:20px;height:20px;color:#6B7280;flex:none"><use href="assets/icons-sprite.svg#file-text"></use></svg></sc-if>
+                    <sc-if value="{{ doc.pending }}" hint-placeholder-val="{{ false }}"><svg style="width:20px;height:20px;color:#A4A7AE;flex:none"><use href="assets/icons-sprite.svg#file-empty"></use></svg></sc-if>
+                    <div style="min-width:0"><div style="display:flex; align-items:center; gap:9px; flex-wrap:wrap"><span style="font:700 16px lato; color:#1D2430; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ doc.name }}</span><span style="font:700 10px lato; letter-spacing:.03em; text-transform:uppercase; padding:3px 9px; border-radius:999px; background:{{ doc.chipBg }}; color:{{ doc.chipInk }}; white-space:nowrap; flex:none">{{ doc.chipLabel }}</span></div></div>
+                  </div>
+                  <sc-if value="{{ doc.available }}" hint-placeholder-val="{{ true }}">
+                    <div style="display:flex; align-items:center; gap:6px; flex:none">
+                      <span style="width:34px;height:34px;border:1px solid #D5D7DA;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;color:#535862"><svg style="width:15px;height:15px;color:var(--accent,#1D2430)"><use href="assets/icons-sprite.svg#download"></use></svg></span>
+                      <span style="width:34px;height:34px;border:1px solid #D5D7DA;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;color:#535862"><svg style="width:16px;height:16px"><use href="assets/icons-sprite.svg#menu-kebab-fill"></use></svg></span>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+              <!-- example customer-uploaded document -->
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; padding:13px 0; border-top:1px solid #F2F3F4">
+                <div style="display:flex; align-items:center; gap:13px; min-width:0">
+                  <svg style="width:20px;height:20px;color:#6B7280;flex:none"><use href="assets/icons-sprite.svg#file-text"></use></svg>
+                  <div style="min-width:0"><div style="display:flex; align-items:center; gap:9px; flex-wrap:wrap"><span style="font:700 16px lato; color:#1D2430">packing-list.pdf</span><span style="font:700 10px lato; letter-spacing:.03em; text-transform:uppercase; padding:3px 9px; border-radius:999px; background:#ECFDF3; color:#067647; white-space:nowrap; flex:none">Uploaded</span></div><div style="font:500 12px lato; color:#A4A7AE; margin-top:3px">Uploaded by John Doe · Jun 16, 10:22 AM</div></div>
+                </div>
+                <div style="display:flex; align-items:center; gap:6px; flex:none">
+                  <span style="width:34px;height:34px;border:1px solid #D5D7DA;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;color:#535862"><svg style="width:15px;height:15px;color:var(--accent,#1D2430)"><use href="assets/icons-sprite.svg#download"></use></svg></span>
+                  <span style="width:34px;height:34px;border:1px solid #D5D7DA;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;color:#535862"><svg style="width:16px;height:16px"><use href="assets/icons-sprite.svg#menu-kebab-fill"></use></svg></span>
+                </div>
+              </div>
+            </div>
+            </sc-if>
+
+            <sc-if value="{{ secComments }}" hint-placeholder-val="{{ true }}">
+            <!-- comments -->
+            <div data-screen-label="Preview › Comments" data-sec="comments" style="padding:26px 0; border-top:1px solid #ECEDEF">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px"><span style="font:600 12px lato; letter-spacing:.10em; text-transform:uppercase; color:var(--accent,#1D2430)">Comments</span><span style="font:600 11px lato; color:#6B7280; background:#F4F5F6; padding:3px 9px; border-radius:999px">{{ previewCommentCount }}</span></div>
+              <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:22px">
+                <span style="width:34px;height:34px;border-radius:999px;background:var(--accent,#1D2430);color:var(--accent-ink,#fff);display:flex;align-items:center;justify-content:center;font:700 12px lato;flex:none">JD</span>
+                <div style="flex:1; min-width:0">
+                  <div style="box-sizing:border-box; width:100%; min-height:42px; border:1px solid #D5D7DA; border-radius:10px; padding:11px 13px; font:500 14px lato; color:#A4A7AE">Add a comment or question about this order…</div>
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:9px">
+                    <span style="display:inline-flex; align-items:center; gap:7px; font:600 12px lato; color:#717680"><svg style="width:15px;height:15px;color:#98A2B3"><use href="assets/icons-sprite.svg#attachment"></use></svg>Attach file</span>
+                    <span style="display:inline-flex; align-items:center; height:36px; padding:0 16px; border-radius:9px; background:var(--accent,#1D2430); color:var(--accent-ink,#fff); font:700 13px lato">Post comment</span>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:18px">
+                <sc-for list="{{ previewComments }}" as="c" hint-placeholder-count="3">
+                  <div style="display:flex; gap:12px; align-items:flex-start">
+                    <span style="width:34px;height:34px;border-radius:999px;background:{{ c.avatarBg }};color:{{ c.avatarInk }};display:flex;align-items:center;justify-content:center;font:700 12px lato;flex:none">{{ c.initials }}</span>
+                    <div style="flex:1; min-width:0">
+                      <div style="display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin-bottom:4px">
+                        <span style="font:700 14px lato; color:#1D2430">{{ c.author }}</span>
+                        <span style="font:700 10px lato; letter-spacing:.03em; text-transform:uppercase; padding:2px 7px; border-radius:5px; background:{{ c.tagBg }}; color:{{ c.tagInk }}">{{ c.role }}</span>
+                        <span style="font:500 12px lato; color:#A4A7AE">{{ c.ts }}</span>
+                      </div>
+                      <div style="font:400 14px/1.6 lato; color:#414651; text-wrap:pretty">{{ c.text }}</div>
+                      <sc-if value="{{ c.hasFile }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex; align-items:center; gap:7px; margin-top:9px; padding:7px 11px; border:1px solid #E9EAEB; border-radius:8px; background:#F9FAFB; font:600 12px lato; color:#414651"><svg style="width:14px;height:14px;color:var(--accent,#1D2430)"><use href="assets/icons-sprite.svg#attachment"></use></svg>{{ c.fileName }}</span></sc-if>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            </sc-if>
+
+            <sc-if value="{{ secFeedback }}" hint-placeholder-val="{{ true }}">
+            <!-- feedback -->
+            <div data-screen-label="Preview › Feedback" data-sec="feedback" style="padding:26px 0; border-top:1px solid #ECEDEF">
+              <sc-if value="{{ noFeedback }}" hint-placeholder-val="{{ true }}">
+              <div>
+                <div style="font:700 16px lato; color:#414651">How likely are you to recommend this order tracking experience?</div>
+                <div style="font:400 13px lato; color:#717680; margin-top:3px">Your feedback helps {{ effCompany }} improve this page.</div>
+                <div style="display:flex; gap:6px; margin-top:16px">
+                  <sc-for list="{{ npsScale }}" as="x" hint-placeholder-count="11">
+                    <sc-if value="{{ x.selected }}" hint-placeholder-val="{{ false }}"><span style="flex:1 1 0; min-width:0; height:42px; display:flex; align-items:center; justify-content:center; border:1px solid var(--accent,#0E65E5); border-radius:8px; background:var(--accent,#0E65E5); font:700 14px lato; color:var(--accent-ink,#fff); cursor:pointer">{{ x.n }}</span></sc-if>
+                    <sc-if value="{{ x.normal }}" hint-placeholder-val="{{ true }}"><span onClick="{{ x.set }}" style="flex:1 1 0; min-width:0; height:42px; display:flex; align-items:center; justify-content:center; border:1px solid #D5D7DA; border-radius:8px; background:#fff; font:700 14px lato; color:#414651; cursor:pointer" style-hover="border-color:var(--accent,#0E65E5); color:var(--accent,#0E65E5)">{{ x.n }}</span></sc-if>
+                  </sc-for>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-top:8px; font:500 12px lato; color:#A4A7AE">
+                  <span>Not likely</span><span>Very likely</span>
+                </div>
+              </div>
+              </sc-if>
+              <sc-if value="{{ feedbackGiven }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex; align-items:center; gap:11px; font:700 15px lato; color:#414651"><svg style="width:20px;height:20px;color:#16B364"><use href="assets/icons-sprite.svg#check-circle"></use></svg>{{ npsThanks }}</div>
+              </sc-if>
+            </div>
+            </sc-if>
+
+            <!-- footer -->
+            <div data-screen-label="Preview › Footer" style="padding:22px 0 30px; border-top:1px solid #ECEDEF; display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap; font:400 13px lato; color:#A4A7AE">
+              <span>© 2026 {{ effCompany }}</span>
+              <div style="display:flex; gap:22px"><span style="color:#717680">Privacy</span><span style="color:#717680">Terms</span></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- ===== Modal ===== -->
+  <sc-if value="{{ hasModal }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="Settings · Modal" style="position:fixed; inset:0; background:rgba(10,13,18,.45); z-index:200; display:flex; align-items:center; justify-content:center; padding:24px; animation:fkfade .12s ease">
+    <div style="width:440px; max-width:100%; background:#fff; border:1px solid #D5D7DA; border-radius:12px; box-shadow:0 20px 24px -4px rgba(10,13,18,.12), 0 8px 8px -4px rgba(10,13,18,.03); padding:24px; animation:fkpop .16s ease">
+      <sc-if value="{{ modalPublish }}" hint-placeholder-val="{{ false }}">
+        <div style="width:44px;height:44px;border-radius:9999px;background:#ECFDF3;display:flex;align-items:center;justify-content:center;color:#067647; box-shadow:0 0 0 6px #F6FEF9"><svg style="width:22px;height:22px"><use href="assets/icons-sprite.svg#send"></use></svg></div>
+        <div style="font:800 19px lato; color:#181D27; margin-top:14px">Publish customer portal?</div>
+        <div style="font:400 14px/1.55 lato; color:#535862; margin-top:8px">The portal will go live at <b style="color:#181D27">{{ slugUrl }}</b> and become reachable by your customers. You can unpublish at any time.</div>
+      </sc-if>
+      <sc-if value="{{ modalUnpublish }}" hint-placeholder-val="{{ false }}">
+        <div style="width:44px;height:44px;border-radius:9999px;background:#FEF3F2;display:flex;align-items:center;justify-content:center;color:#D92D20; box-shadow:0 0 0 6px #FFFBFA"><svg style="width:22px;height:22px"><use href="assets/icons-sprite.svg#alert-triangle"></use></svg></div>
+        <div style="font:800 19px lato; color:#181D27; margin-top:14px">Unpublish customer portal?</div>
+        <div style="font:400 14px/1.55 lato; color:#535862; margin-top:8px">The public site at <b style="color:#181D27">{{ slugUrl }}</b> will immediately go offline. Customers with the link will no longer be able to track shipments until you republish.</div>
+      </sc-if>
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:22px">
+        <button onClick="{{ closeModal }}" style="height:40px; padding:0 16px; border:1px solid #D5D7DA; border-radius:8px; background:#fff; font:700 14px lato; color:#414651; cursor:pointer; box-shadow:0 1px 2px 0 rgba(10,13,18,.05), 0 -2px 0 0 rgba(10,13,18,.05) inset, 0 0 0 1px rgba(10,13,18,.18) inset">Cancel</button>
+        <sc-if value="{{ modalPublish }}" hint-placeholder-val="{{ false }}"><button onClick="{{ confirmModal }}" style="height:40px; padding:0 18px; border:none; border-radius:8px; background:#0E65E5; color:#fff; font:700 14px lato; cursor:pointer; box-shadow:0 1px 2px 0 rgba(10,13,18,.05), 0 -2px 0 0 rgba(10,13,18,.05) inset, 0 0 0 1px rgba(10,13,18,.18) inset">Publish</button></sc-if>
+        <sc-if value="{{ modalUnpublish }}" hint-placeholder-val="{{ false }}"><button onClick="{{ confirmModal }}" style="height:40px; padding:0 18px; border:none; border-radius:8px; background:#D92D20; color:#fff; font:700 14px lato; cursor:pointer; box-shadow:0 1px 2px 0 rgba(10,13,18,.05), 0 -2px 0 0 rgba(10,13,18,.05) inset, 0 0 0 1px rgba(10,13,18,.18) inset">Unpublish</button></sc-if>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ===== Toast ===== -->
+  <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="Settings · Toast" style="position:fixed; left:50%; bottom:30px; z-index:300; transform:translateX(-50%); display:flex; align-items:center; gap:11px; background:#0A0D12; color:#fff; padding:13px 18px; border-radius:12px; box-shadow:0 16px 40px rgba(10,13,18,.34); animation:fktoast .22s ease; max-width:520px">
+    <sc-if value="{{ toastSuccess }}" hint-placeholder-val="{{ true }}"><svg style="width:18px;height:18px;color:#47CD89;flex:none"><use href="assets/icons-sprite.svg#check-circle"></use></svg></sc-if>
+    <sc-if value="{{ toastNeutral }}" hint-placeholder-val="{{ false }}"><svg style="width:18px;height:18px;color:#9AA2AE;flex:none"><use href="assets/icons-sprite.svg#info"></use></svg></sc-if>
+    <span style="font:600 14px lato">{{ toastMsg }}</span>
+  </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    toolsOpen: false,
+    panel: null,
+    device: 'desktop',
+    published: true,
+    slug: 'fedex',
+    slugTaken: false,
+    loginRequired: false,
+    modal: null,
+    cfgMenu: false,
+    toast: null,
+    brand: null,
+    brandLoading: false,
+    brandStatus: '',
+    feedback: null,
+    scenario: { mode: 'otr', status: 'on-time', multiStop: true, masking: 'none', custom: null },
+    aiLoading: false,
+    aiMsg: '',
+    advOpen: false,
+    brandAdv: false,
+    tweaks: { accent: null, company: '', showCompany: false, sections: { map: true, journey: true, details: true, documents: true, comments: true, feedback: true } }
+  };
+
+  componentDidMount() {
+    try{ const lr=localStorage.getItem('fk_login_required'); if(lr!==null) this.setState({loginRequired: lr==='1'}); }catch(e){}
+    try{
+      const s=localStorage.getItem('fk_brand_v3');
+      if(s){ const b=JSON.parse(s); this._brandJson=s;
+        this.setState({ brand:{ name:b.name, mark:b.brandMark, accent:b.accent, logoUrl:b.logoUrl||null, url:b.url||null, accent2:b.accent2||null, surface:b.surface||null, font:b.font||null, fontLink:b.fontLink||null, fontFaces:Array.isArray(b.fontFaces)?b.fontFaces:[], radius:b.radius||null, border:b.border||null, pageBg:b.pageBg||null } });
+      } else {
+        this.setState({ brand:{ name:'FedEx', mark:'FX', accent:'#4D148C', logoUrl:'assets/fedex-logo.png', url:'fedex.com' } });
+      }
+    }catch(e){}
+    import('./portal-brand.js').then(m=>{ this.brandLib=m; this.forceUpdate(); this.applyVars(); }).catch(()=>{});
+    this.applyVars();
+  }
+  componentDidUpdate() { this.applyVars(); this.syncLogos(); this.persistBrand(); }
+
+  currentTokens() {
+    const st=this.state, b=st.brand||{};
+    const company=(b.name)||st.tweaks.company||'Your Company';
+    const mark=(b.mark)||(company.replace(/[^A-Za-z]/g,'').slice(0,2).toUpperCase())||'YC';
+    return {
+      name:company, brandMark:mark, url:b.url||null, logoUrl:b.logoUrl||null,
+      accent:this.effAccent(), accent2:b.accent2||null, surface:b.surface||null,
+      font:b.font||null, fontLink:b.fontLink||null, fontFaces:b.fontFaces||[],
+      radius:b.radius||null, border:b.border||null, pageBg:b.pageBg||null,
+      showCompany:st.tweaks.showCompany===true, sections:st.tweaks.sections
+    };
+  }
+  tokenView() {
+    const t=this.currentTokens();
+    if(this.brandLib) return this.brandLib.withDefaults(t);
+    return { ...t, accent2:t.accent2||'#0E65E5', surface:t.surface||'#F5F6F8', radius:t.radius||'rounded', border:t.border||'subtle', pageBg:t.pageBg||'#F5F6F8', fontFaces:t.fontFaces||[] };
+  }
+  editBrand(patch) { this.setState(s=>({ brand:{ ...(s.brand||{}), ...patch } })); }
+  readFileDataUrl(file) { return new Promise(res=>{ if(!file) return res(null); const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=()=>res(null); r.readAsDataURL(file); }); }
+  async onLogoFile(file){ const url=await this.readFileDataUrl(file); if(url) this.editBrand({logoUrl:url}); }
+  async onFontFile(role, file){
+    const url=await this.readFileDataUrl(file); if(!url) return;
+    const weight = role==='heading'?800:(role==='label'?600:400);
+    this.setState(s=>{ const b=s.brand||{}; const faces=(b.fontFaces||[]).filter(f=>f.role!==role); faces.push({role, weight, dataUrl:url}); return { brand:{...b, font:'Custom', fontLink:null, fontFaces:faces} }; });
+  }
+  setFont(family){ this.editBrand({ font: family||null, fontLink:null, fontFaces:[] }); }
+  clearCustomFont(){ this.editBrand({ font:null, fontLink:null, fontFaces:[] }); }
+
+  persistBrand() {
+    try {
+      const st = this.state;
+      const t = this.currentTokens();
+      const json = JSON.stringify({
+        name: t.name, brandMark: t.brandMark, accent: t.accent, logoUrl: t.logoUrl, url: t.url,
+        showCompany: t.showCompany, sections: t.sections,
+        accent2: st.brand&&st.brand.accent2 || null, surface: st.brand&&st.brand.surface || null,
+        font: t.font, fontLink: t.fontLink, fontFaces: t.fontFaces,
+        radius: st.brand&&st.brand.radius || null, border: st.brand&&st.brand.border || null, pageBg: st.brand&&st.brand.pageBg || null
+      });
+      if (json !== this._brandJson) { this._brandJson = json; localStorage.setItem('fk_brand_v3', json); }
+    } catch(e){}
+  }
+
+  statusMeta(s) {
+    const ex = (label,bar,soft,ink,icon,headline,body,pct) => ({ label, color:bar, soft, pct, move:'In transit', exception:true, excBar:bar, excSoft:soft, excInk:ink, excIcon:icon, headline, body });
+    const M = {
+      'on-time':   { label:'On time',   color:'#16B364', soft:'#E7F8EF', pct:60, move:'In transit' },
+      'delivered': { label:'Delivered', color:'#16B364', soft:'#E7F8EF', pct:100, move:'Delivered', done:true },
+      'awaiting':  { label:'Awaiting pickup', color:'#717680', soft:'#F1F2F4', pct:0, move:'Awaiting pickup', awaiting:true },
+      'delay':       ex('Delayed','#F38744','#FEF6EE','#B54708','alert-triangle','Running behind schedule','This shipment is delayed in transit. The arrival estimate above reflects the latest projection — no action is needed from you.',45),
+      'congestion':  ex('Route congestion','#F38744','#FEF6EE','#B54708','alert-triangle','Heavy traffic on the route','Road congestion is slowing this shipment down. The ETA above has been updated to account for it.',45),
+      'weather':     ex('Weather delay','#F38744','#FEF6EE','#B54708','alert-triangle','Weather is affecting this shipment','Severe weather along the route is causing delays. The carrier is monitoring conditions and your ETA reflects the latest estimate.',43),
+      'port-queue':  ex('Port queue','#F38744','#FEF6EE','#B54708','anchor','Waiting for a berth at the port','The vessel is queued at the destination port. Discharge will begin once a berth opens — typically within 24–48 hours.',50),
+      'customs-hold':    ex('Customs hold','#2E90FA','#EFF6FF','#0B4A99','shield','Held for a routine customs inspection','This is a standard customs check — common and expected on international lanes. The shipment continues automatically once released. No action is required from you.',55),
+      'regulatory-hold': ex('Regulatory hold','#2E90FA','#EFF6FF','#0B4A99','shield','On a brief regulatory hold','A standard regulatory review is underway. Shipments usually resume within 1–2 business days; nothing is needed on your end.',55),
+      'reschedule':  ex('Rescheduled','#9E77ED','#F6F2FE','#6941C6','calendar','Delivery appointment rescheduled','The carrier updated the delivery window. Your new estimated arrival is shown above.',50),
+      'reroute':     ex('Rerouted','#9E77ED','#F6F2FE','#6941C6','shuffle','Carrier changed the route','The carrier adjusted the route — often to avoid a closure or speed up transit. Your tracking and ETA reflect the new plan.',50),
+      'cancellation':{ label:'Cancelled', color:'#D92D20', soft:'#FEF3F2', pct:0, move:'Cancelled', exception:true, cancelled:true, excBar:'#F04438', excSoft:'#FEF3F2', excInk:'#B42318', excIcon:'alert-octagon', headline:'This shipment has been cancelled', body:'The shipper cancelled this shipment. Please contact your shipper if you were expecting this delivery.' }
+    };
+    return M[s] || M['on-time'];
+  }
+  effAccent() { return this.state.tweaks.accent || (this.state.brand && this.state.brand.accent) || '#1D2430'; }
+  inkOn(hex) { try { const m=String(hex).replace('#',''); const r=parseInt(m.substr(0,2),16),g=parseInt(m.substr(2,2),16),b=parseInt(m.substr(4,2),16); return (0.2126*r+0.7152*g+0.0722*b)/255>0.62?'#16181D':'#ffffff'; } catch(e){ return '#ffffff'; } }
+  effPct() { const sm=this.statusMeta(this.state.scenario.status); return this.state.tweaks.progress!=null?this.state.tweaks.progress:sm.pct; }
+  applyVars() {
+    const el=document.documentElement, acc=this.effAccent(), sm=this.statusMeta(this.state.scenario.status);
+    el.style.setProperty('--accent', acc);
+    el.style.setProperty('--accent-ink', this.inkOn(acc));
+    el.style.setProperty('--status', sm.color);
+    el.style.setProperty('--status-soft', sm.soft);
+    el.style.setProperty('--exc-bar', sm.exception ? sm.excBar : 'transparent');
+    el.style.setProperty('--exc-soft', sm.exception ? sm.excSoft : '#ffffff');
+    el.style.setProperty('--exc-ink', sm.exception ? sm.excInk : '#16181D');
+    el.style.setProperty('--dim', sm.cancelled ? '.45' : '1');
+    el.style.setProperty('--dim-filter', sm.cancelled ? 'grayscale(1)' : 'none');
+    el.style.setProperty('--progress', this.effPct()+'%');
+    el.style.setProperty('--step-fill', (this._stepFill==null?60:this._stepFill)+'%');
+    el.style.setProperty('--preview-w', this.state.device==='mobile'?'430px':'100%');
+    if(this.brandLib && this.previewScroll){ this.brandLib.applyBrand(this.previewScroll, this.currentTokens()); const _bg=this.state.brand&&this.state.brand.pageBg; this.previewScroll.style.background=_bg||'#fff'; }
+  }
+
+  modeData() {
+    const D = {
+      otr: { label:'Truckload (FTL)', icon:'truck', carrier:'Werner Enterprises', scac:'WERN', unit:'mi', word:'stops',
+        origin:'Ottawa, IL', dest:'Tekonsha, MI', curLoc:'Near Indianapolis, IN', traveled:'379', remaining:'254',
+        multi:[ {code:'P1',kind:'Pickup 1',place:'Ottawa, IL · May 20'},{code:'P2',kind:'Pickup 2',place:'Joliet, IL · May 20'},{code:'D1',kind:'Delivery 1',place:'Indianapolis, IN · May 21'},{code:'D2',kind:'Delivery 2',place:'Columbus, OH · Jun 18'},{code:'D3',kind:'Delivery 3',place:'Tekonsha, MI · Jun 19'} ], multiCur:3,
+        single:[ {kind:'Pickup',place:'Ottawa, IL · May 20'},{kind:'In transit',place:'Indianapolis, IN · May 21'},{kind:'Delivery',place:'Tekonsha, MI · Jun 19'} ], singleCur:1,
+        refs:[ {label:'Bill of Lading',value:'BOL-0704902'},{label:'Carrier PRO #',value:'WERN-0088421'},{label:'Order #',value:'IO-706462-MY26'},{label:'Trailer',value:'V-208'} ] },
+      ltl: { label:'LTL', icon:'truck', carrier:'Old Dominion', scac:'ODFL', unit:'mi', word:'stops',
+        origin:'Atlanta, GA', dest:'Charlotte, NC', curLoc:'Greenville terminal, SC', traveled:'168', remaining:'92',
+        multi:[ {code:'P',kind:'Pickup',place:'Atlanta, GA · Jun 16'},{code:'T',kind:'Linehaul terminal',place:'Greenville, SC · Jun 17'},{code:'D',kind:'Delivery',place:'Charlotte, NC · Jun 19'} ], multiCur:1,
+        single:[ {kind:'Pickup',place:'Atlanta, GA · Jun 16'},{kind:'Linehaul terminal',place:'Greenville, SC · Jun 17'},{kind:'Delivery',place:'Charlotte, NC · Jun 19'} ], singleCur:1,
+        refs:[ {label:'Bill of Lading',value:'BOL-554120'},{label:'Carrier PRO #',value:'ODFL-7741120'},{label:'Order #',value:'IO-554120'},{label:'Pallets',value:'6 of 6'} ] },
+      parcel: { label:'Parcel', icon:'box', carrier:'FedEx', scac:'FDEG', unit:'mi', word:'scans',
+        origin:'Memphis, TN', dest:'Austin, TX', curLoc:'Out for delivery — Austin, TX', traveled:'612', remaining:'18',
+        multi:[ {kind:'Origin facility',place:'Memphis, TN · Jun 17'},{kind:'In transit',place:'Dallas, TX · Jun 18'},{kind:'Out for delivery',place:'Austin, TX · Jun 19'} ], multiCur:2,
+        single:[ {kind:'Origin facility',place:'Memphis, TN · Jun 17'},{kind:'In transit',place:'Dallas, TX · Jun 18'},{kind:'Out for delivery',place:'Austin, TX · Jun 19'} ], singleCur:2,
+        refs:[ {label:'Tracking #',value:'7700 1234 5678'},{label:'Order #',value:'IO-706462'},{label:'Packages',value:'3 of 3'},{label:'Service',value:'Ground'} ] },
+      ocean: { label:'Ocean FCL', icon:'ship', carrier:'Maersk', scac:'MAEU', unit:'nm', word:'milestones',
+        origin:'Shanghai, CN', dest:'Los Angeles, CA', curLoc:'Mid-Pacific — vessel underway', traveled:'5,240', remaining:'1,180',
+        multi:[ {kind:'Gate out (origin)',place:'Shanghai, CN · May 28'},{kind:'Loaded on vessel',place:'Shanghai (CNSHA) · May 30'},{kind:'Departed POL',place:'Shanghai · May 31'},{kind:'In transit',place:'Mid-Pacific · Jun 12'},{kind:'Discharge (POD)',place:'Los Angeles (USLAX) · Jun 20'} ], multiCur:3,
+        single:[ {kind:'Gate out (origin)',place:'Shanghai, CN · May 28'},{kind:'Loaded on vessel',place:'Shanghai (CNSHA) · May 30'},{kind:'Departed POL',place:'Shanghai · May 31'},{kind:'In transit',place:'Mid-Pacific · Jun 12'},{kind:'Discharge (POD)',place:'Los Angeles (USLAX) · Jun 20'} ], singleCur:3,
+        refs:[ {label:'Ocean BOL',value:'MAEU8842160'},{label:'Container #',value:'MSKU 778241-2'},{label:'Vessel / Voyage',value:'Maersk Edmonton / 124E'},{label:'Booking #',value:'2398871'} ] },
+      rail: { label:'Rail', icon:'train', carrier:'BNSF Railway', scac:'BNSF', unit:'mi', word:'milestones',
+        origin:'Chicago, IL', dest:'Los Angeles, CA', curLoc:'Near Kansas City, MO', traveled:'1,290', remaining:'760',
+        multi:[ {kind:'Origin ramp',place:'Chicago, IL (UP G4) · Jun 14'},{kind:'Departed ramp',place:'Chicago · Jun 14'},{kind:'In transit',place:'Kansas City, MO · Jun 16'},{kind:'Destination ramp',place:'Los Angeles (ICTF) · Jun 19'} ], multiCur:2,
+        single:[ {kind:'Origin ramp',place:'Chicago, IL (UP G4) · Jun 14'},{kind:'Departed ramp',place:'Chicago · Jun 14'},{kind:'In transit',place:'Kansas City, MO · Jun 16'},{kind:'Destination ramp',place:'Los Angeles (ICTF) · Jun 19'} ], singleCur:2,
+        refs:[ {label:'Waybill #',value:'BNSF-77120'},{label:'Railcar #',value:'TTGX 884216'},{label:'Container #',value:'EMHU 220-815'},{label:'Equipment',value:'53 ft'} ] },
+      intermodal: { label:'Intermodal', icon:'container-stacked', carrier:'J.B. Hunt', scac:'JBHU', unit:'mi', word:'milestones',
+        origin:'Los Angeles, CA', dest:'Dallas, TX', curLoc:'Rail — near Tucumcari, NM', traveled:'910', remaining:'520',
+        multi:[ {kind:'Dray pickup',place:'Los Angeles, CA · Jun 15'},{kind:'Origin ramp',place:'LA (ICTF) · Jun 15'},{kind:'Rail in transit',place:'Tucumcari, NM · Jun 17'},{kind:'Destination ramp',place:'Dallas (Alliance) · Jun 19'},{kind:'Dray delivery',place:'Fort Worth, TX · Jun 20'} ], multiCur:2,
+        single:[ {kind:'Origin ramp',place:'LA (ICTF) · Jun 15'},{kind:'Rail in transit',place:'Tucumcari, NM · Jun 17'},{kind:'Destination ramp',place:'Dallas (Alliance) · Jun 19'} ], singleCur:1,
+        refs:[ {label:'Bill of Lading',value:'JBHU-44715'},{label:'Container #',value:'JBHU 552-810'},{label:'Railcar #',value:'DTTX 728115'},{label:'Chassis #',value:'JBHZ 9981'} ] },
+      air: { label:'Air', icon:'flight', carrier:'Lufthansa Cargo', scac:'LH', unit:'mi', word:'milestones',
+        origin:'Frankfurt (FRA)', dest:'Chicago (ORD)', curLoc:'In flight — North Atlantic', traveled:'3,980', remaining:'520',
+        multi:[ {kind:'Tendered',place:'Frankfurt (FRA) · Jun 18'},{kind:'Departed',place:'FRA · Jun 18'},{kind:'In flight',place:'North Atlantic · Jun 18'},{kind:'Arrival',place:'Chicago (ORD) · Jun 19'},{kind:'Available',place:'ORD cargo · Jun 19'} ], multiCur:2,
+        single:[ {kind:'Tendered',place:'Frankfurt (FRA) · Jun 18'},{kind:'Departed',place:'FRA · Jun 18'},{kind:'In flight',place:'North Atlantic · Jun 18'},{kind:'Arrival',place:'Chicago (ORD) · Jun 19'} ], singleCur:2,
+        refs:[ {label:'AWB #',value:'020-88421605'},{label:'Flight',value:'LH 8160'},{label:'Pieces',value:'4'},{label:'Gross weight',value:'820 kg'} ] }
+    };
+    return D[this.state.scenario.mode] || D.otr;
+  }
+
+  buildPortal() {
+    const sc=this.state.scenario, md=this.modeData(), sm=this.statusMeta(sc.status);
+    const useMulti = sc.multiStop && md.multi;
+    const base = (useMulti ? md.multi : md.single).map(s=>({...s}));
+    const curIdx = useMulti ? md.multiCur : md.singleCur;
+    const lastIdx = base.length-1;
+    const mineIdx = sm.awaiting ? 0 : (sm.done ? lastIdx : curIdx);
+    const lvl = sc.masking;
+    const splitLoc = p => (p||'').split(' · ')[0];
+    const splitDate = p => { const a=(p||'').split(' · '); return a[1]||''; };
+
+    const tagFor = (kind) => { const k=String(kind).toLowerCase(); if (k.indexOf('dray')>=0) return 'DRAY'; if (sc.mode==='ocean') return 'OCEAN'; if (sc.mode==='rail'||sc.mode==='intermodal') return 'RAIL'; if (sc.mode==='air') return 'AIR'; if (sc.mode==='parcel') return 'PARCEL'; if (sc.mode==='ltl') return 'LTL'; return 'TRUCK'; };
+    const stops = base.map((s,i)=>{
+      let state;
+      if (sm.done) state='done';
+      else if (sm.awaiting) state = i===0?'current':'upcoming';
+      else state = i<curIdx?'done':(i===curIdx?'current':'upcoming');
+      let masked=false;
+      if (lvl==='strict') masked = (i!==mineIdx);
+      else if (lvl==='stops') masked = (i!==mineIdx && i!==0 && i!==lastIdx);
+      const statusLabel = state==='done'?'Completed':(state==='current'?(sm.awaiting?'Scheduled':(sm.exception?'Exception':'Current')):'Upcoming');
+      return { code:s.code||'', kind:s.kind, loc:splitLoc(s.place), date:splitDate(s.place),
+        state, done:state==='done', current:state==='current', upcoming:state==='upcoming', notCurrent:state!=='current',
+        masked, shown:!masked, statusLabel, tag: tagFor(s.kind) };
+    });
+
+    const strict = lvl==='strict';
+    const origin = strict ? '•••••, ••' : md.origin;
+    const dest = strict ? '•••••, ••' : md.dest;
+    let currentLoc, nextStop='—', showNext=true;
+    if (sm.cancelled) { currentLoc = 'Shipment cancelled'; showNext=false; }
+    else if (sm.done) { currentLoc = strict ? 'Your assigned stop' : md.dest; showNext=false; }
+    else if (sm.awaiting) { currentLoc = strict ? 'Your stop · scheduled' : ('Awaiting pickup · '+md.origin); const n=stops.find(s=>s.upcoming); nextStop = strict?'Hidden for your visibility':(n?(n.kind+' · '+n.loc):'—'); }
+    else {
+      const cur = stops[mineIdx];
+      currentLoc = (strict || (cur && cur.masked)) ? 'Your assigned stop' : md.curLoc;
+      const n = stops.find(s=>s.upcoming);
+      nextStop = strict ? 'Hidden for your visibility' : (n ? (n.kind+' · '+n.loc) : '—');
+    }
+
+    const totalLegs = Math.max(1, base.length - 1);
+    const curLeg = sm.done ? totalLegs : Math.min(Math.max(curIdx, 1), totalLegs);
+    const legLine = sc.multiStop ? ('Leg ' + curLeg + ' of ' + totalLegs + ' · ' + base.length + ' stops · Multi-stop') : ('Direct shipment · ' + base.length + ' ' + md.word);
+    const refs = md.refs.map((r,i)=>{ const masked = strict && i>0; return { label:r.label, value: masked?'••••••':r.value, masked, shown:!masked }; });
+    const documents = [
+      { name:'Commercial Invoice', status:'Available', available:true },
+      { name:'Packing List', status:'Available', available:true },
+      { name:'USMCA Certificate of Origin', status:'Available', available:true },
+      { name:'Bill of Lading', status:'Available', available:true },
+      { name:'Proof of Pickup', status:'Available', available:true },
+      { name:'Proof of Delivery', status: sm.done?'Available':'Available after delivery', available:!!sm.done, pending:!sm.done }
+    ].map(d=>{
+      if(d.available) return { ...d, chipLabel:'Available', chipBg:'#ECFDF3', chipInk:'#067647' };
+      const _st=String(d.status||''); const _q=/deliver/i.test(_st)?'After delivery':/pickup/i.test(_st)?'After pickup':'Pending';
+      return { ...d, chipLabel:_q, chipBg:'#F4F5F6', chipInk:'#6B7280' };
+    });
+
+    const _ci = stops.findIndex(s=>s.current);
+    this._stepFill = sm.done ? 100 : (_ci>0 ? (_ci/(Math.max(1,stops.length-1)))*100 : 0);
+    const cust = sc.custom || {};
+    const curLocOut = (cust.curLoc && lvl!=='strict' && !sm.cancelled && !sm.awaiting && !sm.done) ? cust.curLoc : currentLoc;
+    const excBodyOut = (cust.note && sm.exception && !sm.cancelled) ? cust.note : (sm.body||'');
+    return {
+      modeLabel:md.label, modeIcon:md.icon, carrier:md.carrier, scac:md.scac,
+      move:sm.move, etaLabel:sm.label, awaiting:!!sm.awaiting,
+      exception:!!sm.exception, cancelled:!!sm.cancelled, notCancelled:!sm.cancelled,
+      excHeadline:sm.headline||'', excBody: excBodyOut, excIcon:sm.excIcon||'alert-triangle', excLabel:sm.label,
+      parentLoad:'Load L-306881633', contextShow:!!sc.multiStop,
+      contextLine:'Part of Load L-306881633 ('+md.label+', '+base.length+' stops)',
+      yourStopCity: base[mineIdx] ? splitLoc(base[mineIdx].place) : md.dest,
+      etaDate: sm.cancelled?'Cancelled':(sm.awaiting?'Not scheduled':'Friday, June 19'),
+      etaTime: sm.cancelled?'Order cancelled by shipper':(sm.awaiting?'Pickup window May 20':'6:06 AM CDT'),
+      etaSub: sm.cancelled?'Order cancelled by shipper':(sm.awaiting?'Pickup window May 20':(sm.done?'Friday, June 19 · 2:14 PM CDT':'Arrives between 1:00 and 4:00 PM CDT')),
+      heroBig: sm.cancelled?'Cancelled':(sm.done?'Delivered':(sm.awaiting?'Not scheduled':'Friday, June 19')),
+      etaEyebrow: sm.cancelled?'Shipment status':(sm.done?'Delivered':'Estimated delivery'),
+      showStatusLine: !sm.cancelled,
+      updated: sm.cancelled?'17 Jun, 16:40 PT':'23 Jun, 09:30 PT',
+      orderRef: 'PO-4471-A',
+      origin, dest, currentLoc: curLocOut, nextStop, showNext,
+      traveled: sm.awaiting?'0':md.traveled, remaining:md.remaining, unit:md.unit,
+      stops, stopCount: stops.length, doneCount: stops.filter(s=>s.done).length, stopsWord: md.word, legLine, journey:stops, refs, documents,
+      docsAvailable: documents.filter(d=>d.available).length,
+      masked: lvl!=='none',
+      maskNote: lvl==='strict' ? 'Strict privacy — you are associated with one stop. Other stops, locations and references are hidden.' : (lvl==='stops' ? 'Limited visibility — stops you are not associated with are hidden.' : '')
+    };
+  }
+
+  // ---- brand extraction ----
+  normalizeDomain(v){ if(!v) return ''; let d=v.trim().toLowerCase().replace(/^https?:\/\//,'').replace(/^www\./,''); return d.split('/')[0].split('?')[0].split('#')[0]; }
+  loadFirstImage(urls){ return new Promise(res=>{ let i=0; const t=()=>{ if(i>=urls.length) return res(null); const u=urls[i++], img=new Image(); img.onload=()=>(img.naturalWidth>8?res(u):t()); img.onerror=t; img.src=u; }; t(); }); }
+  async doApplyBrand(){
+    if(this.state.brandLoading) return;
+    const domain=this.normalizeDomain(this.urlInput?this.urlInput.value:'');
+    if(!domain || domain.indexOf('.')<0){ this.setState({brandStatus:'Enter a valid website, e.g. fedex.com'}); return; }
+    if(!window.claude || !window.claude.complete){ this.setState({brandStatus:'Brand extraction runs in the live preview only.'}); return; }
+    this.setState({brandLoading:true, brandStatus:'Reading '+domain+'…'});
+    let info=null;
+    try{
+      const out=await window.claude.complete({ messages:[{role:'user',content:
+        'You are a brand identity assistant. For the company whose website is "'+domain+'", respond with ONLY a compact JSON object (no markdown) with keys: "companyName" (string), "accentColor" (#RRGGBB hex of their PRIMARY brand color), "secondaryColor" (#RRGGBB hex of a complementary secondary brand color), "pageBackground" (#RRGGBB hex of a very light neutral/off-white suitable as a page background), "fontFamily" (the name of a Google Fonts family that matches or closely approximates their brand typeface, e.g. "Inter", "Poppins", "Roboto Slab", "Merriweather"; use a real Google Fonts family name), "cornerStyle" (one of: sharp, rounded, pill — how rounded their UI buttons look), "borderStyle" (one of: none, subtle, defined — how prominent card/widget borders are), "monogram" (1-2 uppercase letters), "recognized" (boolean). Domain: '+domain }] });
+      const j=String(out||'').replace(/```json/gi,'').replace(/```/g,'').trim();
+      info=JSON.parse(j.substring(j.indexOf('{'), j.lastIndexOf('}')+1));
+    }catch(e){ this.setState({brandLoading:false, brandStatus:'Could not read that brand. Try another URL.'}); return; }
+    const okHex=v=>{ const h=String(v||'').replace('#',''); return /^[0-9a-fA-F]{6}$/.test(h)?'#'+h:null; };
+    const accent=okHex(info&&info.accentColor)||'#16181D';
+    const accent2=okHex(info&&info.secondaryColor)||null;
+    const pageBg=okHex(info&&info.pageBackground)||null;
+    const font=(info&&info.fontFamily&&/^[\w\s]+$/.test(String(info.fontFamily)))?String(info.fontFamily).trim():null;
+    const radius=['sharp','rounded','pill'].includes(info&&info.cornerStyle)?info.cornerStyle:null;
+    const border=['none','subtle','defined'].includes(info&&info.borderStyle)?info.borderStyle:null;
+    const name=(info&&info.companyName)?info.companyName:domain;
+    const mark=(info&&info.monogram)?String(info.monogram).toUpperCase().slice(0,2):name.replace(/[^A-Za-z]/g,'').slice(0,2).toUpperCase();
+    this.setState({brandStatus:'Fetching logo…'});
+    const logo=await this.loadFirstImage(['https://logo.clearbit.com/'+domain+'?size=128','https://icons.duckduckgo.com/ip3/'+domain+'.ico','https://www.google.com/s2/favicons?sz=128&domain='+domain]);
+    this.setState({
+      brand:{ accent, name, mark, logoUrl:logo, url:domain, accent2, surface:null, font, fontLink:null, fontFaces:[], radius, border, pageBg },
+      tweaks:{ ...this.state.tweaks, accent:null },
+      brandLoading:false, brandStatus:'Applied '+name+(info&&info.recognized===false?' (estimated)':'')
+    });
+  }
+  syncLogos(){ if(!this._logos) return; const url=this.state.brand&&this.state.brand.logoUrl; this._logos.forEach(el=>{ if(el&&el.isConnected&&url&&el.src!==url) el.src=url; }); }
+
+  async doGenerateScenario(){
+    if(this.state.aiLoading) return;
+    const prompt=(this.nlInput && this.nlInput.value || '').trim();
+    if(!prompt){ this.setState({aiMsg:'Describe a shipment first — e.g. "ocean container held at customs in LA".'}); return; }
+    if(!window.claude || !window.claude.complete){ this.setState({aiMsg:'AI scenarios run in the live preview only — pick a common example below.'}); return; }
+    this.setState({aiLoading:true, aiMsg:'Generating preview…'});
+    const modeList='otr, ltl, parcel, ocean, rail, intermodal, air';
+    const statusList='on-time, delivered, awaiting, delay, congestion, weather, port-queue, customs-hold, regulatory-hold, reschedule, reroute, cancellation';
+    try{
+      const out=await window.claude.complete({ messages:[{role:'user', content:
+        'You map a shipment description to a tracking-page preview scenario. Respond with ONLY a compact JSON object, no markdown, with keys: '+
+        '"mode" one of ['+modeList+'] (otr = full truckload); '+
+        '"status" one of ['+statusList+']; '+
+        '"multiStop" boolean (true for multiple pickups/deliveries or multi-leg moves); '+
+        '"curLoc" a short phrase for where the shipment is right now (e.g. "Near Indianapolis, IN" or "Mid-Pacific — vessel underway"), or "" if not applicable; '+
+        '"note" one customer-friendly sentence explaining the current exception, or "" when on time / delivered / awaiting. '+
+        'Description: '+JSON.stringify(prompt) }] });
+      const j=String(out||'').replace(/```json/gi,'').replace(/```/g,'').trim();
+      const info=JSON.parse(j.substring(j.indexOf('{'), j.lastIndexOf('}')+1));
+      const modes=['otr','ltl','parcel','ocean','rail','intermodal','air'];
+      const statuses=['on-time','delivered','awaiting','delay','congestion','weather','port-queue','customs-hold','regulatory-hold','reschedule','reroute','cancellation'];
+      const mode=modes.indexOf(info.mode)>=0?info.mode:'otr';
+      const status=statuses.indexOf(info.status)>=0?info.status:'on-time';
+      const multiStop=!!info.multiStop;
+      const curLoc=(typeof info.curLoc==='string'?info.curLoc.trim():'').slice(0,60);
+      const note=(typeof info.note==='string'?info.note.trim():'').slice(0,200);
+      this.setState({ scenario:{...this.state.scenario, mode, status, multiStop, custom:{curLoc, note}}, aiLoading:false, aiMsg:'' });
+      this.showToast('success','Preview updated from your description.');
+    }catch(e){ this.setState({aiLoading:false, aiMsg:'Could not generate that one — try rephrasing, or pick an example below.'}); }
+  }
+  animScroll(scroller, to, dur){
+    dur=dur||440;
+    const win = scroller===window;
+    const getY=()=> win ? ((document.scrollingElement||document.documentElement).scrollTop) : scroller.scrollTop;
+    const setY=(y)=> win ? window.scrollTo(0,y) : (scroller.scrollTop=y);
+    const start=getY(), delta=to-start;
+    if(Math.abs(delta)<2){ setY(to); return; }
+    const now0=(window.performance&&performance.now)?performance.now():Date.now();
+    const ease=t=> (t<0.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2);
+    clearInterval(scroller.__animIv);
+    scroller.__animIv=setInterval(()=>{
+      const now=(window.performance&&performance.now)?performance.now():Date.now();
+      const p=Math.min(1,(now-now0)/dur);
+      setY(start+delta*ease(p));
+      if(p>=1) clearInterval(scroller.__animIv);
+    },16);
+  }
+  portalEl(){ return [...document.querySelectorAll('div')].find(d=>(d.getAttribute('style')||'').indexOf('74vh')>=0) || null; }
+  sectionElNow(){ return document.querySelector('[data-screen-label="Settings · Live preview"]'); }
+  toggleSection(key){
+    const sections=this.state.tweaks.sections;
+    const turningOff=!!sections[key];
+    const sc=this.portalEl();
+    let offTarget=null;
+    if(turningOff && sc){ const el=sc.querySelector('[data-sec="'+key+'"]'); if(el){ offTarget=sc.scrollTop+(el.getBoundingClientRect().top-sc.getBoundingClientRect().top)-12; } }
+    const sec=this.sectionElNow();
+    if(sec){ const base=(document.scrollingElement||document.documentElement).scrollTop; const top=base+sec.getBoundingClientRect().top-8; this.animScroll(window, Math.max(0,top)); }
+    this.setState({tweaks:{...this.state.tweaks, sections:{...sections,[key]:!sections[key]}}}, ()=>{
+      const sc2=this.portalEl(); if(!sc2) return;
+      if(turningOff){ if(offTarget!=null) this.animScroll(sc2, Math.max(0,offTarget)); }
+      else{ const el2=sc2.querySelector('[data-sec="'+key+'"]'); if(el2){ const target=sc2.scrollTop+(el2.getBoundingClientRect().top-sc2.getBoundingClientRect().top)-12; this.animScroll(sc2, Math.max(0,target)); this.flashEl(el2); } }
+    });
+  }
+  flashEl(el){ try{
+    const pBg=el.style.backgroundColor, pT=el.style.transition, pML=el.style.marginLeft, pMR=el.style.marginRight, pPL=el.style.paddingLeft, pPR=el.style.paddingRight;
+    el.style.transition='background-color .35s ease';
+    el.style.marginLeft='-24px'; el.style.marginRight='-24px';
+    el.style.paddingLeft='24px'; el.style.paddingRight='24px';
+    el.style.backgroundColor='rgba(14,101,229,0.06)';
+    clearTimeout(this._flashT);
+    this._flashT=setTimeout(()=>{
+      el.style.backgroundColor=pBg||'transparent';
+      setTimeout(()=>{ el.style.marginLeft=pML; el.style.marginRight=pMR; el.style.paddingLeft=pPL; el.style.paddingRight=pPR; el.style.transition=pT; },400);
+    },1000);
+  }catch(e){} }
+  showToast(kind,msg){ clearTimeout(this._tt); this.setState({toast:{kind,msg}}); this._tt=setTimeout(()=>this.setState({toast:null}),3400); }
+
+  renderVals(){
+    const st=this.state, sc=st.scenario, p=this.buildPortal();
+    const presetDefs=[
+      {name:'Multi-stop OTR · mid-route', sub:'Truckload, on time', icon:'truck', s:{mode:'otr',status:'on-time',multiStop:true,masking:'none'}},
+      {name:'Parcel · out for delivery', sub:'Last mile, on time', icon:'box', s:{mode:'parcel',status:'on-time',multiStop:false,masking:'none'}},
+      {name:'Ocean FCL · port queue', sub:'Vessel waiting for a berth', icon:'ship', s:{mode:'ocean',status:'port-queue',multiStop:false,masking:'none'}},
+      {name:'Ocean · customs hold', sub:'Routine, expected', icon:'shield', s:{mode:'ocean',status:'customs-hold',multiStop:false,masking:'none'}},
+      {name:'Single-stop participant · masked', sub:'OTR, strict privacy', icon:'eye-off', s:{mode:'otr',status:'on-time',multiStop:true,masking:'strict'}},
+      {name:'OTR · weather delay', sub:'Amber exception', icon:'alert-triangle', s:{mode:'otr',status:'weather',multiStop:true,masking:'none'}},
+      {name:'Air · rerouted', sub:'Carrier route change', icon:'shuffle', s:{mode:'air',status:'reroute',multiStop:false,masking:'none'}},
+      {name:'LTL · cancelled', sub:'Shipment cancelled', icon:'alert-octagon', s:{mode:'ltl',status:'cancellation',multiStop:false,masking:'none'}},
+      {name:'LTL · delivered', sub:'Proof of delivery ready', icon:'truck', s:{mode:'ltl',status:'delivered',multiStop:false,masking:'none'}},
+      {name:'Truckload · awaiting pickup', sub:'Scheduled, not moving', icon:'truck', s:{mode:'otr',status:'awaiting',multiStop:false,masking:'none'}}
+    ];
+    const presets=presetDefs.map(d=>({ name:d.name, sub:d.sub, icon:d.icon, apply:()=>this.setState({scenario:{...d.s, custom:null}, panel:null}) }));
+    const quickDefs=[
+      {name:'Ocean held at customs', sub:'Routine inspection, expected', icon:'shield', s:{mode:'ocean',status:'customs-hold',multiStop:false,masking:'none'}},
+      {name:'Parcel out for delivery', sub:'Last mile, on time', icon:'box', s:{mode:'parcel',status:'on-time',multiStop:false,masking:'none'}},
+      {name:'Delayed multi-stop truckload', sub:'Weather exception', icon:'alert-triangle', s:{mode:'otr',status:'weather',multiStop:true,masking:'none'}},
+      {name:'Delivered with POD ready', sub:'LTL, proof of delivery', icon:'truck', s:{mode:'ltl',status:'delivered',multiStop:false,masking:'none'}},
+      {name:'Air freight rerouted', sub:'Carrier changed the route', icon:'shuffle', s:{mode:'air',status:'reroute',multiStop:false,masking:'none'}},
+      {name:'Cancelled order', sub:'Cancelled by shipper', icon:'alert-octagon', s:{mode:'ltl',status:'cancellation',multiStop:false,masking:'none'}}
+    ];
+    const quickPicks=quickDefs.map(d=>({ name:d.name, sub:d.sub, icon:d.icon, apply:()=>this.setState({scenario:{...d.s, custom:null}}) }));
+    const modes=[['otr','OTR','truck'],['ltl','LTL','truck'],['parcel','Parcel','box'],['ocean','Ocean','ship'],['rail','Rail','train'],['intermodal','Intermodal','container-stacked'],['air','Air','flight']];
+    const modeChips=modes.map(([k,label,icon])=>({ key:k, label, icon, active:sc.mode===k, normal:sc.mode!==k, set:()=>this.setState({scenario:{...sc,mode:k,custom:null}}) }));
+    const statuses=[['on-time','On time','#16B364'],['delivered','Delivered','#16B364'],['awaiting','Awaiting','#717680'],['delay','Delayed','#F38744'],['congestion','Congestion','#F38744'],['weather','Weather','#F38744'],['port-queue','Port queue','#F38744'],['customs-hold','Customs hold','#2E90FA'],['regulatory-hold','Regulatory hold','#2E90FA'],['reschedule','Rescheduled','#9E77ED'],['reroute','Rerouted','#9E77ED'],['cancellation','Cancelled','#D92D20']];
+    const statusChips=statuses.map(([k,label,color])=>({ key:k, label, color, active:sc.status===k, normal:sc.status!==k, set:()=>this.setState({scenario:{...sc,status:k,custom:null}}) }));
+    const masks=[['none','Full visibility'],['stops','Mask other stops'],['strict','Strict · only my stop']];
+    const maskChips=masks.map(([k,label])=>({ key:k, label, active:sc.masking===k, normal:sc.masking!==k, set:()=>this.setState({scenario:{...sc,masking:k}}) }));
+    const tv = this.tokenView();
+    const lc = v => String(v||'').toLowerCase();
+    const swatchHexes=['#16181D','#0E65E5','#0B5C3F','#5B3FB5','#B5430F','#C81E5B','#4D148C'];
+    const accentSwatches=swatchHexes.map(h=>({ hex:h, active:lc(this.effAccent())===lc(h), idle:lc(this.effAccent())!==lc(h), set:()=>{ this.setState({tweaks:{...st.tweaks,accent:h}}); } }));
+    const secHexes=[tv.accent2,'#0E65E5','#0B5C3F','#5B3FB5','#B5430F','#C81E5B'].filter((h,i,a)=>h&&a.map(lc).indexOf(lc(h))===i);
+    const secondarySwatches=secHexes.map(h=>({ hex:h, active:lc(tv.accent2)===lc(h), idle:lc(tv.accent2)!==lc(h), set:()=>this.editBrand({accent2:h}) }));
+    const surfHexes=[tv.surface,'#F5F6F8','#F4F1FA','#EEF4FF','#F0FAF4','#FBF3EE'].filter((h,i,a)=>h&&a.map(lc).indexOf(lc(h))===i);
+    const surfaceSwatches=surfHexes.map(h=>({ hex:h, active:lc(tv.surface)===lc(h), idle:lc(tv.surface)!==lc(h), set:()=>this.editBrand({surface:h}) }));
+    const bgHexes=['#F5F6F8','#FFFFFF','#F7F5FB','#EEF2F9','#F3F6F3','#FAF7F4'];
+    if(bgHexes.map(lc).indexOf(lc(tv.pageBg))<0) bgHexes.unshift(tv.pageBg);
+    const pageBgSwatches=bgHexes.map(h=>({ hex:h, active:lc(tv.pageBg)===lc(h), idle:lc(tv.pageBg)!==lc(h), set:()=>this.editBrand({pageBg:h}) }));
+    const shapeOptions=[['sharp','Sharp'],['rounded','Rounded'],['pill','Pill']].map(([k,label])=>({ key:k, label, active:tv.radius===k, idle:tv.radius!==k, set:()=>this.editBrand({radius:k}) }));
+    const borderOptions=[['none','None'],['subtle','Subtle'],['defined','Defined']].map(([k,label])=>({ key:k, label, active:tv.border===k, idle:tv.border!==k, set:()=>this.editBrand({border:k}) }));
+    const isCustomFont = (tv.fontFaces&&tv.fontFaces.length)>0;
+    const fontFamilies=['Lato','Inter','Poppins','Source Sans 3','Merriweather','Roboto Slab'];
+    const curFont = isCustomFont ? 'Custom' : (tv.font || 'Lato');
+    const fontChoices=fontFamilies.map(f=>({ label:f, active: !isCustomFont && curFont===f, idle: isCustomFont || curFont!==f, set:()=>this.setFont(f==='Lato'?null:f) }));
+    const roleMap=[['body','Body'],['heading','Heading'],['label','Label']];
+    const fontRoles=roleMap.map(([role,label])=>{ const has=(tv.fontFaces||[]).some(f=>f.role===role); return { role, label, status: has?'Uploaded':'Using body font', color: has?'#067647':'#A4A7AE', action: has?'Replace':'Add', onUpload:e=>{ const f=e.target.files&&e.target.files[0]; if(f) this.onFontFile(role,f); } }; });
+    const advSummary = st.brandAdv ? '' : (tv.radius.charAt(0).toUpperCase()+tv.radius.slice(1)+' · '+tv.border.charAt(0).toUpperCase()+tv.border.slice(1));
+
+    const toolsItems=[
+      {label:'Reports & Analytics',icon:'file-text'},{label:'Geofences',icon:'location-pin'},{label:'Notification Rules',icon:'comment-square'},
+      {label:'Carrier Management',icon:'truck'},{label:'Customer Portal Settings',icon:'globe',active:true},{label:'API & Webhooks',icon:'integrate-2'},{label:'Data Exports',icon:'download'}
+    ].map(t=>({...t, normal:!t.active}));
+
+    const slug=st.slug, slugLen=slug.trim().length;
+    const company=(st.brand&&st.brand.name)||st.tweaks.company||'Your Company';
+    const mark=(st.brand&&st.brand.mark)||(company.replace(/[^A-Za-z]/g,'').slice(0,2).toUpperCase())||'YC';
+
+    const summaryBits=[p.modeLabel, this.statusMeta(sc.status).label];
+    if(sc.multiStop) summaryBits.push('Multi-stop');
+    if(sc.masking!=='none') summaryBits.push('Masked');
+
+    return {
+      p,
+      // header / nav
+      toolsItems, toolsOpen:st.toolsOpen,
+      toggleTools:()=>this.setState(s=>({toolsOpen:!s.toolsOpen})), closeTools:()=>this.setState({toolsOpen:false}),
+      // title / publish status
+      published:st.published, draft:!st.published,
+      // config
+      slug, slugUrl:'track.fourkites.com/portal/'+(slug||''),
+      slugOk: slugLen>=3 && !st.slugTaken, slugBad: slugLen>=3 && st.slugTaken, slugShort: slugLen<3,
+      setSlugInput:el=>{ this.slugInput=el; if(el && el.value!==st.slug) el.value=st.slug; },
+      onSlug:e=>{ const v=e.target.value.replace(/\s+/g,'-').toLowerCase(); this.setState({slug:v, slugTaken:['demo','test','fourkites','portal'].includes(v)}); },
+      loginRequired:st.loginRequired, loginOff:!st.loginRequired,
+      portalHref: 'Customer Portal Login.dc.html',
+      toggleLogin:()=>{ const v=!st.loginRequired; try{localStorage.setItem('fk_login_required', v?'1':'0');}catch(e){} this.setState({loginRequired:v}); this.showToast('neutral', v?'Authenticated login required to search.':'Login requirement turned off — portal is open.'); },
+      openPublish:()=>this.setState({modal:'publish'}), openUnpublish:()=>this.setState({modal:'unpublish', cfgMenu:false}),
+      cfgMenuOpen:st.cfgMenu, toggleCfgMenu:()=>this.setState(s=>({cfgMenu:!s.cfgMenu})),
+      publishedAt:'Jun 25, 2026 · 2:14 PM CDT', publishedBy:'Kiran M.',
+      loginSummary: st.loginRequired ? 'Required — customers sign in to search' : 'Open — anyone with a tracking number',
+      // toolbar device
+      isDesktop:st.device==='desktop', notDesktop:st.device!=='desktop', isMobile:st.device==='mobile', notMobile:st.device!=='mobile',
+      deviceLabel: st.device==='mobile'?'Mobile view':'Desktop view', deviceIcon: st.device==='mobile'?'smartphone':'monitor',
+      setDesktop:()=>this.setState({device:'desktop'}), setMobile:()=>this.setState({device:'mobile'}),
+      // panels
+      scenarioPanel:st.panel==='scenario', tweakPanel:st.panel==='tweak', brandPanel:st.panel==='brand',
+      openScenario:()=>this.setState(s=>({panel:s.panel==='scenario'?null:'scenario'})),
+      openTweak:()=>this.setState(s=>({panel:s.panel==='tweak'?null:'tweak'})),
+      openBrand:()=>this.setState(s=>({panel:s.panel==='brand'?null:'brand'})),
+      closePanel:()=>this.setState({panel:null}),
+      scenarioSummary: summaryBits.join(' · '),
+      presets, quickPicks, modeChips, statusChips, maskChips,
+      setNlInput:el=>{ this.nlInput=el; },
+      onNlKey:e=>{ if(e.key==='Enter' && (e.metaKey||e.ctrlKey)){ e.preventDefault(); this.doGenerateScenario(); } },
+      generateScenario:()=>this.doGenerateScenario(),
+      genLabel: st.aiLoading?'Generating…':'Generate',
+      hasAiMsg:!!st.aiMsg, aiMsg:st.aiMsg||'',
+      advOpen:st.advOpen, advClosed:!st.advOpen, toggleAdv:()=>this.setState(s=>({advOpen:!s.advOpen})),
+      multiStop:sc.multiStop, singleStop:!sc.multiStop, toggleMulti:()=>this.setState({scenario:{...sc,multiStop:!sc.multiStop,custom:null}}),
+      // tweaks
+      accentSwatches, useBrandAccent:()=>this.setState({tweaks:{...st.tweaks,accent:null}}),
+      secondarySwatches, surfaceSwatches, pageBgSwatches, shapeOptions, borderOptions,
+      fontChoices, fontRoles, advSummary,
+      fontName: isCustomFont ? 'Custom upload' : (tv.font || 'Lato'),
+      fontSource: isCustomFont ? 'Uploaded' : (tv.font ? 'Google Fonts' : 'System'),
+      noCustomFont: !isCustomFont, hasCustomFont: isCustomFont,
+      brandAdvOpen: st.brandAdv, brandAdvClosed: !st.brandAdv, toggleBrandAdv:()=>this.setState(s=>({brandAdv:!s.brandAdv})),
+      onLogoUpload:e=>{ const f=e.target.files&&e.target.files[0]; if(f) this.onLogoFile(f); },
+      onFontUploadBody:e=>{ const f=e.target.files&&e.target.files[0]; if(f) this.onFontFile('body',f); },
+      clearCustomFont:()=>this.clearCustomFont(),
+      resetBrandAll:()=>this.editBrand({accent2:null,surface:null,font:null,fontLink:null,fontFaces:[],radius:null,border:null,pageBg:null}),
+      brandDomain:(st.brand&&st.brand.url)||'',
+      progressLabel:this.effPct(),
+      setRangeInput:el=>{ this.rangeInput=el; if(el){ const v=st.tweaks.progress!=null?st.tweaks.progress:this.statusMeta(sc.status).pct; if(String(el.value)!==String(v)) el.value=v; } },
+      onProgress:e=>this.setState({tweaks:{...st.tweaks,progress:parseInt(e.target.value,10)}}),
+      setCompanyInput:el=>{ this.companyInput=el; const v = st.tweaks.company || ((st.brand&&st.brand.name)||''); if(el && el.value!==v) el.value=v; },
+      onCompany:e=>this.setState({tweaks:{...st.tweaks,company:e.target.value}}),
+      secMap:st.tweaks.sections.map, secMapOff:!st.tweaks.sections.map, toggleMap:()=>this.toggleSection('map'),
+      secJourney:st.tweaks.sections.journey, secJourneyOff:!st.tweaks.sections.journey, toggleJourney:()=>this.toggleSection('journey'),
+      secDetails:st.tweaks.sections.details, secDetailsOff:!st.tweaks.sections.details, toggleDetails:()=>this.toggleSection('details'),
+      secDocs:st.tweaks.sections.documents, secDocsOff:!st.tweaks.sections.documents, toggleDocs:()=>this.toggleSection('documents'),
+      secComments:st.tweaks.sections.comments, secCommentsOff:!st.tweaks.sections.comments, toggleComments:()=>this.toggleSection('comments'),
+      secFeedback:st.tweaks.sections.feedback, secFeedbackOff:!st.tweaks.sections.feedback, toggleFeedback:()=>this.toggleSection('feedback'),
+      showCompanyName:st.tweaks.showCompany, showCompanyOff:!st.tweaks.showCompany, toggleCompany:()=>this.setState({tweaks:{...st.tweaks,showCompany:!st.tweaks.showCompany}}),
+      // brand
+      setUrlInput:el=>{ this.urlInput=el; }, onKey:e=>{ if(e.key==='Enter') this.doApplyBrand(); },
+      applyBrand:()=>this.doApplyBrand(), resetBrand:()=>this.setState({brand:null, brandStatus:'Brand reset to default.'}),
+      brandLabel: st.brandLoading?'Reading…':'Extract',
+      hasBrandStatus:!!st.brandStatus, brandStatus:st.brandStatus,
+      hasBrand:!!st.brand, brandName:(st.brand&&st.brand.name)||'',
+      setLogoImg:el=>{ if(!el) return; el.onerror=()=>{el.style.display='none';}; this._logos=this._logos||new Set(); this._logos.add(el); const u=st.brand&&st.brand.logoUrl; if(u) el.src=u; },
+      // portal identity
+      effCompany:company, effMark:mark, hasLogo:!!(st.brand&&st.brand.logoUrl), noLogo:!(st.brand&&st.brand.logoUrl),
+      // modal
+      hasModal:!!st.modal, modalPublish:st.modal==='publish', modalUnpublish:st.modal==='unpublish',
+      closeModal:()=>this.setState({modal:null}),
+      confirmModal:()=>{ const m=st.modal; if(m==='publish'){ this.setState({published:true,modal:null}); this.showToast('success','Portal published — now live at track.fourkites.com/portal/'+st.slug); } else if(m==='unpublish'){ this.setState({published:false,modal:null}); this.showToast('neutral','Portal unpublished — the public site is now offline.'); } },
+      // toast
+      noFeedback: st.feedback===null, feedbackGiven: st.feedback!==null,
+      previewCommentCount: '5 comments',
+      previewComments: [
+        { author:'Agent Cassie', initials:'AC', role:'FourKites · Customer Service Agent', ts:'Jun 15, 9:20 AM', text:'Heads up — this load is staged for the Nuevo Laredo–Laredo crossing. To clear CBP without delay we\'ll need three documents on file: the commercial invoice, packing list, and USMCA certificate of origin. You can upload them right here and I\'ll route them to our customs broker.', avatarBg:'var(--accent,#1D2430)', avatarInk:'var(--accent-ink,#fff)', tagBg:'#EEF2F9', tagInk:'#0B4A99', hasFile:false, fileName:'' },
+        { author:'John Doe', initials:'JD', role:'Shipper · Ops', ts:'Jun 15, 11:48 AM', text:'Commercial invoice attached. Packing list and USMCA certificate to follow this afternoon.', avatarBg:'#E9EAEB', avatarInk:'#535862', tagBg:'#F4F5F6', tagInk:'#535862', hasFile:true, fileName:'commercial-invoice.pdf' },
+        { author:'John Doe', initials:'JD', role:'Shipper · Ops', ts:'Jun 15, 3:12 PM', text:'USMCA certificate of origin attached, and the packing list is uploaded in Documents. Let me know if the broker needs anything else.', avatarBg:'#E9EAEB', avatarInk:'#535862', tagBg:'#F4F5F6', tagInk:'#535862', hasFile:true, fileName:'usmca-certificate-of-origin.pdf' },
+        { author:'Marcus Lee', initials:'ML', role:'Carrier · Werner', ts:'Jun 16, 1:55 PM', text:'Update from the border: CBP released the load at 1:40 PM CT — cleared with no exam. We\'ve crossed at Laredo and are rolling toward San Antonio.', avatarBg:'var(--accent,#1D2430)', avatarInk:'var(--accent-ink,#fff)', tagBg:'#EEF2F9', tagInk:'#0B4A99', hasFile:false, fileName:'' },
+        { author:'Agent Cassie', initials:'AC', role:'FourKites · Customer Service Agent', ts:'Jun 16, 2:20 PM', text:'Customs cleared. All three documents are on file and the entry is closed. Revised ETA to San Antonio is holding for Jun 19 — I\'ll keep this thread posted if anything changes.', avatarBg:'var(--accent,#1D2430)', avatarInk:'var(--accent-ink,#fff)', tagBg:'#EEF2F9', tagInk:'#0B4A99', hasFile:false, fileName:'' }
+      ],
+      npsScale: Array.from({length:11},(_,n)=>({ n, selected: st.feedback===n, normal: st.feedback!==n, set:()=>this.setState({feedback:n}) })),
+      npsThanks: (st.feedback===null ? '' : (st.feedback>=9 ? 'Great to hear — thanks for the score!' : (st.feedback>=7 ? 'Thanks for your feedback!' : 'Thanks — sorry it fell short. We\u2019ll use this to improve.'))),
+      hasToast:!!st.toast, toastMsg:st.toast?st.toast.msg:'', toastSuccess:st.toast&&st.toast.kind==='success', toastNeutral:st.toast&&st.toast.kind==='neutral',
+      setSectionEl:el=>{ this.sectionEl=el; },
+      setPreviewScroll:el=>{ this.previewScroll=el; },
+      setRoot:el=>{ this.root=el; if(el) this.applyVars(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

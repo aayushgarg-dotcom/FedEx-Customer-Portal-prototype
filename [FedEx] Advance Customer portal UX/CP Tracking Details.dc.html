@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://use.typekit.net/nvo2zqf.css">
+<style>
+@font-face { font-family:"LatoLocal"; font-weight:400; src:local("Lato"), url("fonts/Lato-Regular.ttf") format("truetype"); font-display:swap; }
+@font-face { font-family:"LatoLocal"; font-weight:700; src:local("Lato Bold"), url("fonts/Lato-Bold.ttf") format("truetype"); font-display:swap; }
+@font-face { font-family:"LatoLocal"; font-weight:900; src:local("Lato Black"), url("fonts/Lato-Black.ttf") format("truetype"); font-display:swap; }
+@keyframes fkpulse { 0%{box-shadow:0 0 0 0 color-mix(in srgb, var(--accent,#1D2430) 55%, transparent)} 70%{box-shadow:0 0 0 9px transparent} 100%{box-shadow:0 0 0 0 transparent} }
+</style>
+</helmet>
+
+<div ref="{{ setRoot }}" data-screen-label="Tracking" style="min-height:100%; background:#fff; font-family:lato,LatoLocal,sans-serif; color:#1D2430; display:flex; flex-direction:column">
+
+  <!-- Company header (adaptive: full app shell when signed in, minimal public header otherwise) -->
+  <div data-screen-label="Tracking · Header" style="background:#fff; border-bottom:1px solid #ECEDEF">
+    <div style="max-width:1440px; margin:0 auto; padding:0 28px; height:78px; display:flex; align-items:center; justify-content:space-between">
+      <!-- brand (clickable → Home when signed in) -->
+      <sc-if value="{{ authed }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ goHome }}" title="Back to home" style="display:flex; align-items:center; gap:13px; cursor:pointer; border-radius:10px; margin:0 -6px; padding:4px 6px; transition:background .12s" style-hover="background:#F7F8FA">
+        <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ false }}"><img ref="{{ setLogoImg }}" alt="brand logo" style="height:48px;width:auto;max-width:200px;object-fit:contain;display:block"></sc-if>
+        <sc-if value="{{ noLogo }}" hint-placeholder-val="{{ true }}"><div style="width:38px;height:38px;border-radius:9px;background:var(--accent,#1D2430);display:flex;align-items:center;justify-content:center;color:var(--accent-ink,#fff);font:700 15px lato;box-shadow:0 1px 2px rgba(10,13,18,.12), 0 0 0 1px rgba(10,13,18,.04)">{{ monogram }}</div></sc-if>
+        <sc-if value="{{ showCompany }}" hint-placeholder-val="{{ false }}"><span style="font:700 15px lato; letter-spacing:-.01em; color:#1D2430">{{ companyName }}</span></sc-if>
+      </div>
+      </sc-if>
+      <sc-if value="{{ notAuthed }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex; align-items:center; gap:13px">
+        <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ false }}"><img ref="{{ setLogoImg }}" alt="brand logo" style="height:48px;width:auto;max-width:200px;object-fit:contain;display:block"></sc-if>
+        <sc-if value="{{ noLogo }}" hint-placeholder-val="{{ true }}"><div style="width:38px;height:38px;border-radius:9px;background:var(--accent,#1D2430);display:flex;align-items:center;justify-content:center;color:var(--accent-ink,#fff);font:700 15px lato;box-shadow:0 1px 2px rgba(10,13,18,.12), 0 0 0 1px rgba(10,13,18,.04)">{{ monogram }}</div></sc-if>
+        <sc-if value="{{ showCompany }}" hint-placeholder-val="{{ false }}"><span style="font:700 15px lato; letter-spacing:-.01em; color:#1D2430">{{ companyName }}</span></sc-if>
+      </div>
+      </sc-if>
+
+      <!-- signed-in: app user controls -->
+      <sc-if value="{{ authed }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex; align-items:center; gap:6px">
+        <button title="Copy link" style="display:inline-flex; align-items:center; gap:8px; height:36px; padding:0 14px; border:1px solid #D5D7DA; border-radius:2px; background:#fff; font:700 13px lato; color:#3B3F46; cursor:pointer; margin-right:4px" style-hover="background:#FAFBFC; border-color:#B9BCC2"><svg style="width:15px;height:15px;color:#717680"><use href="assets/icons-sprite.svg#copy"></use></svg>Copy link</button>
+        <div style="width:1px;height:28px;background:#E5E6E9;margin:0 4px"></div>
+        <button style="position:relative; width:40px;height:40px;border:none;background:none;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#535862" style-hover="background:#F4F5F6">
+          <svg style="width:21px;height:21px"><use href="assets/icons-sprite.svg#notification"></use></svg>
+          <span style="position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:999px;background:#F04438;border:2px solid #fff"></span>
+        </button>
+        <button style="width:40px;height:40px;border:none;background:none;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#535862" style-hover="background:#F4F5F6">
+          <svg style="width:20px;height:20px"><use href="assets/icons-sprite.svg#settings"></use></svg>
+        </button>
+        <div style="width:1px;height:28px;background:#E5E6E9;margin:0 8px"></div>
+        <div style="position:relative">
+          <button onClick="{{ toggleUser }}" style="display:flex; align-items:center; gap:10px; height:48px; padding:0 8px 0 4px; border:none; background:none; border-radius:10px; cursor:pointer" style-hover="background:#F7F8FA">
+            <span style="width:38px;height:38px;border-radius:999px;background:var(--accent,#0E65E5);color:var(--accent-ink,#fff);display:flex;align-items:center;justify-content:center;font:700 14px lato">{{ userInitials }}</span>
+            <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.2">
+              <span style="font:700 13px lato; color:#1D2430">{{ userName }}</span>
+              <span style="font:600 11px lato; color:#8E929A">{{ userRole }}</span>
+            </span>
+            <svg style="width:13px;height:13px;color:#A4A7AE" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <sc-if value="{{ userMenuOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; top:56px; right:0; width:238px; background:#fff; border:1px solid #D5D7DA; border-radius:12px; box-shadow:0 20px 24px -4px rgba(10,13,18,.12), 0 8px 8px -4px rgba(10,13,18,.03); padding:6px; z-index:70; animation:fkpop .14s ease">
+            <div style="padding:10px 12px 8px; border-bottom:1px solid #F2F3F4; margin-bottom:4px">
+              <div style="font:700 14px lato; color:#1D2430">{{ userName }}</div>
+              <div style="font:500 12px lato; color:#8E929A">{{ userEmail }}</div>
+            </div>
+            <sc-for list="{{ userMenu }}" as="mi" hint-placeholder-count="4">
+              <div onClick="{{ mi.run }}" style="display:flex; align-items:center; gap:11px; padding:9px 11px; border-radius:8px; cursor:pointer; font:600 13px lato; color:#1D2430" style-hover="background:#F7F8FA"><svg style="width:16px;height:16px;color:#717680"><use href="assets/icons-sprite.svg#{{ mi.icon }}"></use></svg>{{ mi.label }}</div>
+            </sc-for>
+          </div>
+          </sc-if>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- public shared view: minimal action -->
+      <sc-if value="{{ notAuthed }}" hint-placeholder-val="{{ true }}">
+      <button style="display:inline-flex; align-items:center; gap:8px; height:36px; padding:0 14px; border:1px solid #D5D7DA; border-radius:2px; background:#fff; font:700 13px lato; color:#3B3F46; cursor:pointer" style-hover="background:#FAFBFC; border-color:#B9BCC2"><svg style="width:15px;height:15px;color:#717680"><use href="assets/icons-sprite.svg#copy"></use></svg>Copy link</button>
+      </sc-if>
+    </div>
+  </div>
+  <sc-if value="{{ userMenuOpen }}" hint-placeholder-val="{{ false }}"><div onClick="{{ closeUser }}" style="position:fixed; inset:0; z-index:45"></div></sc-if>
+
+  <!-- FourKites utility bar -->
+  <div data-screen-label="Tracking · Utility bar" style="background:#FAFBFC; border-bottom:1px solid #ECEDEF">
+    <div style="max-width:1440px; margin:0 auto; padding:0 28px; height:42px; display:flex; align-items:center; justify-content:space-between">
+      <div style="display:flex; align-items:center; gap:8px; font:600 11px lato; letter-spacing:.02em; color:#A4A7AE">
+        <span>Order tracking &amp; shipment visibility powered by</span>
+        <svg viewBox="0 0 224 56" style="height:15px; width:auto"><path d="M71.575 29.575V41.545H66.724V14.455H78.96V18.697H71.575V25.249H77.413V29.568H71.575V29.575Z" fill="#535862"></path><path d="M83.664 40.446C82.152 39.123 81.312 36.995 81.312 31.507V24.5C81.312 19.005 82.145 16.884 83.664 15.561C84.84 14.539 86.506 14.007 88.473 14.007C90.44 14.007 92.148 14.539 93.324 15.561C94.836 16.884 95.676 19.012 95.676 24.5V31.507C95.676 37.002 94.843 39.123 93.324 40.446C92.148 41.468 90.482 42 88.473 42C86.464 42 84.833 41.468 83.664 40.446ZM90.79 32.564V23.436C90.79 20.629 90.79 18.508 88.48 18.508C86.17 18.508 86.205 20.629 86.205 23.436V32.564C86.205 35.371 86.205 37.492 88.48 37.492C90.755 37.492 90.79 35.371 90.79 32.564Z" fill="#535862"></path><path d="M113.939 14.455L113.904 17.22V34.727C113.904 39.389 111.174 42 106.778 42C102.382 42 99.6939 39.382 99.6939 34.727V17.22L99.6589 14.455H104.545L104.51 17.22V34.195C104.51 36.316 105.077 37.492 106.785 37.492C108.493 37.492 109.095 36.316 109.095 34.195V17.22L109.06 14.455H113.946H113.939Z" fill="#535862"></path><path d="M123.228 30.408V41.545H118.377V14.455H125.195C131.257 14.455 132.734 18.053 132.734 22.449V22.526C132.734 25.368 131.936 27.832 129.703 29.232L133.343 41.545H128.191L125.083 30.408H123.228ZM123.228 26.278H124.516C127.246 26.278 127.778 24.57 127.778 22.491V22.456C127.778 20.37 127.211 18.704 124.593 18.704H123.228V26.278Z" fill="#535862"></path><path d="M151.76 14.455L146.566 24.57L152.061 41.545H146.867L143.115 29.421L141.337 32.872L141.372 41.552H136.486V14.455H141.26C141.26 14.455 141.295 24.038 141.26 24.871H141.414C141.869 24.038 142.401 22.939 142.856 22.064L146.531 14.448H151.76V14.455Z" fill="#535862"></path><path d="M159.677 14.455V41.545H154.791V14.455H159.677Z" fill="#535862"></path><path d="M172.067 18.697V41.545H167.293V18.697H162.519V14.455H176.876V18.697H172.067Z" fill="#535862"></path><path d="M184.576 29.575V37.303H192.15V41.545H179.725V14.455H192.003V18.697H184.576V25.249H190.414V29.568H184.576V29.575Z" fill="#535862"></path><path d="M198.898 34.041C199.353 36.54 200.487 37.492 202.118 37.492C203.749 37.492 204.617 36.547 204.617 35.14C204.617 33.628 203.63 32.186 201.474 30.597L198.975 28.777C195.979 26.579 194.691 24.003 194.691 21.161C194.691 16.954 197.568 14 202.041 14C206.171 14 208.558 16.499 209.167 20.741L204.428 21.385C204.162 19.565 203.406 18.508 201.887 18.508C200.368 18.508 199.612 19.53 199.612 20.93C199.612 22.638 200.823 23.849 202.797 25.284L205.261 27.062C208.103 29.148 209.545 31.801 209.545 34.867C209.545 39.221 206.626 41.993 202.083 41.993C197.54 41.993 194.845 39.263 194.201 34.678L198.898 34.041V34.041Z" fill="#535862"></path><path d="M36.722 17.682L28 26.404L19.278 17.682L28 0L36.722 17.682Z" fill="#E1E000"></path><path d="M26.404 28L17.682 36.722L0 28L17.675 19.278L26.404 28Z" fill="#F9423A"></path><path d="M36.722 38.3179L28 55.9999L19.271 38.3249L28 29.5959L36.722 38.3179Z" fill="#00AFD7"></path><path d="M55.9999 28L38.3179 36.729L29.5959 28L38.3179 19.278L55.9999 28Z" fill="#00AF66"></path></svg>
+      </div>
+      <div style="position:relative">
+        <button onClick="{{ toggleLang }}" style="display:inline-flex; align-items:center; gap:7px; height:28px; padding:0 10px; border:1px solid #E9EAEB; border-radius:7px; background:#fff; font:600 12px lato; color:#414651; cursor:pointer">
+          <svg style="width:14px;height:14px;color:#717680"><use href="assets/icons-sprite.svg#globe"></use></svg>{{ currentLang }}
+          <svg style="width:11px;height:11px;color:#A4A7AE" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <sc-if value="{{ langOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute; top:34px; right:0; width:160px; background:#fff; border:1px solid #D5D7DA; border-radius:8px; box-shadow:0 12px 16px -4px rgba(10,13,18,.12), 0 4px 6px -2px rgba(10,13,18,.03); padding:5px; z-index:30">
+          <sc-for list="{{ languages }}" as="lng" hint-placeholder-count="5">
+            <div onClick="{{ lng.pick }}" style="display:flex; align-items:center; justify-content:space-between; padding:8px 10px; border-radius:6px; cursor:pointer; font:600 13px lato; color:#1D2430">{{ lng.label }}<sc-if value="{{ lng.active }}" hint-placeholder-val="{{ false }}"><svg style="width:14px;height:14px;color:var(--accent,#0E65E5)"><use href="assets/icons-sprite.svg#check"></use></svg></sc-if></div>
+          </sc-for>
+        </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back / search context bar -->
+  <div data-screen-label="Tracking · Context bar" style="background:#FAFBFC; border-bottom:1px solid #ECEDEF">
+    <div style="max-width:1440px; margin:0 auto; padding:14px 28px; display:flex; align-items:center; gap:16px; flex-wrap:wrap">
+      <sc-if value="{{ authed }}" hint-placeholder-val="{{ true }}">
+      <a onClick="{{ backToResults }}" style="display:inline-flex; align-items:center; gap:7px; font:700 13px lato; color:#535862; text-decoration:none; cursor:pointer; white-space:nowrap" style-hover="color:#1D2430"><svg style="width:16px;height:16px;color:#8E929A" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>Back to dashboard</a>
+      <div style="width:1px; height:22px; background:#E5E6E9"></div>
+      </sc-if>
+      <div style="font:500 13px lato; color:#8E929A">Order <span style="font-weight:700; color:#1D2430">{{ ref }}</span></div>
+      <sc-if value="{{ authed }}" hint-placeholder-val="{{ true }}">
+      <a onClick="{{ newSearch }}" style="margin-left:auto; display:inline-flex; align-items:center; gap:7px; font:700 13px lato; color:#535862; text-decoration:none; cursor:pointer; white-space:nowrap" style-hover="color:#1D2430"><svg style="width:15px;height:15px;color:#8E929A"><use href="assets/icons-sprite.svg#search"></use></svg>New search</a>
+      </sc-if>
+    </div>
+  </div>
+
+  <div style="container-type:inline-size; flex:1; width:100%; max-width:1440px; margin:0 auto; padding:0 28px; box-sizing:border-box">
+
+    <!-- HERO GROUP -->
+    <div data-screen-label="Tracking · Hero / ETA">
+      <div style="padding:32px 0 24px">
+        <div style="font:600 11px lato; letter-spacing:.10em; text-transform:uppercase; color:var(--accent,#1D2430)">Order {{ ref }} &nbsp;·&nbsp; {{ etaEyebrow }}</div>
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:18px; flex-wrap:wrap; margin-top:10px">
+          <div style="min-width:0">
+            <div style="font-family:lato,LatoLocal,sans-serif; font-weight:900; font-size:clamp(34px,5.4cqw,52px); line-height:.96; letter-spacing:-.025em; color:#1D2430">{{ heroBig }}</div>
+            <div style="font:600 14px lato; color:#535862; margin-top:8px">{{ etaSub }}</div>
+          </div>
+          <div style="text-align:right; flex:none">
+            <sc-if value="{{ live }}" hint-placeholder-val="{{ true }}"><span style="display:inline-flex; align-items:center; gap:8px; height:30px; padding:0 13px; border-radius:999px; background:#E7F8EF; font:700 13px lato; color:#16B364"><span style="width:8px;height:8px;border-radius:999px;background:#16B364; animation:fkpulse 2.2s infinite"></span>{{ pillLabel }}</span></sc-if>
+            <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex; align-items:center; gap:7px; height:30px; padding:0 13px; border-radius:999px; background:#ECFDF3; font:700 13px lato; color:#067647"><svg style="width:14px;height:14px;color:#067647"><use href="assets/icons-sprite.svg#check"></use></svg>{{ pillLabel }}</span></sc-if>
+            <sc-if value="{{ pending }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex; align-items:center; gap:7px; height:30px; padding:0 13px; border-radius:999px; background:#F4F5F6; font:700 13px lato; color:#6B7280"><svg style="width:13px;height:13px;color:#8E929A"><use href="assets/icons-sprite.svg#clock"></use></svg>{{ pillLabel }}</span></sc-if>
+            <div style="font:700 15px lato; color:#1D2430; margin-top:11px; white-space:nowrap">{{ moveLine }}</div>
+            <div style="font:500 12px lato; color:#8E929A; margin-top:3px">Updated {{ updated }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- milestone stepper -->
+      <sc-if value="{{ secJourney }}" hint-placeholder-val="{{ true }}">
+      <div data-screen-label="Tracking · Milestone stepper" style="padding:26px 0; border-top:1px solid #ECEDEF">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
+          <span style="display:inline-flex; align-items:center; gap:8px; font:700 12px lato; letter-spacing:.02em; color:#414651"><svg style="width:15px;height:15px;color:var(--accent,#1D2430);flex:none"><use href="assets/icons-sprite.svg#shuffle"></use></svg>{{ legLine }}</span>
+          <span style="display:inline-flex; align-items:center; gap:7px; font:600 12px lato; color:#717680"><svg style="width:14px;height:14px;color:var(--accent,#1D2430);flex:none"><use href="assets/icons-sprite.svg#location-pin"></use></svg>Destination · <span style="color:#1D2430; font-weight:700">{{ destination }}</span></span>
+        </div>
+
+        <div style="position:relative; margin-top:24px; padding-top:4px">
+          <div style="position:absolute; left:7%; right:7%; top:15px; height:3px">
+            <div style="position:absolute; inset:0; border-radius:999px; background:#ECEDEF"></div>
+            <div style="position:absolute; left:0; top:0; bottom:0; width:var(--step-fill,60%); border-radius:999px; background:var(--accent,#1D2430); transition:width .4s ease"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; position:relative">
+            <sc-for list="{{ stops }}" as="st" hint-placeholder-count="5">
+              <div style="flex:1; min-width:0; display:flex; flex-direction:column; align-items:center; text-align:center; padding:0 4px">
+                <sc-if value="{{ st.done }}" hint-placeholder-val="{{ false }}"><div style="width:26px;height:26px;border-radius:999px;background:var(--accent,#1D2430);display:flex;align-items:center;justify-content:center"><svg style="width:13px;height:13px;color:#fff"><use href="assets/icons-sprite.svg#check"></use></svg></div></sc-if>
+                <sc-if value="{{ st.current }}" hint-placeholder-val="{{ true }}"><div style="width:26px;height:26px;border-radius:999px;background:var(--accent,#1D2430);display:flex;align-items:center;justify-content:center; animation:fkpulse 2.2s infinite"><span style="width:9px;height:9px;border-radius:999px;background:#fff"></span></div></sc-if>
+                <sc-if value="{{ st.upcoming }}" hint-placeholder-val="{{ false }}"><div style="width:26px;height:26px;border-radius:999px;background:#fff;border:2px solid #D5D7DA"></div></sc-if>
+                <div style="font:600 12px lato; color:#1D2430; margin-top:10px; line-height:1.3">{{ st.label }}</div>
+                <div style="font:500 11px lato; color:#8E929A; margin-top:3px">{{ st.date }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+      </div>
+      </sc-if>
+    </div>
+
+    <!-- shipment details -->
+    <sc-if value="{{ secDetails }}" hint-placeholder-val="{{ true }}">
+    <div data-screen-label="Tracking · Shipment details" style="padding:26px 0; border-top:1px solid #ECEDEF">
+      <div style="font:600 12px lato; letter-spacing:.10em; text-transform:uppercase; color:var(--accent,#1D2430); margin-bottom:16px">Order &amp; shipment details</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:16px 28px">
+        <div><div style="font:600 11px lato; letter-spacing:.05em; text-transform:uppercase; color:#A4A7AE">Carrier</div><div style="font:600 17px lato; color:#1D2430; margin-top:6px">{{ carrier }}</div></div>
+        <div><div style="font:600 11px lato; letter-spacing:.05em; text-transform:uppercase; color:#A4A7AE">Mode</div><div style="font:600 17px lato; color:#1D2430; margin-top:6px">{{ mode }}</div></div>
+        <sc-for list="{{ refs }}" as="r" hint-placeholder-count="5">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px">
+              <span style="font:600 11px lato; letter-spacing:.05em; text-transform:uppercase; color:#A4A7AE">{{ r.label }}</span>
+              <sc-if value="{{ r.searched }}" hint-placeholder-val="{{ false }}"><span style="font:600 9px lato; letter-spacing:.05em; text-transform:uppercase; color:#6B7280; border:1px solid #E5E6E9; padding:2px 6px; border-radius:5px">Searched</span></sc-if>
+            </div>
+            <div style="font:700 17px lato; color:#1D2430; margin-top:6px">{{ r.value }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- live location -->
+    <sc-if value="{{ mapVisible }}" hint-placeholder-val="{{ true }}">
+    <div data-screen-label="Tracking · Live map" style="padding:26px 0; border-top:1px solid #ECEDEF">
+      <div style="font:600 12px lato; letter-spacing:.10em; text-transform:uppercase; color:var(--accent,#1D2430); margin-bottom:14px">Live location</div>
+      <div data-card style="position:relative; height:300px; border:1px solid #ECEDEF; border-radius:16px; overflow:hidden; background:linear-gradient(155deg,#F7F8FA 0%,#EEF0F3 55%,#E6E9ED 100%)">
+        <div style="position:absolute; inset:0; background-image:linear-gradient(rgba(120,128,140,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(120,128,140,.08) 1px,transparent 1px); background-size:46px 46px"></div>
+        <svg viewBox="0 0 1000 300" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%"><path d="M120 230 L560 140" fill="none" stroke="var(--accent,#1D2430)" stroke-width="3" stroke-linecap="round"></path><path d="M560 140 L880 64" fill="none" stroke="#AEB3BB" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 11"></path></svg>
+        <div style="position:absolute; left:12%; top:76.6%; transform:translate(-50%,-50%); width:13px;height:13px;border-radius:999px;background:var(--accent,#1D2430);border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2)"></div>
+        <div style="position:absolute; left:56%; top:46.6%; transform:translate(-50%,-50%); width:46px;height:46px;border-radius:999px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.18); border:2px solid var(--accent,#1D2430); animation:fkpulse 2.4s infinite"><svg style="width:22px;height:22px;color:var(--accent,#1D2430)"><use href="assets/icons-sprite.svg#truck"></use></svg></div>
+        <div style="position:absolute; left:88%; top:21.3%; transform:translate(-50%,-50%); width:30px;height:30px;border-radius:999px;background:var(--accent,#1D2430);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 9px rgba(0,0,0,.22)"><svg style="width:16px;height:16px;color:#fff"><use href="assets/icons-sprite.svg#location-pin"></use></svg></div>
+        <div style="position:absolute; left:20px; top:18px; background:#fff; border-radius:10px; box-shadow:0 3px 12px rgba(10,13,18,.1); padding:9px 13px; font:700 12px lato; color:#1D2430">{{ currentLoc }} &nbsp;·&nbsp; {{ mapUpdated }}</div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- documents -->
+    <sc-if value="{{ secDocs }}" hint-placeholder-val="{{ true }}">
+    <div data-screen-label="Tracking · Documents" style="padding:26px 0; border-top:1px solid #ECEDEF">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px">
+        <div style="display:flex; align-items:center; gap:12px"><span style="font:600 12px lato; letter-spacing:.10em; text-transform:uppercase; color:var(--accent,#1D2430)">Documents</span><span data-surface style="font:600 11px lato; color:#6B7280; background:#F4F5F6; padding:3px 9px; border-radius:999px">{{ docsAvailable }} available</span></div>
+        <button onClick="{{ openUploadModal }}" style="display:inline-flex; align-items:center; gap:7px; height:34px; padding:0 13px; border:1px solid #D5D7DA; border-radius:8px; background:#fff; font:700 12px lato; color:#414651; cursor:pointer" style-hover="background:#FAFBFC; border-color:#B9BCC2"><svg style="width:14px;height:14px;color:var(--accent,#1D2430)"><use href="assets/icons-sprite.svg#upload"></use></svg>Upload</button>
+      </div>
+      <sc-for list="{{ docRows }}" as="doc" hint-placeholder-count="3">
+        <sc-if value="{{ doc.isAction }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; padding:14px 16px; margin:10px 0; border:1px solid #FEDCC8; background:#FFFBF7; border-radius:12px">
+            <div style="display:flex; align-items:center; gap:13px; min-width:0">
+              <svg style="width:20px;height:20px;color:#D9682E;flex:none"><use href="assets/icons-sprite.svg#file-text"></use></svg>
+              <div style="min-width:0">
+                <div style="display:flex; align-items:center; gap:9px; flex-wrap:wrap"><span style="font:700 16px lato; color:#1D2430">{{ doc.name }}</span><span style="font:700 10px lato; letter-spacing:.03em; text-transform:uppercase; padding:3px 9px; border-radius:999px; background:{{ doc.chipBg }}; color:{{ doc.chipInk }}; white-space:nowrap">{{ doc.chipLabel }}</span></div>
+                <div style="font:500 12px lato; color:#B93815; margin-top:3px">{{ doc.reason }}</div>
+              </div>
+            </div>
+            <button onClick="{{ doc.upload }}" style="display:inline-flex; align-items:center; gap:8px; height:38px; padding:0 16px; border:none; border-radius:2px; background:#B93815; font:700 13px lato; color:#fff; cursor:pointer; flex:none" style-hover="background:#9A2E10"><svg style="width:15px;height:15px;color:#fff"><use href="assets/icons-sprite.svg#upload"></use></svg>Upload</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ doc.isRow }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; padding:13px 0; border-top:1px solid #F2F3F4">
+            <div style="display:flex; align-items:center; gap:13px; min-width:0">
+              <svg style="width:20px;height:20px;color:#6B7280;flex:none"><use href="assets/icons-sprite.svg#file-text"></use></svg>
+              <div style="min-width:0">
+                <div style="display:flex; align-items:center; gap:9px; flex-wrap:wrap">
+                  <sc-if value="{{ doc.previewable }}" hint-placeholder-val="{{ true }}"><span onClick="{{ doc.preview }}" title="Click to preview" style="font:700 16px lato; color:#1D2430; cursor:pointer; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-underline-offset:3px; text-decoration:underline; text-decoration-color:transparent" style-hover="color:var(--accent,#1D2430); text-decoration-color:currentColor">{{ doc.name }}</span></sc-if>
+                  <sc-if value="{{ doc.notPreviewable }}" hint-placeholder-val="{{ false }}"><span style="font:700 16px lato; color:#1D2430; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ doc.name }}</span></sc-if>
+                  <span style="font:700 10px lato; letter-spacing:.03em; text-transform:uppercase; padding:3px 9px; border-radius:999px; background:{{ doc.chipBg }}; color:{{ doc.chipInk }}; white-space:nowrap; flex:none">{{ doc.chipLabel }}</span>
+                </div>
+                <sc-if value="{{ doc.hasMeta }}" hint-placeholder-val="{{ true }}"><div style="font:500 12px lato; color:#A4A7AE; margin-top:3px">{{ doc.meta }}</div></sc-if>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; flex:none; position:relative">
+              <sc-if value="{{ doc.canDownload }}" hint-placeholder-val="{{ true }}"><button onClick="{{ doc.download }}" title="Download" style="width:34px;height:34px;border:1px solid #D5D7DA;border-radius:8px;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#535862" style-hover="background:#FAFBFC;border-color:#B9BCC2"><svg style="width:15px;height:15px;color:var(--accent,#1D2430)"><use href="assets/icons-sprite.svg#download"></use></svg></button></sc-if>
+              <sc-if value="{{ doc.hasMenu }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ doc.toggleMenu }}" title="More actions" style="width:34px;height:34px;border:1px solid #D5D7DA;border-radius:8px;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#535862" style-hover="background:#FAFBFC;border-color:#B9BCC2"><svg style="width:16px;height:16px"><use href="assets/icons-sprite.svg#menu-kebab-fill"></use></svg></button>
+                <sc-if value="{{ doc.menuOpen }}" hint-placeholder-val="{{ false }}">
+                  <div onClick="{{ closeDocMenu }}" style="position:fixed; inset:0; z-index:60"></div>
+                  <div style="position:absolute; top:40px; right:0; z-index:61; min-width:188px; background:#fff; border:1px solid #E9EAEB; border-radius:10px; box-shadow:0 12px 28px -8px rgba(10,13,18,.22); padding:6px">
+                    <sc-if value="{{ doc.showRename }}" hint-placeholder-val="{{ false }}"><div onClick="{{ doc.rename }}" style="display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:7px; font:600 13px lato; color:#414651; cursor:pointer" style-hover="background:#F4F5F6"><svg style="width:15px;height:15px;color:#717680"><use href="assets/icons-sprite.svg#edit-1"></use></svg>Rename</div></sc-if>
+                    <sc-if value="{{ doc.showShare }}" hint-placeholder-val="{{ true }}"><div onClick="{{ doc.share }}" style="display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:7px; font:600 13px lato; color:#414651; cursor:pointer" style-hover="background:#F4F5F6"><svg style="width:15px;height:15px;color:#717680"><use href="assets/icons-sprite.svg#link-2"></use></svg>Share (copy link)</div></sc-if>
+                    <sc-if value="{{ doc.showReupload }}" hint-placeholder-val="{{ false }}"><div onClick="{{ doc.reupload }}" style="display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:7px; font:600 13px lato; color:#414651; cursor:pointer" style-hover="background:#F4F5F6"><svg style="width:15px;height:15px;color:#717680"><use href="assets/icons-sprite.svg#upload"></use></svg>Request re-upload</div></sc-if>
+                    <sc-if value="{{ doc.showDelete }}" hint-placeholder-val="{{ false }}"><div onClick="{{ doc.remove }}" style="display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:7px; font:600 13px lato; color:#D92D20; cursor:pointer" style-hover="background:#FEF3F2"><svg style="width:15px;height:15px;color:#D92D20"><use href="assets/icons-sprite.svg#trash-full"></use></svg>Delete</div></sc-if>
+                  </div>
+                </sc-if>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+      </sc-for>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ uploadModal }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeUploadModal }}" style="position:fixed; inset:0; z-index:120; background:rgba(16,18,27,.45); display:flex; align-items:center; justify-content:center; padding:24px; animation:fkpop .12s ease">
+      <div onClick="{{ stopModal }}" style="width:100%; max-width:440px; background:#fff; border-radius:16px; box-shadow:0 24px 48px -12px rgba(10,13,18,.35); padding:22px">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px"><div style="font:800 17px lato; letter-spacing:-.01em; color:#1D2430">Upload a document</div><span onClick="{{ closeUploadModal }}" style="cursor:pointer;color:#A4A7AE;display:flex" style-hover="color:#717680"><svg style="width:20px;height:20px"><use href="assets/icons-sprite.svg#x"></use></svg></span></div>
+        <div style="font:400 13px/1.5 lato; color:#717680; margin-bottom:18px">Choose a document type, then select a file to add it to this order.</div>
+        <div style="font:700 10px lato; letter-spacing:.06em; text-transform:uppercase; color:#A4A7AE; margin-bottom:9px">Document type</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px">
+          <sc-for list="{{ docTypeChips }}" as="t" hint-placeholder-count="5">
+            <sc-if value="{{ t.active }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;align-items:center;height:34px;padding:0 14px;border-radius:8px;background:var(--accent,#1D2430);color:var(--accent-ink,#fff);font:700 12px lato">{{ t.label }}</span></sc-if>
+            <sc-if value="{{ t.idle }}" hint-placeholder-val="{{ true }}"><span onClick="{{ t.set }}" style="display:inline-flex;align-items:center;height:34px;padding:0 14px;border-radius:8px;border:1px solid #D5D7DA;background:#fff;color:#414651;font:600 12px lato;cursor:pointer" style-hover="border-color:#B9BCC2">{{ t.label }}</span></sc-if>
+          </sc-for>
+        </div>
+        <label style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; padding:26px; border:1.5px dashed #C6C9CF; border-radius:12px; cursor:pointer; text-align:center" style-hover="border-color:var(--accent,#1D2430); background:#FAFBFC">
+          <svg style="width:26px;height:26px;color:var(--accent,#1D2430)"><use href="assets/icons-sprite.svg#upload"></use></svg>
+          <span style="font:700 14px lato; color:#1D2430">Choose a file to upload</span>
+          <span style="font:500 12px lato; color:#A4A7AE">Any file type · added as “{{ uploadTypeLabel }}”</span>
+          <input onChange="{{ onUploadDoc }}" type="file" style="display:none">
+        </label>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- document preview (mock) -->
+    <sc-if value="{{ previewDoc }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closePreview }}" style="position:fixed; inset:0; z-index:125; background:rgba(16,18,27,.5); display:flex; align-items:center; justify-content:center; padding:24px; animation:fkpop .12s ease">
+      <div onClick="{{ stopModal }}" style="width:100%; max-width:480px; background:#fff; border-radius:16px; box-shadow:0 24px 48px -12px rgba(10,13,18,.35); padding:18px">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px">
+          <div style="display:flex; align-items:center; gap:10px; min-width:0"><svg style="width:18px;height:18px;color:#6B7280;flex:none"><use href="assets/icons-sprite.svg#file-text"></use></svg><span style="font:700 15px lato; color:#1D2430; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ previewDoc }}</span></div>
+          <span onClick="{{ closePreview }}" style="cursor:pointer;color:#A4A7AE;display:flex;flex:none" style-hover="color:#717680"><svg style="width:20px;height:20px"><use href="assets/icons-sprite.svg#x"></use></svg></span>
+        </div>
+        <div style="aspect-ratio:8.5/11; background:#F4F5F6; border:1px solid #E9EAEB; border-radius:10px; display:flex; flex-direction:column; gap:12px; padding:32px 30px; overflow:hidden">
+          <div style="height:14px; width:52%; border-radius:4px; background:#E1E3E6"></div>
+          <div style="height:9px; width:88%; border-radius:4px; background:#E9EAEB"></div>
+          <div style="height:9px; width:94%; border-radius:4px; background:#E9EAEB"></div>
+          <div style="height:9px; width:78%; border-radius:4px; background:#E9EAEB"></div>
+          <div style="height:9px; width:90%; border-radius:4px; background:#E9EAEB; margin-top:10px"></div>
+          <div style="height:9px; width:84%; border-radius:4px; background:#E9EAEB"></div>
+          <div style="height:9px; width:66%; border-radius:4px; background:#E9EAEB"></div>
+          <div style="margin-top:auto; display:flex; align-items:center; justify-content:center; gap:8px; color:#B4B7BC; font:600 11px 'IBM Plex Mono', monospace; letter-spacing:.04em"><svg style="width:14px;height:14px"><use href="assets/icons-sprite.svg#eye"></use></svg>PREVIEW PLACEHOLDER</div>
+        </div>
+        <div style="display:flex; justify-content:flex-end; margin-top:16px">
+          <button onClick="{{ closePreview }}" style="display:inline-flex; align-items:center; height:38px; padding:0 18px; border:1px solid #D5D7DA; border-radius:2px; background:#fff; font:700 13px lato; color:#1D2430; cursor:pointer" style-hover="background:#FAFBFC; border-color:#B9BCC2">Close</button>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed; bottom:24px; left:50%; transform:translateX(-50%); z-index:130; background:#1D2430; color:#fff; font:600 13px lato; padding:11px 16px; border-radius:10px; box-shadow:0 12px 28px -8px rgba(10,13,18,.35)">{{ toast }}</div>
+    </sc-if>
+
+    <!-- comments (two-way thread) -->
+    <sc-if value="{{ secComments }}" hint-placeholder-val="{{ true }}">
+    <div data-screen-label="Tracking · Comments" style="padding:26px 0; border-top:1px solid #ECEDEF">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px"><span style="font:600 12px lato; letter-spacing:.10em; text-transform:uppercase; color:var(--accent,#1D2430)">Comments</span><span data-surface style="font:600 11px lato; color:#6B7280; background:#F4F5F6; padding:3px 9px; border-radius:999px">{{ commentCount }}</span></div>
+
+      <!-- composer -->
+      <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:22px">
+        <span style="width:36px;height:36px;border-radius:999px;background:var(--accent,#1D2430);color:var(--accent-ink,#fff);display:flex;align-items:center;justify-content:center;font:700 13px lato;flex:none">{{ myInitials }}</span>
+        <div style="flex:1; min-width:0">
+          <textarea ref="{{ setCommentInput }}" rows="2" placeholder="Add a comment or question about this order…" style="box-sizing:border-box; width:100%; resize:vertical; min-height:44px; border:1px solid #D5D7DA; border-radius:10px; padding:11px 13px; font:500 14px/1.5 lato; color:#1D2430; outline:none" style-focus="border-color:var(--accent,#1D2430)"></textarea>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:9px">
+            <label style="display:inline-flex; align-items:center; gap:7px; font:600 12px lato; color:#717680; cursor:pointer" style-hover="color:#414651"><svg style="width:15px;height:15px;color:#98A2B3"><use href="assets/icons-sprite.svg#attachment"></use></svg><sc-if value="{{ hasAttachment }}" hint-placeholder-val="{{ false }}">{{ attachmentName }}</sc-if><sc-if value="{{ noAttachment }}" hint-placeholder-val="{{ true }}">Attach file</sc-if><input onChange="{{ onAttach }}" type="file" style="display:none"></label>
+            <button onClick="{{ postComment }}" style="display:inline-flex; align-items:center; gap:7px; height:38px; padding:0 18px; border:none; border-radius:9px; background:var(--accent,#1D2430); color:var(--accent-ink,#fff); font:700 13px lato; cursor:pointer">Post comment</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- thread -->
+      <div style="display:flex; flex-direction:column; gap:18px">
+        <sc-for list="{{ comments }}" as="c" hint-placeholder-count="3">
+          <div style="display:flex; gap:12px; align-items:flex-start">
+            <span style="width:36px;height:36px;border-radius:999px;background:{{ c.avatarBg }};color:{{ c.avatarInk }};display:flex;align-items:center;justify-content:center;font:700 13px lato;flex:none">{{ c.initials }}</span>
+            <div style="flex:1; min-width:0">
+              <div style="display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin-bottom:4px">
+                <span style="font:700 14px lato; color:#1D2430">{{ c.author }}</span>
+                <span style="font:700 10px lato; letter-spacing:.03em; text-transform:uppercase; padding:2px 7px; border-radius:5px; background:{{ c.tagBg }}; color:{{ c.tagInk }}">{{ c.role }}</span>
+                <span style="font:500 12px lato; color:#A4A7AE">{{ c.ts }}</span>
+              </div>
+              <div style="font:400 14px/1.6 lato; color:#414651; text-wrap:pretty">{{ c.text }}</div>
+              <sc-if value="{{ c.hasFile }}" hint-placeholder-val="{{ false }}"><span data-surface style="display:inline-flex; align-items:center; gap:7px; margin-top:9px; padding:7px 11px; border:1px solid #E9EAEB; border-radius:8px; background:#F9FAFB; font:600 12px lato; color:#414651"><svg style="width:14px;height:14px;color:var(--accent,#1D2430)"><use href="assets/icons-sprite.svg#attachment"></use></svg>{{ c.fileName }}</span></sc-if>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- feedback (NPS) -->
+    <sc-if value="{{ secFeedback }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Tracking · Feedback" style="padding:26px 0; border-top:1px solid #ECEDEF">
+      <sc-if value="{{ noFeedback }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <div style="font:700 16px lato; color:#414651">How likely are you to recommend this order tracking experience?</div>
+        <div style="font:400 13px lato; color:#717680; margin-top:3px">Your feedback helps {{ companyName }} improve this page.</div>
+        <div style="display:flex; gap:6px; margin-top:16px">
+          <sc-for list="{{ npsScale }}" as="x" hint-placeholder-count="11">
+            <sc-if value="{{ x.selected }}" hint-placeholder-val="{{ false }}"><span style="flex:1 1 0; min-width:0; height:42px; display:flex; align-items:center; justify-content:center; border:1px solid var(--accent,#1D2430); border-radius:8px; background:var(--accent,#1D2430); font:700 14px lato; color:var(--accent-ink,#fff); cursor:pointer">{{ x.n }}</span></sc-if>
+            <sc-if value="{{ x.normal }}" hint-placeholder-val="{{ true }}"><span onClick="{{ x.set }}" style="flex:1 1 0; min-width:0; height:42px; display:flex; align-items:center; justify-content:center; border:1px solid #D5D7DA; border-radius:8px; background:#fff; font:700 14px lato; color:#414651; cursor:pointer" style-hover="border-color:var(--accent,#1D2430); color:var(--accent,#1D2430)">{{ x.n }}</span></sc-if>
+          </sc-for>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-top:8px; font:500 12px lato; color:#A4A7AE">
+          <span>Not likely</span><span>Very likely</span>
+        </div>
+      </div>
+      </sc-if>
+      <sc-if value="{{ feedbackGiven }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex; align-items:center; gap:11px; font:700 15px lato; color:#414651"><svg style="width:20px;height:20px;color:#16B364"><use href="assets/icons-sprite.svg#check-circle"></use></svg>{{ npsThanks }}</div>
+      </sc-if>
+    </div>
+    </sc-if>
+
+    <!-- footer -->
+    <div data-screen-label="Tracking · Footer" style="padding:22px 0 36px; border-top:1px solid #ECEDEF; display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap; font:400 13px lato; color:#A4A7AE">
+      <span>© 2026 {{ companyName }}</span>
+      <a onClick="{{ backToResults }}" style="color:#717680; text-decoration:none; cursor:pointer; font-weight:700">&larr; Back to dashboard</a>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1000,&quot;height&quot;:900},&quot;companyName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;FedEx&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;monogram&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;AL&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1D2430&quot;,&quot;options&quot;:[&quot;#1D2430&quot;,&quot;#0E65E5&quot;,&quot;#0B5C3F&quot;,&quot;#5B3FB5&quot;,&quot;#B5430F&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;showMap&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { ready:false, ref:'', shipmentId:'', applied:null, authed:false, userMenuOpen:false, lang:'English', langOpen:false, feedback:null, comments:[], commentsKey:'', attachment:null, uploads:[], uploadType:'Other', uploadModal:false, docMenu:null, previewDoc:null, toast:null };
+
+  async componentDidMount(){
+    const p = new URLSearchParams(location.search);
+    const ref = (p.get('ref') || '').trim();
+    const sid = (p.get('shipment') || '').trim();
+    let applied = {name:'FedEx',brandMark:'FX',accent:'#4D148C',logoUrl:'assets/fedex-logo.png',url:'fedex.com',showCompany:false};
+    try { const s = localStorage.getItem('fk_brand_v3'); if (s) applied = JSON.parse(s); } catch(e){}
+    let db = null;
+    try { const m = await import('./portal-shipments.js'); db = m.PORTAL; } catch(e){}
+    this.db = db;
+    let authed=false; try { authed = sessionStorage.getItem('fk_authed')==='1'; } catch(e){}
+    this.setState({ ready:true, ref: ref || (db && db.defaultReference) || 'PO-4471-A', shipmentId: sid, applied, authed });
+    this.loadComments(sid || ref || 'default');
+    import('./portal-brand.js').then(m=>{ this.brandLib=m; this.applyVars(); }).catch(()=>{});
+  }
+
+  seedComments(){
+    return [
+      { author:'Agent Cassie', initials:'AC', role:'FourKites · Customer Service Agent', ts:'Jun 15, 9:20 AM', text:'Heads up — this load is staged for the Nuevo Laredo–Laredo crossing. To clear CBP without delay we\'ll need three documents on file: the commercial invoice, packing list, and USMCA certificate of origin. You can upload them right here and I\'ll route them to our customs broker.', side:'ops' },
+      { author:'John Doe', initials:'JD', role:'Shipper · Ops', ts:'Jun 15, 11:48 AM', text:'Commercial invoice attached. Packing list and USMCA certificate to follow this afternoon.', side:'customer', fileName:'commercial-invoice.pdf' },
+      { author:'John Doe', initials:'JD', role:'Shipper · Ops', ts:'Jun 15, 3:12 PM', text:'USMCA certificate of origin attached, and the packing list is uploaded in Documents. Let me know if the broker needs anything else.', side:'customer', fileName:'usmca-certificate-of-origin.pdf' },
+      { author:'Marcus Lee', initials:'ML', role:'Carrier · Werner', ts:'Jun 16, 1:55 PM', text:'Update from the border: CBP released the load at 1:40 PM CT — cleared with no exam. We\'ve crossed at Laredo and are rolling toward San Antonio.', side:'ops' },
+      { author:'Agent Cassie', initials:'AC', role:'FourKites · Customer Service Agent', ts:'Jun 16, 2:20 PM', text:'Customs cleared. All three documents are on file and the entry is closed. Revised ETA to San Antonio is holding for Jun 19 — I\'ll keep this thread posted if anything changes.', side:'ops' }
+    ];
+  }
+  loadComments(key){
+    const SEED_VERSION = 5; // bump whenever seedComments() changes so cached copies refresh
+    const k = 'fk_comments_' + key;
+    const seed = this.seedComments();
+    let stored = null;
+    try { const s = localStorage.getItem(k); if (s) stored = JSON.parse(s); } catch(e){}
+    let list;
+    if (stored && stored.v === SEED_VERSION && Array.isArray(stored.list)) {
+      // current version — use as-is
+      list = stored.list;
+    } else {
+      // no cache, or a stale seed version: rebuild from the fresh seed and
+      // re-append any comments the user actually posted (not part of any seed).
+      const oldList = Array.isArray(stored) ? stored : (stored && stored.list) || [];
+      const seedText = new Set(seed.map(c=>c.text));
+      const userPosts = oldList.filter(c=> c.side==='customer' && c.ts==='Just now' && !seedText.has(c.text));
+      list = [ ...seed, ...userPosts ];
+      try { localStorage.setItem(k, JSON.stringify({ v:SEED_VERSION, list })); } catch(e){}
+    }
+    this.setState({ comments:list, commentsKey:k });
+  }
+  saveComments(list){ try { if (this.state.commentsKey) localStorage.setItem(this.state.commentsKey, JSON.stringify({ v:5, list })); } catch(e){} }
+  postComment(){
+    const val = (this.commentInput && this.commentInput.value || '').trim();
+    if (!val) return;
+    const c = { author:'John Doe', initials:'JD', role:'Shipper · Ops', ts:'Just now', text:val, side:'customer' };
+    if (this.state.attachment) c.fileName = this.state.attachment;
+    const list = [ ...this.state.comments, c ];
+    this.setState({ comments:list, attachment:null });
+    this.saveComments(list);
+    if (this.commentInput) this.commentInput.value='';
+  }
+  onAttach(e){ const f = e.target.files && e.target.files[0]; if (f) this.setState({ attachment: f.name }); }
+  onUploadDoc(e){ const f = e.target.files && e.target.files[0]; if(!f) return; const up = { name:f.name, type:this.state.uploadType, uploader:'John Doe', role:'Shipper · Ops', ts:'Just now' }; this.setState({ uploads:[ ...this.state.uploads, up ], uploadModal:false }); e.target.value=''; }
+  openUploadModal(){ this.setState({ uploadModal:true, docMenu:null }); }
+  closeUploadModal(){ this.setState({ uploadModal:false }); }
+  toggleDocMenu(key){ this.setState(s=>({ docMenu: s.docMenu===key ? null : key })); }
+  closeDocMenu(){ this.setState({ docMenu:null }); }
+  openPreview(name){ this.setState({ previewDoc:name, docMenu:null }); }
+  closePreview(){ this.setState({ previewDoc:null }); }
+  showToast(msg){ this.setState({ toast:msg }); clearTimeout(this._toastT); this._toastT=setTimeout(()=>this.setState({ toast:null }), 2200); }
+  copyShare(name){ try{ navigator.clipboard && navigator.clipboard.writeText('https://portal.example/d/'+encodeURIComponent(name)); }catch(e){} this.setState({ docMenu:null }); this.showToast('Link copied'); }
+  requestReupload(name){ this.setState({ docMenu:null }); this.showToast('Re-upload requested for '+name); }
+  removeUpload(i){ this.setState({ uploads: this.state.uploads.filter((_,x)=>x!==i), docMenu:null }); }
+  renameUpload(i){ this.setState({ docMenu:null }); const cur=this.state.uploads[i]; if(!cur) return; const n=(window.prompt('Rename document', cur.name)||'').trim(); if(!n) return; const list=this.state.uploads.slice(); list[i]={ ...cur, name:n }; this.setState({ uploads:list }); }
+  componentDidUpdate(){ this.applyVars(); this.syncLogos(); }
+
+  selected(){ return this.db ? this.db.byId(this.state.shipmentId) : null; }
+  activeAccent(){ const a=this.state.applied; return (a&&a.accent) || this.props.accentColor || '#1D2430'; }
+  inkOn(hex){
+    try{ const h=String(hex).replace('#',''); const f=h.length===3?h.split('').map(c=>c+c).join(''):h;
+      const r=parseInt(f.slice(0,2),16), g=parseInt(f.slice(2,4),16), b=parseInt(f.slice(4,6),16);
+      return (0.299*r+0.587*g+0.114*b)/255>0.62?'#1D2430':'#ffffff'; }catch(e){ return '#ffffff'; }
+  }
+  applyVars(){
+    const el=this.root; if(!el) return;
+    const acc=this.activeAccent();
+    el.style.setProperty('--accent',acc);
+    el.style.setProperty('--accent-ink',this.inkOn(acc));
+    const s=this.selected();
+    el.style.setProperty('--step-fill',((s&&s.pct)||'60')+'%');
+    if(this.brandLib){ this.brandLib.applyBrand(el, this.state.applied); const _bg=this.state.applied&&this.state.applied.pageBg; if(_bg) el.style.background=_bg; }
+  }
+  syncLogos(){ if(!this._logos) return; const url=this.state.applied&&this.state.applied.logoUrl; this._logos.forEach(el=>{ if(url&&el.src!==url) el.src=url; }); }
+  go(url){ window.location.href = url; }
+
+  renderVals(){
+    const a = this.state.applied;
+    const ref = this.state.ref;
+    const s = this.selected() || {};
+    const tone = s.statusTone || 'live';
+    const etaEyebrow = tone==='done' ? 'Delivered' : tone==='pending' ? 'Estimated pickup' : 'Estimated delivery';
+    const time = (s.eta && s.eta.time) || '';
+    const etaSub = tone==='done' ? ('Signed ' + time) : tone==='pending' ? ('Window opens ' + time) : ('Arrives ' + time);
+    const stops = (s.stops || []).map(st => ({
+      done: !!st.done, current: !!st.current, upcoming: !!st.upcoming,
+      label: String(st.kind || '').split('·')[0].trim(),
+      date: String(st.place || '').split('·').pop().trim()
+    }));
+    const refs = [{ label:'Your reference', value: ref, searched:true }];
+    (s.details || []).forEach(d => { if (d.label !== 'Carrier' && d.label !== 'Mode') refs.push({ label:d.label, value:d.value, searched:false }); });
+    const secs = (a && a.sections) || {};
+    const on = k => secs[k] !== false;
+    const fb = this.state.feedback;
+    const menuOpen = this.state.docMenu;
+    const sysRows = (s.documents || []).map((d, i) => {
+      if (d.actionRequired) return { isAction:true, isRow:false, name:d.name, chipLabel:'Action required', chipBg:'#FEF0E6', chipInk:'#B93815', reason:d.status, upload:()=>this.openUploadModal() };
+      if (d.available) {
+        const key = 'sys-' + i;
+        return { isAction:false, isRow:true, name:d.name, chipLabel:'Available', chipBg:'#ECFDF3', chipInk:'#067647',
+          meta: d.by ? ('Added by ' + d.by + ' · ' + (d.at || '')) : '', hasMeta: !!d.by,
+          previewable:true, notPreviewable:false, preview:()=>this.openPreview(d.name),
+          canDownload:true, download:()=>this.showToast('Downloading ' + d.name),
+          hasMenu:true, menuOpen: menuOpen===key, toggleMenu:()=>this.toggleDocMenu(key),
+          showRename:false, showShare:true, showReupload:false, showDelete:false,
+          share:()=>this.copyShare(d.name) };
+      }
+      const st = String(d.status || '');
+      const q = /deliver/i.test(st) ? 'After delivery' : /pickup/i.test(st) ? 'After pickup' : 'Pending';
+      return { isAction:false, isRow:true, name:d.name, chipLabel:q, chipBg:'#F4F5F6', chipInk:'#6B7280', meta:'', hasMeta:false, previewable:false, notPreviewable:true, canDownload:false, hasMenu:false };
+    });
+    const userRows = this.state.uploads.map((u, i) => {
+      const key = 'up-' + i;
+      return { isAction:false, isRow:true, name:u.name, chipLabel:'Uploaded', chipBg:'#ECFDF3', chipInk:'#067647',
+        meta: 'Uploaded by ' + (u.uploader || 'You') + ' · ' + (u.ts || ''), hasMeta:true,
+        previewable:true, notPreviewable:false, preview:()=>this.openPreview(u.name),
+        canDownload:true, download:()=>this.showToast('Downloading ' + u.name),
+        hasMenu:true, menuOpen: menuOpen===key, toggleMenu:()=>this.toggleDocMenu(key),
+        showRename:true, showShare:true, showReupload:true, showDelete:true,
+        rename:()=>this.renameUpload(i), share:()=>this.copyShare(u.name), reupload:()=>this.requestReupload(u.name), remove:()=>this.removeUpload(i) };
+    });
+    const docRows = [ ...sysRows, ...userRows ];
+    return {
+      secJourney: on('journey'), secDetails: on('details'), secDocs: on('documents'), secComments: on('comments'), secFeedback: on('feedback'),
+      myInitials: 'JD',
+      commentCount: this.state.comments.length + (this.state.comments.length===1?' comment':' comments'),
+      comments: this.state.comments.map(c=>{ const ops = c.side==='ops'; return {
+        author:c.author, initials:c.initials, role:c.role, ts:c.ts, text:c.text,
+        avatarBg: ops ? 'var(--accent,#1D2430)' : '#E9EAEB', avatarInk: ops ? 'var(--accent-ink,#fff)' : '#535862',
+        tagBg: ops ? '#EEF2F9' : '#F4F5F6', tagInk: ops ? '#0B4A99' : '#535862',
+        hasFile: !!c.fileName, fileName: c.fileName || ''
+      }; }),
+      setCommentInput: el=>{ this.commentInput=el; },
+      postComment: ()=>this.postComment(),
+      onAttach: e=>this.onAttach(e),
+      hasAttachment: !!this.state.attachment, noAttachment: !this.state.attachment, attachmentName: this.state.attachment || '',
+      noFeedback: fb===null, feedbackGiven: fb!==null,
+      npsScale: Array.from({length:11},(_,n)=>({ n, selected: fb===n, normal: fb!==n, set:()=>this.setState({feedback:n}) })),
+      npsThanks: (fb===null ? '' : (fb>=9 ? 'Great to hear — thanks for the score!' : (fb>=7 ? 'Thanks for your feedback!' : 'Thanks — sorry it fell short. We’ll use this to improve.'))),
+      ref,
+      companyName: (a&&a.name) || this.props.companyName || 'FedEx',
+      monogram: (a&&a.brandMark) || this.props.monogram || 'AL',
+      hasLogo: !!(a&&a.logoUrl),
+      noLogo: !(a&&a.logoUrl),
+      showCompany: !!(a&&a.showCompany),
+      etaEyebrow, heroBig: (s.eta && s.eta.dateLong) || '', etaSub,
+      live: tone==='live', done: tone==='done', pending: tone==='pending',
+      pillLabel: tone==='done' ? 'Delivered' : tone==='pending' ? 'Scheduled' : 'On time',
+      moveLine: (s.statusLabel || '') + ' · ' + (s.currentLoc || ''),
+      updated: String(s.mapUpdated || '').replace(/^updated\s+/i, ''),
+      legLine: (s.mode || '') + ' · ' + ((s.stops || []).length) + ' stops',
+      destination: s.destination || '',
+      stops,
+      carrier: s.carrier || '', mode: s.mode || '', nextStop: s.nextStop || '',
+      refs, docRows: docRows, docsAvailable: s.docsAvailable,
+      previewDoc: this.state.previewDoc, closePreview: ()=>this.closePreview(),
+      closeDocMenu: ()=>this.closeDocMenu(), toast: this.state.toast,
+      docTypeChips: ['BOL','POD','Customs','Invoice','Other'].map(t=>({ label:t, active:this.state.uploadType===t, idle:this.state.uploadType!==t, set:()=>this.setState({uploadType:t}) })),
+      onUploadDoc: e=>this.onUploadDoc(e),
+      uploadModal: this.state.uploadModal, uploadTypeLabel: this.state.uploadType,
+      openUploadModal: ()=>this.openUploadModal(), closeUploadModal: ()=>this.closeUploadModal(),
+      stopModal: e=>{ if(e && e.stopPropagation) e.stopPropagation(); },
+      mapVisible: tone==='live' && (this.props.showMap ?? true) && (secs.map !== false),
+      currentLoc: s.currentLoc || '', mapUpdated: s.mapUpdated || '',
+      backToResults: () => this.go('CP Shipment Dashboard.dc.html'),
+      newSearch: () => this.go('Customer Portal Home.dc.html'),
+      authed: this.state.authed, notAuthed: !this.state.authed,
+      goHome: () => this.go('Customer Portal Home.dc.html'),
+      currentLang: this.state.lang, langOpen: this.state.langOpen,
+      toggleLang: ()=>this.setState(s=>({langOpen:!s.langOpen, userMenuOpen:false})),
+      languages: ['English','Espa\u00f1ol','Fran\u00e7ais','Deutsch','\u4e2d\u6587'].map(l=>({ label:l, active:l===this.state.lang, pick:()=>this.setState({lang:l, langOpen:false}) })),
+      userName: this.props.userName || 'John Doe',
+      userInitials: this.props.userInitials || 'JD',
+      userRole: this.props.userRole || 'Operations',
+      userEmail: this.props.userEmail || 'john.doe@fedex.com',
+      userMenuOpen: this.state.userMenuOpen,
+      toggleUser: () => this.setState(s=>({ userMenuOpen: !s.userMenuOpen })),
+      closeUser: () => this.setState({ userMenuOpen:false }),
+      userMenu: [
+        { label:'Profile', icon:'user', run:()=>this.setState({userMenuOpen:false}) },
+        { label:'Account settings', icon:'settings', run:()=>this.setState({userMenuOpen:false}) },
+        { label:'Notifications', icon:'notification', run:()=>this.setState({userMenuOpen:false}) },
+        { label:'Sign out', icon:'logout', run:()=>this.go('Customer Portal Login.dc.html') }
+      ],
+      setRoot: el => { this.root = el; if (el) this.applyVars(); },
+      setLogoImg: el => { if (!el) return; el.onerror=()=>{el.style.display='none';}; this._logos = this._logos || new Set(); this._logos.add(el); const url = this.state.applied && this.state.applied.logoUrl; if (url) el.src = url; }
+    };
+  }
+}
+</script>
+</body>
+</html>
